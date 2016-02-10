@@ -33,7 +33,7 @@ When you will start a new branch, be certan that you branch from *develop*.
 
 
 
-# How to start on a new issue
+### How to start on a new issue
 
 1. Check if the issue already exists.
 ..* If yes: switch to that branch by typing "git checkout <*branch name*>" and start coding.
@@ -42,13 +42,13 @@ When you will start a new branch, be certan that you branch from *develop*.
 4. Now type "git push origin <*your-branch-name*>" so that the branch also pops up in github, not just on your local machine.
 5. Now everything is set to go, just start writing code!
 
-# How to push to <*your-branch*>
+### How to push to <*your-branch*>
 
 1. Be on the correct issue/branch.
 2. Do all adding and commiting.
 3. Type: "git push origin <*your-branch*>" and it will be pushed to your branch.
 
-# How to push things to the develop branch
+### How to push things to the develop branch
 
 *Do not merge directly with the develop branch.*
 
