@@ -21,3 +21,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 accounts-password
 aldeed:collection2
 iron:router
+twbs:bootstrap
