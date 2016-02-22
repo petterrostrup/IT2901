@@ -8,5 +8,12 @@
 		{{else}}
 		TODO: if user is not logged in, link to login 
 		{{/if}}-->
+		<li>{{_ "hello"}}</li>
+        <input type="button" id="language" value="Change language"/>
+        {{#if currentUser}}
+        	<li><a href="#" id="logout">Logg Ut</a></li>
+        {{else}}
+        	<li><a href="{{pathFor 'login'}}">Logg Inn</a></li>
+        {{/if}}
 	</ul>
 </template>

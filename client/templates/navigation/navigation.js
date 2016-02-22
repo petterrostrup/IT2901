@@ -1,5 +1,9 @@
-Template.main_template.helpers({
-  currentUser: function() {
-    return Meteor.userId();
-  }
-})
+
+Template.navigation.events({
+  "click #logout": function(event, template){
+     Meteor.logout(function(){
+
+     });
+  },
+});
+
