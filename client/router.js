@@ -7,7 +7,7 @@ Router.route("/", {
   name:"home",
   template:"home"});
 
-Router.route("/", {
+Router.route("/login", {
     name:"login",
     template:"login"
 });

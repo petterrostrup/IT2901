@@ -20,20 +20,25 @@ Template.login.events({
       var emailVar = template.find("#email").value;
       var passVar = template.find("#password2").value;
       var confirmVar = template.find("#confirm-password").value;
-      try {
-        Accounts.createUser({
-          username: userVar,
-          email: emailVar,
-          password: passVar,
-          profile: {
-            firstName: firstVar,
-            lastName: lastVar
-          }
-        })
+      var user = {
+        username: template.find("#username2").value,
+        email: template.find("#email").value,
+        profile: {
+          first_name: template.find("#firstname").value,
+          last_name: template.find("#lastname").value,
+          organization: "lol",
+          languages: ["norwegian"]
+        },
+        roles: "norm",
       }
-      catch(err){
-        console.log(err)
-      }
+      Meteor.call("add_user", user, passVar, function(error, result) {
+        if (error){
+          console.log(error);
+        } else {
+          console.log("User added.");
+        }
+        console.log(result);
+      });
     }
     else {
         var userVar = template.find("#username1").value;
