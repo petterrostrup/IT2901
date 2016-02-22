@@ -5,7 +5,8 @@ Router.configure({
 
 Router.route("/", {
   name:"home",
-  template:"home"});
+  template:"home"
+});
 
 Router.route("/login", {
     name:"login",
