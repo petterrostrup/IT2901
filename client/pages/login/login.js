@@ -26,8 +26,6 @@ Template.login.events({
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
-          organization: "lol",
-          languages: ["norwegian"]
         },
         roles: "norm",
       }
