@@ -30,6 +30,14 @@ Easy to use routing for urls in Meteor.
 
 Bootstrap.
 
+### [alanning:roles](https://atmospherejs.com/alanning/roles)
+
+Simple roles implementation for Meteor. 
+
+### [check](https://atmospherejs.com/meteor/check)
+
+Simple check for elements that are not supposed to be database injections.
+
 ## How-to-git (simple)
 
 *Never* push directly to the master branch and the developer branch. You can check witch branch you are on by typing "git branch". 
