@@ -1,11 +1,13 @@
 Template.login.events({
   "click #login-form-link":function(event, template){
+    template.$("#logError").hide();    
     template.$("#login-form").delay(100).fadeIn(100);
     template.$("#register-form").fadeOut(100);
     template.$('#register-form-link').removeClass('active');
     template.$("#login-form-link").addClass('active');
   },
   "click #register-form-link":function(event, template){
+    template.$("#regError").hide();
     template.$("#register-form").delay(100).fadeIn(100);
     template.$("#login-form").fadeOut(100);
     template.$('#login-form-link').removeClass('active');
@@ -32,6 +34,8 @@ Template.login.events({
       Meteor.call("add_user", user, passVar, function(error, result) {
         if (error){
           console.log(error);
+          template.$("#regErrorText").text(error.reason);
+          template.$("#regError").show();
         } else {
           console.log("User added.");
           template.$("#login-form").delay(100).fadeIn(100);
@@ -53,8 +57,12 @@ Template.login.events({
 
         Meteor.loginWithPassword({username: userVar}, passVar, function(error) {
           if (error) {
+            // Possible that it is not safe. Give the user to much feedback. Bad users can use this. 
             console.log(error);
-            console.log("Feil brukernavn eller passord");
+            template.$("#logErrorText").text(error.reason);
+            template.$("#logError").show();
+            // this does not work
+            template.$("#password1").text("");
           } else
             console.log("Du har logget inn!!");
         });
