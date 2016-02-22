@@ -22,5 +22,10 @@ aldeed:collection2
 iron:router
 twbs:bootstrap
 alanning:roles
+<<<<<<< HEAD
+tap:i18n-db
+tap:i18n
+=======
 accounts-ui
 check
+>>>>>>> develop
