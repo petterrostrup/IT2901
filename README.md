@@ -38,6 +38,10 @@ Simple roles implementation for Meteor.
 
 Simple check for elements that are not supposed to be database injections.
 
+### [Chimp](https://chimp.readme.io/)
+
+Testing framework
+
 ## How-to-git (simple)
 
 *Never* push directly to the master branch and the developer branch. You can check witch branch you are on by typing "git branch". 
