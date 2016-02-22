@@ -1,5 +1,7 @@
 Meteor.methods({
-	add_user: function(user, password) {
+
+	// Method for creating a new user in the system.
+	create_user: function(user, password) {
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
 		check(user, Object);

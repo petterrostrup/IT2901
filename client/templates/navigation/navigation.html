@@ -1,13 +1,12 @@
 <template name="navigation">
 	<ul class="list-inline">
-		<li>Press me</li>
-		<li>Press med</li>
+		<li><a href="{{pathFor 'home'}}">Home</a></li>
 		<li>{{_ "hello"}}</li>
         <input type="button" id="language" value="Change language"/>
         {{#if currentUser}}
-        	<li><a href="#" id="logout">Logg Ut</a></li>
+        	<li><a href="#" id="logout">Logout</a></li>
         {{else}}
-        	<li><a href="{{pathFor 'login'}}">Logg Inn</a></li>
+        	<li><a href="{{pathFor 'login'}}">Login</a></li>
         {{/if}}
 	</ul>
 </template>
