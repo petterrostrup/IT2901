@@ -23,7 +23,7 @@ Schema.UserProfile = new SimpleSchema({
 	languages: {
 		type: [String],
 		label: "Languages",
-		optional: false
+		optional: true
 	}
 });
 
