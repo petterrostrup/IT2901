@@ -10,5 +10,10 @@ Router.route("/", {
 
 Router.route("/login", {
     name:"login",
-    template:"login"
+    template:"login",
+    onBeforeAction: function() {
+    	if (Meteor.userId())
+    		Router.go("/");
+    	this.next();
+    }
 });

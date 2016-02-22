@@ -34,17 +34,30 @@ Template.login.events({
           console.log(error);
         } else {
           console.log("User added.");
+          template.$("#login-form").delay(100).fadeIn(100);
+          template.$("#register-form").fadeOut(100);
+          template.$('#register-form-link').removeClass('active');
+          template.$("#login-form-link").addClass('active');
+          // template.$("#register-form-link").removeClass("active");
         }
-        console.log(result);
       });
     }
     else {
         var userVar = template.find("#username1").value;
         var passVar = template.find("#password1").value;
 
-        Meteor.loginWithPassword(userVar, passVar);
+        if (Meteor.userId()) {
+          console.log("Du er allerede logget inn.");
+          return;
+        }
 
-        console.log(Meteor.userId());
+        Meteor.loginWithPassword({username: userVar}, passVar, function(error) {
+          if (error) {
+            console.log(error);
+            console.log("Feil brukernavn eller passord");
+          } else
+            console.log("Du har logget inn!!");
+        });
     }
   }
 });
