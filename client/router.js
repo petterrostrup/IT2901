@@ -12,3 +12,8 @@ Router.route("/login", {
     name:"login",
     template:"login"
 });
+
+Router.route("/profile", {
+    name:"profile",
+    template:"profile"
+});
