@@ -14,16 +14,28 @@ Router.route("/", {
 Router.route("/login", {
     name:"login",
     template:"login",
+
+    // This function is executed before the route happens.
+    // If the user is logged in, it will not be sent to the login page
     onBeforeAction: function() {
-    	
-    	// If a user is logged in, then send it to the home-page
     	if (Meteor.userId())
     		Router.go("/");
-    	this.next();
+      else
+    	  this.next();
     }
 });
 
+// Routes the user to the profile page
 Router.route("/profile", {
     name:"profile",
-    template:"profile"
+    template:"profile",
+
+    //Executed before the action. 
+    //If the user is logged in, it can see the profile page
+    onBeforeAction: function() {
+      if (Meteor.userId())
+        this.next();
+      else
+        Router.go("/");
+    }
 });

@@ -34,7 +34,26 @@ Meteor.methods({
 			}
 		}
 	},
+
+	// Method for insert new content to the database.
 	submit_content: function(post) {
+
+		// Simple check that the input are valid
+		check(post, Object);
+
+		// If you are not logged in, you are not allowed to create content
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		// Adds the id of the user in the post
+		post.createdById = Meteor.userId();
+
+		// Check if a user can insert a post in Content.
+		// If not, it will throw an error.
+		// Commenting this out so people not will hate me
+		// Security.can(this.userId).insert(post).for(Content).throw(); 
+
 		Content.insert(post);
 	}
 });

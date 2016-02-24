@@ -1,5 +1,6 @@
 
 Meteor.subscribe("content");
+Meteor.subscribe("personalInfo");
 
 getUserLanguage = function () {
     // Put logic for determining the user language
