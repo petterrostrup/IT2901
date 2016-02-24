@@ -31,5 +31,8 @@ Meteor.methods({
 				console.log("The user " + user.username + " was added.");
 			}
 		}
+	},
+	submit_content: function(post) {
+		Content.insert(post);
 	}
 });
