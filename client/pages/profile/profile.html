@@ -1,0 +1,59 @@
+<template name="profile">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ currentUser.profile.firstName }} {{currentUser.profile.lastName}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://www.sheffield.com/wp-content/uploads/2013/06/placeholder.png" class="img-circle img-responsive"> </div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                    <tr>
+                                        <td>Username:</td>
+                                        <td>{{ currentUser.username}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Joined:</td>
+                                        <td>01/01/2001</td>
+                                    </tr>
+                                    <tr>
+                                    <tr>
+                                        <td>Gender</td>
+                                        <td>Male</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Home Address</td>
+                                        <td>Placeholder</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><a id="mailtoLink" href="mailto:placeholder@placeholder.com">{{ currentUser.email }}</a></td>
+                                    </tr>
+                                    <td>Phone Number</td>
+                                    <td>12345678
+                                    </td>
+
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <span>
+                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
