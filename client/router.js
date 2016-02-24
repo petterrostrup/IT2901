@@ -22,3 +22,8 @@ Router.route("/login", {
     	this.next();
     }
 });
+
+Router.route("/profile", {
+    name:"profile",
+    template:"profile"
+});

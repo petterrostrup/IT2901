@@ -6,3 +6,4 @@ Template.navigation.events({
      });
   },
 });
+

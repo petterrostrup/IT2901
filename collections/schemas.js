@@ -74,7 +74,7 @@ Schema.Content = new SimpleSchema({
 	createdById: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
-		optional: false
+		optional:false
 	},
 	title: {
 		type: String,
@@ -94,14 +94,14 @@ Schema.Content = new SimpleSchema({
 	    }
   	},
   	//todo catagory not static plz
-  	catagory: {
+  	category: {
   		type: String,
   		allowedValues: ["Job", "Tips and tricks", "Food", "IT support"],
-  		optional: false,
+  		optional: true,
   	},
   	tags: {
   		type: [String],
-  		optional: false
+  		optional: true
   	},
   	description: {
   		type: String,

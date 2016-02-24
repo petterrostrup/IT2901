@@ -1,7 +1,44 @@
 <template name="home">
-{{#if currentUser}}
-	<h1>DU ER NÅ LOGGET INN!!!!</h1>
-{{else}}
-	<h4>Du er ikke logget inn.</h4>
-{{/if}}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<!-- link to contentpage, make everything clickable -->
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-circle" />
+					<h3>
+						Contentpages
+					</h3>
+				</div>
+				<!-- Link to forum, make everything clickable -->
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-circle" />
+					<h3>
+						Forum
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="container">
+
+			<div class="panel-group">
+			<h2>Contentlist</h2>
+					<!-- makes a list of all content. Not Tested -->
+			    	{{#each getContent}}
+	        			<div class="panel panel-default">
+							<div class="panel-heading">{{title}}</div>
+							<div class="panel-body">{{description}}</div>
+						</div>
+	    			{{/each}}
+    		</div>
+		</div>
+	</div>
+</div>
+<form class="contentForm">
+	<input type="text" name="title" placeholder="Type to add new content title" />
+    <input type="text" name="description" placeholder="Type to add new content desc" />
+    <input type="submit" name="content-submit" id="content-submit" value="content it up">
+ </form>
 </template>

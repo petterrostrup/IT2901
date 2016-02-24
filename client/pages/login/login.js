@@ -2,6 +2,7 @@ Template.login.events({
 
   // Switches from register form to login form
   "click #login-form-link":function(event, template){
+    template.$("#logError").hide();    
     template.$("#login-form").delay(100).fadeIn(100);
     template.$("#register-form").fadeOut(100);
     template.$('#register-form-link').removeClass('active');
@@ -10,6 +11,7 @@ Template.login.events({
 
   // Switches from login form to register form
   "click #register-form-link":function(event, template){
+    template.$("#regError").hide();
     template.$("#register-form").delay(100).fadeIn(100);
     template.$("#login-form").fadeOut(100);
     template.$('#login-form-link').removeClass('active');
@@ -20,12 +22,7 @@ Template.login.events({
   "submit form":function(event, template){
     event.preventDefault();
     if (template.$("#register-form-link").hasClass('active')){
-      var userVar = template.find("#username2").value;
-      var firstVar = template.find("#firstname").value;
-      var lastVar = template.find("#lastname").value;
-      var emailVar = template.find("#email").value;
       var passVar = template.find("#password2").value;
-      var confirmVar = template.find("#confirm-password").value;
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,
@@ -40,6 +37,8 @@ Template.login.events({
       Meteor.call("create_user", user, passVar, function(error, result) {
         if (error){
           console.log(error);
+          template.$("#regErrorText").text(error.reason);
+          template.$("#regError").show();
         } else {
           console.log("User added.");
 
@@ -79,8 +78,11 @@ Template.login.events({
       // is incorrect.
       Meteor.loginWithPassword({username: userVar}, passVar, function(error) {
         if (error) {
+          // Possible that it is not safe. Give the user to much feedback. Bad users can use this. 
           console.log(error);
-          console.log("Feil brukernavn eller passord");
+          template.$("#logErrorText").text("Username or password is wrong!");
+          template.$("#logError").show();
+          // this does not work
           event.target.password1.value = "";
         } else
           console.log("Du har logget inn!!");

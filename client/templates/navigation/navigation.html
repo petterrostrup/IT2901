@@ -4,7 +4,8 @@
 		<li>{{_ "hello"}}</li>
         <input type="button" id="language" value="Change language"/>
         {{#if currentUser}}
-        	<li><a href="#" id="logout">Logout</a></li>
+        	<li><a href="#">{{currentUser.username}}</a></li>
+        	<li><a href="#" id="logout">Logg Ut</a></li>
         {{else}}
         	<li><a href="{{pathFor 'login'}}">Login</a></li>
         {{/if}}

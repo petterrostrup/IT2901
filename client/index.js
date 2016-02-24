@@ -1,3 +1,6 @@
+
+Meteor.subscribe("content");
+
 getUserLanguage = function () {
     // Put logic for determining the user language
     return 'en'
@@ -36,3 +39,4 @@ Template.navigation.events = {
             });
     }
 }
+
