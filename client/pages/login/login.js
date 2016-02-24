@@ -23,6 +23,15 @@ Template.login.events({
     event.preventDefault();
     if (template.$("#register-form-link").hasClass('active')){
       var passVar = template.find("#password2").value;
+      var passVar2 = event.target["confirm-password"].value;
+      if (passVar != passVar2){
+        template.$("#regErrorText").text("Passwords did not match!");
+        template.$("#regError").show();
+        event.target["confirm-password"].value = "";
+        event.target.password2.value = "";
+        event.target.password2.focus();
+        return;
+      }
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,
