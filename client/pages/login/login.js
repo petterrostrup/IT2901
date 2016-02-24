@@ -14,12 +14,7 @@ Template.login.events({
   "submit form":function(event, template){
     event.preventDefault();
     if (template.$("#register-form-link").hasClass('active')){
-      var userVar = template.find("#username2").value;
-      var firstVar = template.find("#firstname").value;
-      var lastVar = template.find("#lastname").value;
-      var emailVar = template.find("#email").value;
       var passVar = template.find("#password2").value;
-      var confirmVar = template.find("#confirm-password").value;
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,

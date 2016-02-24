@@ -6,30 +6,17 @@
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Insert name here</h3>
+                        <h3 class="panel-title">{{ currentUser.profile.firstName }} {{currentUser.profile.lastName}}</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://www.sheffield.com/wp-content/uploads/2013/06/placeholder.png" class="img-circle img-responsive"> </div>
-
-                            <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-                              <dl>
-                                <dt>DEPARTMENT:</dt>
-                                <dd>Administrator</dd>
-                                <dt>HIRE DATE</dt>
-                                <dd>11/12/2013</dd>
-                                <dt>DATE OF BIRTH</dt>
-                                   <dd>11/12/2013</dd>
-                                <dt>GENDER</dt>
-                                <dd>Male</dd>
-                              </dl>
-                            </div>-->
                             <div class=" col-md-9 col-lg-9 ">
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
                                         <td>Username:</td>
-                                        <td>User here</td>
+                                        <td>{{ currentUser.username}}</td>
                                     </tr>
                                     <tr>
                                         <td>Joined:</td>
@@ -46,7 +33,7 @@
                                     </tr>
                                     <tr>
                                         <td>Email</td>
-                                        <td><a href="mailto:placeholder@placeholder.com">Mail here</a></td>
+                                        <td><a id="mailtoLink" href="mailto:placeholder@placeholder.com">{{ currentUser.email }}</a></td>
                                     </tr>
                                     <td>Phone Number</td>
                                     <td>12345678
