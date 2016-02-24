@@ -10,11 +10,11 @@ Code that is supposed to run on the client, will be laid in the client directory
 First create a settings.json file in the server directory.
 ```json
 {
-	"DEBUG": ... (true/false),
+	"DEBUG": true/false,
 	"defaultUser": {
-		"username": ...,
-		"password": ...,
-		"email": ...
+		"username": "String",
+		"password": "String",
+		"email": "String"
 	}
 }
 ```
