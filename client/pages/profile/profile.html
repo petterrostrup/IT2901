@@ -6,7 +6,7 @@
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ currentUser.profile.firstName }} {{currentUser.profile.lastName}}</h3>
+                        <h3 class="panel-title">{{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -20,20 +20,15 @@
                                     </tr>
                                     <tr>
                                         <td>Joined:</td>
-                                        <td>01/01/2001</td>
+                                        <td>{{ currentUser.createdAt }}</td>
                                     </tr>
                                     <tr>
-                                    <tr>
-                                        <td>Gender</td>
-                                        <td>Male</td>
-                                    </tr>
                                     <tr>
                                         <td>Home Address</td>
-                                        <td>Placeholder</td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
-                                        <td><a id="mailtoLink" href="mailto:placeholder@placeholder.com">{{ currentUser.email }}</a></td>
+                                        <td>{{ getUserInfo }}</td>
                                     </tr>
                                     <td>Phone Number</td>
                                     <td>12345678
