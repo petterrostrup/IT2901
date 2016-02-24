@@ -11,7 +11,6 @@ Template.home.events({
 	    var title = event.target.title.value;
 	 	var description = event.target.description.value;
 	 	var content = {
-	 		createdById:Meteor.user()._id,
 	 		title: title,
 	 		category: "Job",
 	 		tags: ["kult"],
@@ -21,7 +20,7 @@ Template.home.events({
 	    Meteor.call("submit_content", content, function(error, result) {
 	        if (error){
 	          	console.log(error);
-	          	console.log("u wot mate?")
+	          	console.log("u wot mate?");
 	        } else {
 	          	console.log("Content added.");
 	          	// Clear form
