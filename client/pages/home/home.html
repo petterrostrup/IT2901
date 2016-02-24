@@ -24,10 +24,8 @@
 		<div class="container">
 
 			<div class="panel-group">
-			<h2>Panel Group</h2>
-				<p>The panel</p>
+			<h2>Contentlist</h2>
 					<!-- makes a list of all content. Not Tested -->
-					<!-- TODO: Test if it works. -->
 			    	{{#each getContent}}
 	        			<div class="panel panel-default">
 							<div class="panel-heading">{{title}}</div>
@@ -38,9 +36,9 @@
 		</div>
 	</div>
 </div>
-{{#if currentUser}}
-	<h1>DU ER NÅ LOGGET INN!!!!</h1>
-{{else}}
-	<h4>Du er ikke logget inn.</h4>
-{{/if}}
+<form class="contentForm">
+	<input type="text" name="title" placeholder="Type to add new content title" />
+    <input type="text" name="description" placeholder="Type to add new content desc" />
+    <input type="submit" name="content-submit" id="content-submit" value="content it up">
+ </form>
 </template>
