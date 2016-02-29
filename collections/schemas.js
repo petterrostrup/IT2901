@@ -70,6 +70,19 @@ Schema.User = new SimpleSchema({
 	}
 });
 
+Schema.ContentCategory = new SimpleSchema({
+	catagory: {
+		type: String,
+		optional: false,
+	},
+	subcatagory: {
+		type: ContentCategory,
+		optional: true
+	}
+
+
+});
+
 Schema.Content = new SimpleSchema({
 	createdById: {
 		type: String,
@@ -93,11 +106,9 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	//todo catagory not static plz
   	category: {
-  		type: String,
-  		allowedValues: ["Job", "Tips and tricks", "Food", "IT support"],
-  		optional: true,
+  		type: ContentCategory,
+  		optional: false,
   	},
   	tags: {
   		type: [String],
