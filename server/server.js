@@ -12,6 +12,14 @@ Meteor.publish("content", function(){
 	return Content.find({});
 });
 
+Meteor.publish("tags", function(tag_string) {
+    console.log(tag_string);
+    return Tag.find({
+        name: {$regex: tag_string}
+    });
+    // return Tag.find({});
+});
+
 Meteor.startup(function(){
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");

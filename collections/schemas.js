@@ -70,17 +70,22 @@ Schema.User = new SimpleSchema({
 	}
 });
 
+Schema.Tag = new SimpleSchema({
+	name: {
+		type: String,
+		unique: true
+	}
+});
+
 Schema.ContentCategory = new SimpleSchema({
 	catagory: {
 		type: String,
-		optional: false,
+		optional: false
 	},
 	subcatagory: {
-		type: ContentCategory,
+		type: Schema.ContentCategory,
 		optional: true
 	}
-
-
 });
 
 Schema.Content = new SimpleSchema({
@@ -107,11 +112,11 @@ Schema.Content = new SimpleSchema({
 	    }
   	},
   	category: {
-  		type: ContentCategory,
+  		type: Schema.ContentCategory,
   		optional: false,
   	},
   	tags: {
-  		type: [String],
+  		type: [Schema.Tag],
   		optional: true
   	},
   	description: {
@@ -123,3 +128,4 @@ Schema.Content = new SimpleSchema({
 
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
+Tag.attachSchema(Schema.Tag);

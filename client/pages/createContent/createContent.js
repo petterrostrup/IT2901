@@ -1,3 +1,15 @@
+Session.set("tagname", "");
+
+Meteor.autorun(function() {
+	Meteor.subscribe("tags", Session.get("tagname"));
+});
+
+Template.createContent.helpers({
+	getTags: function() {
+		return Tag.find({});
+	}
+});
+
 Template.createContent.events({
 	"submit form": function (event) {
 	    // Prevent default browser form submit
@@ -20,5 +32,8 @@ Template.createContent.events({
 	          	event.target.description.value = "";
 	    	}
 	    })
+	},
+	"keypress #lolas": function(event, template) {
+		Session.set("tagname", template.find("#lolas").value);
 	}
 });

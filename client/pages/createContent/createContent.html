@@ -1,0 +1,20 @@
+<template name="createContent">
+	<input id="lolas" type="textfield"/>
+	<button id="contentlol">Press me!</button>
+
+
+	{{#each getTags}}
+		<div class="panel panel-default">
+			<div class="panel-heading">{{name}}</div>
+		</div>
+	{{/each}}
+	<script type="text/javascript">
+		// $("#lolas").keyup(function() {
+		// 	Session.set("tagname", $(this).val());
+		// 	console.log(Tag.find({}).collection._doc);
+		// 	for (var a in Tag.find({})){
+		// 		console.log(a);
+		// 	}
+		// });
+	</script>
+</template>

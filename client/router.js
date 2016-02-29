@@ -10,6 +10,19 @@ Router.route("/", {
   template:"home"
 });
 
+
+// Routing for creating content
+Router.route("/create_content", {
+  name: "create_content",
+  template: "createContent",
+  onBeforeAction: function() {
+    if (!Meteor.userId())
+      Router.go("/");
+    else
+      this.next();
+  } 
+});
+
 // Routes the user to the login page.
 Router.route("/login", {
     name:"login",
