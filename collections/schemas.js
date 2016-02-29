@@ -71,11 +71,11 @@ Schema.User = new SimpleSchema({
 });
 
 Schema.ContentCategory = new SimpleSchema({
-	catagory: {
+	category: {
 		type: String,
 		optional: false,
 	},
-	subcatagory: {
+	subcategory: {
 		type: ContentCategory,
 		optional: true
 	}

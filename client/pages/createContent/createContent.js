@@ -1,3 +1,12 @@
+Template.createContent.helpers({
+	getTag: function() {
+		return Tag.find({});
+	},
+	getContentCategory: function() {
+		Content.find({category: {$exists: true}})
+	}
+});
+
 Template.createContent.events({
 	"submit form": function (event) {
 	    // Prevent default browser form submit

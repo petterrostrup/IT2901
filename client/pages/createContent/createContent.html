@@ -1,0 +1,27 @@
+<template name="createContent">
+<div class="ui loading form">
+  <div class="field">
+    <label>Title</label>
+    <input type="text" placeholder="First Name">
+  </div>
+  <div class="field">
+    <label>Description</label>
+    <textarea rows="2"></textarea>
+  </div>
+  <div class="field">
+    <select class="ui fluid search dropdown" multiple="">
+      {{#each getTag}}
+        <option value="{{name}}" >{{name}}</option>
+      {{/each}}
+    </select>
+  </div>
+  <div class="field">
+    <select class="ui fluid search dropdown" multiple="">
+      {{#each getContentCategory}}
+        <option value="{{category}}" >{{category}}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+</template>
