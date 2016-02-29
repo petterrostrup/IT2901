@@ -1,10 +1,14 @@
+Session.set("tagname", "");
+
 Template.createContent.helpers({
 	getTag: function() {
 		return Tag.find({});
 	},
 	getContentCategory: function() {
 		Content.find({category: {$exists: true}})
-	}
+
+Meteor.autorun(function() {
+	Meteor.subscribe("tags", Session.get("tagname"));
 });
 
 Template.createContent.events({
@@ -29,5 +33,8 @@ Template.createContent.events({
 	          	event.target.description.value = "";
 	    	}
 	    })
+	},
+	"keypress #lolas": function(event, template) {
+		Session.set("tagname", template.find("#lolas").value);
 	}
 });
