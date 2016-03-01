@@ -76,19 +76,16 @@ Schema.Tag = new SimpleSchema({
 		unique: true
 	}
 });
+/*
+TODO: add support for subcategory
 
 Schema.ContentCategory = new SimpleSchema({
 	category: {
 		type: String,
 		optional: false
-	},
-	subcategory: {
-		type: Schema.ContentCategory,
-
-		optional: true
 	}
 });
-
+*/
 Schema.Content = new SimpleSchema({
 	createdById: {
 		type: String,
@@ -113,7 +110,7 @@ Schema.Content = new SimpleSchema({
 	    }
   	},
   	category: {
-  		type: Schema.ContentCategory,
+  		type: String,
   		optional: false,
   	},
   	tags: {
