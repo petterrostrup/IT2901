@@ -1,0 +1,20 @@
+.footer{
+    bottom: 0;
+    background-color: #F8F8F8;
+    height: 60px;
+    margin-top: 40px;
+    text-align: center;
+    border-top: 1px solid #E7E7E7;
+}
+
+template,html, body{
+    height: 100%;
+}
+
+
+.content{
+    position: relative;
+    border: 1px solid #000;
+    overflow-y:auto;
+    height:100%;
+}

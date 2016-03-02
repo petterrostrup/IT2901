@@ -10,6 +10,12 @@ Router.route("/", {
   template:"home"
 });
 
+// Routing for the home page
+Router.route("/content", {
+    name:"content",
+    template:"content"
+});
+
 // Routes the user to the login page.
 Router.route("/login", {
     name:"login",
