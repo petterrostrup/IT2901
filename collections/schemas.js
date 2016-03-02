@@ -113,10 +113,6 @@ Schema.Content = new SimpleSchema({
   		type: String,
   		optional: false,
   	},
-  	tags: {
-  		type: [Schema.Tag],
-  		optional: true
-  	},
   	description: {
   		type: String,
   		optional: false,

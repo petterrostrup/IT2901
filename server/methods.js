@@ -45,7 +45,7 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
-
+		post.tags = [];
 		// Adds the id of the user in the post
 		post.createdById = Meteor.userId();
 
@@ -53,7 +53,7 @@ Meteor.methods({
 		// If not, it will throw an error.
 		// Commenting this out so people not will hate me
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
-
+		console.log(post);
 		Content.insert(post);
 	}
 });
