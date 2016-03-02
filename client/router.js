@@ -10,6 +10,13 @@ Router.route("/", {
   template:"home"
 });
 
+
+// Routing for the home page
+Router.route("/content", {
+    name: "content",
+    template: "content"
+});
+
 // Routing for creating content
 Router.route("/create_content", {
   name: "create_content",
@@ -20,6 +27,7 @@ Router.route("/create_content", {
     else
       this.next();
   } 
+
 });
 
 // Routes the user to the login page.

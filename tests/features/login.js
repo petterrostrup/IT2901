@@ -26,6 +26,7 @@
                 }
 
             });
+
         });
 
 
@@ -33,6 +34,9 @@
         this.Given(/^I navigate to "([^"]*)"$/, function (relativePath) {
             // Write the automation code here
             browser.url(relativePath);
+/*            console.log(relativePath);
+            expect(browser.url).toEqual(relativePath);*/
+
         });
 
 
