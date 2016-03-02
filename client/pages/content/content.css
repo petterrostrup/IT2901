@@ -2,31 +2,6 @@
 /* Import Bootswatch paper theme because it isn't provided by Bootsnipp and it is awesome! */
 @import url(//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.4/paper/bootstrap.min.css);
 @import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css);
-
-/* WHAT YOU NEED */
-.fading-side-menu.affix-top {
-    opacity: 1;
-    transition: opacity 1s
-}
-.fading-side-menu.affix {
-    top: 11.5px;
-}
-.fading-side-menu.affix {
-    opacity: 0.2;
-    transition: opacity 5s
-}
-.fading-side-menu.affix:hover {
-    opacity: 1;
-    transition: opacity 0.3s
-}
-/* RECOMMENDED STYLING BUT NOT REQUIRED */
-.fading-side-menu a {
-    color: rgb(102, 102, 102);
-}
-.fading-side-menu a .fa {
-    padding-right:15px;
-}
-
 /* FOR DEMO ONLY */
 body {
     background-color: rgb(255, 255, 255);
@@ -80,9 +55,4 @@ p.small.text-muted {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-}
-#fullscreen {
-    position: fixed;
-    top: 10px;
-    right: 10px;
 }
