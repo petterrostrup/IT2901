@@ -93,7 +93,7 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	//todo catagory not static plz
+  	//todo category not static plz
   	category: {
   		type: String,
   		allowedValues: ["Job", "Tips and tricks", "Food", "IT support"],
