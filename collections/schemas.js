@@ -70,6 +70,22 @@ Schema.User = new SimpleSchema({
 	}
 });
 
+Schema.Tag = new SimpleSchema({
+	name: {
+		type: String,
+		unique: true
+	}
+});
+/*
+TODO: add support for subcategory
+
+Schema.ContentCategory = new SimpleSchema({
+	category: {
+		type: String,
+		optional: false
+	}
+});
+*/
 Schema.Content = new SimpleSchema({
 	createdById: {
 		type: String,
@@ -93,15 +109,9 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	//todo catagory not static plz
   	category: {
   		type: String,
-  		allowedValues: ["Job", "Tips and tricks", "Food", "IT support"],
-  		optional: true,
-  	},
-  	tags: {
-  		type: [String],
-  		optional: true
+  		optional: false,
   	},
   	description: {
   		type: String,
@@ -112,3 +122,4 @@ Schema.Content = new SimpleSchema({
 
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
+Tag.attachSchema(Schema.Tag);
