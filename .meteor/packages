@@ -32,3 +32,5 @@ xolvio:backdoor
 ongoworks:security
 semantic:ui
 flemay:less-autoprefixer
+semantic:ui-css
+semantic:ui-dropdown
