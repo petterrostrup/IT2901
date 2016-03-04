@@ -22,6 +22,14 @@ Router.route("/category", {
     template: "category"
 });
 
+Router.route("/category/:_id", function() {
+  var data = Category.findOne({_id: this.params._id});
+  if (data)
+    this.render("category", data);
+  else
+    this.render("page_not_found");
+});
+
 // Routing for creating content
 Router.route("/create_content", {
   name: "create_content",

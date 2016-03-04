@@ -20,6 +20,10 @@ Meteor.publish("tags", function(tag_string) {
     // return Tag.find({});
 });
 
+Meteor.publish("category", function() {
+    return Category.find({});
+});
+
 Meteor.startup(function(){
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");
@@ -34,5 +38,14 @@ Meteor.startup(function(){
 
         });
         Accounts.setPassword(userid, defUser.password);
+    }
+    if (!Category.findOne()){
+        Category.insert({
+            name: "Matematikk",
+            children: [],
+            content: [],
+            description: "Regning med tall",
+            url_name: "mattematikk",
+        });
     }
 });
