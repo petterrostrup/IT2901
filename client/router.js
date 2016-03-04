@@ -17,6 +17,11 @@ Router.route("/content", {
     template: "content"
 });
 
+Router.route("/category", {
+    name: "category",
+    template: "category"
+});
+
 // Routing for creating content
 Router.route("/create_content", {
   name: "create_content",
@@ -26,8 +31,7 @@ Router.route("/create_content", {
       Router.go("/");
     else
       this.next();
-  } 
-
+  }
 });
 
 // Routes the user to the login page.
