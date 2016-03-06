@@ -39,11 +39,13 @@ Meteor.startup(function(){
         });
         Accounts.setPassword(userid, defUser.password);
     }
-    if (!Category.findOne()){
+    if (!Category.findOne() && Meteor.settings.DEBUG){
+        console.log("Default category created.");
         Category.insert({
             name: "Matematikk",
             children: [],
             content: [],
+            children_id: [],
             description: "Regning med tall",
             url_name: "mattematikk",
         });

@@ -19,13 +19,13 @@ Router.route("/content", {
 
 Router.route("/category", {
     name: "category",
-    template: "category"
+    template: "mainCategory"
 });
 
 Router.route("/category/:_id", function() {
   var data = Category.findOne({_id: this.params._id});
   if (data)
-    this.render("category", data);
+    this.render("category");
   else
     this.render("page_not_found");
 });

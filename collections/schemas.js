@@ -131,9 +131,19 @@ Schema.Category = new SimpleSchema({
 		type: String,
 		optional: false
 	},
+	parent_id: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: true
+	},
 	parent: {
 		type: Schema.Category,
 		optional: true
+	},
+	children_id: {
+		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
 	},
 	children: {
 		type: [Schema.Category],
