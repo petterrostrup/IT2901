@@ -3,8 +3,8 @@
 <ul class="list-inline">
 
 {{#each get_parent_url}}
-    <li>
-        <a href="{{pathFor 'category'}}/{{_id}}">{{name}} </a>
+    <li class="">
+        <a href="{{pathFor 'category'}}/{{_id}}"> {{name}}</a>
     </li>
 {{/each}}
 
@@ -38,7 +38,10 @@
         <th></th>
     </tr>
     {{#each get_content}}
-        <th><a href="{{pathFor 'content'}}/{{_id}}">{{title}}</a></th>
+    <tr>
+        <td><a href="{{pathFor 'content'}}/{{_id}}">{{title}}</a></td>
+        <td></td>
+    </tr>
     {{/each}}
     <tr>
         <td>
