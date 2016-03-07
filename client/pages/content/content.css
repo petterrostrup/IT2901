@@ -1,0 +1,58 @@
+/* FOR DEMO ONLY */
+/* Import Bootswatch paper theme because it isn't provided by Bootsnipp and it is awesome! */
+@import url(//cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.4/paper/bootstrap.min.css);
+@import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css);
+/* FOR DEMO ONLY */
+body {
+    background-color: rgb(255, 255, 255);
+    font-size: 16px;
+}
+
+header {
+    background: url('https://unsplash.imgix.net/photo-1427955569621-3e494de2b1d2?fit=crop&fm=jpg&h=700&q=75&w=1050') no-repeat center bottom;
+    background-size: cover;
+    margin-bottom: 30px;
+    min-height: 320px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+header:after {
+    bottom: 0px;
+    box-shadow: 0px -0px 10px 10px rgb(255, 255, 255);
+    content: '';
+    height: 0px;
+    left: 0px;
+    width: 100%;
+    position: absolute;
+}
+header .col-xs-12 {
+    height: 320px;
+}
+
+header .alert-info {
+    background-color: rgba(156, 39, 176, 0.7);
+}
+
+.title {
+    font-weight: 700;
+    margin-top: 0px;
+}
+
+p.small.text-muted {
+    margin-bottom: 0px;
+}
+
+.lead {
+    font-style: italic;
+}
+
+.no-margin {
+    margin: 0px !important;
+}
+
+.vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}

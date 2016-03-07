@@ -5,9 +5,21 @@ Bachelor
 Meteor will distinguish between server and client directories. Code that is only supposed to be reached by the server will be laid here.
 Code that is supposed to run on the client, will be laid in the client directory.
 
-#TODO: 
-Add proper Readme
-Add proper gitignore
+# Adding a settings.json file
+
+First create a settings.json file in the server directory.
+```json
+{
+	"DEBUG": true,
+	"defaultUser": {
+		"username": "...",
+		"password": "...",
+		"email": "..."
+	}
+}
+```
+To run the meteor app, you type the following in the terminal:
+`meteor --settings server/settings.json`
 
 We will use this when we git:
  - http://nvie.com/posts/a-successful-git-branching-model/
@@ -37,6 +49,14 @@ Simple roles implementation for Meteor.
 ### [check](https://atmospherejs.com/meteor/check)
 
 Simple check for elements that are not supposed to be database injections.
+
+### [Chimp](https://chimp.readme.io/)
+
+Testing framework
+
+### [ongoworks:security](https://atmospherejs.com/ongoworks/security)
+
+Simple framework for adding constraints on adding, deleting and reading the mongdo database. Based on alanning:roles.
 
 ## How-to-git (simple)
 

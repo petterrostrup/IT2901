@@ -1,6 +1,9 @@
 <template name="layout">
-  {{> navigation}}
-  <div class="container">
-    {{> yield}}
-  </div>
+    <!-- Navbar -->
+    <div class="navbar-fixed-top">{{> navigation}}</div>
+
+    <div class="container container-fluid">
+        {{> yield}}
+    </div>
+    <div class="footer">{{> footer}}</div>
 </template>

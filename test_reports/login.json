@@ -1,0 +1,88 @@
+[
+  {
+    "id": "",
+    "name": "",
+    "description": "User Login\n\nAs an existing user\nI want to be able to login\nSo that I can access the awesome app",
+    "line": 1,
+    "keyword": "Feature",
+    "uri": "/Users/Wiker/Documents/Bachelor/IT2901/tests/features/login.feature",
+    "elements": [
+      {
+        "name": "Log in",
+        "id": ";log-in",
+        "line": 9,
+        "keyword": "Scenario",
+        "description": "",
+        "type": "scenario",
+        "tags": [
+          {
+            "name": "@dev",
+            "line": 8
+          }
+        ],
+        "steps": [
+          {
+            "name": "I am an existing user",
+            "line": 10,
+            "keyword": "Given ",
+            "result": {
+              "status": "passed",
+              "duration": 22643650
+            },
+            "match": {}
+          },
+          {
+            "name": "I navigate to \"localhost:3000/login\"",
+            "line": 11,
+            "keyword": "And ",
+            "result": {
+              "status": "passed",
+              "duration": 2127876693
+            },
+            "match": {}
+          },
+          {
+            "name": "I enter my email \"erik\" and password \"123\"",
+            "line": 12,
+            "keyword": "When ",
+            "result": {
+              "status": "passed",
+              "duration": 600895041
+            },
+            "match": {}
+          },
+          {
+            "name": "I submit the form",
+            "line": 13,
+            "keyword": "And ",
+            "result": {
+              "status": "passed",
+              "duration": 121529941
+            },
+            "match": {}
+          },
+          {
+            "name": "I should see the home page",
+            "line": 14,
+            "keyword": "Then ",
+            "result": {
+              "status": "failed",
+              "duration": 10063585125,
+              "error_message": "Error: element (h1) still not existing after 10000ms\n    at Object.Future.wait (/usr/local/lib/node_modules/chimp/node_modules/fibers/future.js:420:15)\n    at Object.<anonymous> (/usr/local/lib/node_modules/chimp/node_modules/xolvio-fiber-utils/index.js:48:19)\n    at World.<anonymous> (login.js:67:21)\n    at /usr/local/lib/node_modules/chimp/node_modules/meteor-promise/fiber_pool.js:33:40\n    - - - - -\n    at Object.<anonymous> (/usr/local/lib/node_modules/chimp/node_modules/webdriverio/lib/commands/waitForExist.js:50:19)\n    at Object.safeExecute (/usr/local/lib/node_modules/chimp/node_modules/webdriverio/lib/utils/safeExecute.js:19:24)\n    at Object.WebdriverIO.resolve (/usr/local/lib/node_modules/chimp/node_modules/webdriverio/lib/webdriverio.js:87:29)\n    at /usr/local/lib/node_modules/chimp/node_modules/webdriverio/lib/webdriverio.js:227:32\n    at _rejected (/usr/local/lib/node_modules/chimp/node_modules/q/q.js:830:24)\n    at /usr/local/lib/node_modules/chimp/node_modules/q/q.js:856:30\n    at Promise.when (/usr/local/lib/node_modules/chimp/node_modules/q/q.js:1108:31)\n    at Promise.promise.promiseDispatch (/usr/local/lib/node_modules/chimp/node_modules/q/q.js:774:41)\n    at /usr/local/lib/node_modules/chimp/node_modules/q/q.js:590:44\n    at runSingle (/usr/local/lib/node_modules/chimp/node_modules/q/q.js:123:13)\n    at flush (/usr/local/lib/node_modules/chimp/node_modules/q/q.js:111:13)\n    at process._tickCallback (node.js:355:11)"
+            },
+            "match": {}
+          },
+          {
+            "keyword": "After ",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 374941
+            },
+            "match": {}
+          }
+        ]
+      }
+    ]
+  }
+]

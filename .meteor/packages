@@ -22,5 +22,15 @@ aldeed:collection2
 iron:router
 twbs:bootstrap
 alanning:roles
+
+tap:i18n-db
+tap:i18n
+
 accounts-ui
 check
+xolvio:backdoor
+ongoworks:security
+semantic:ui
+flemay:less-autoprefixer
+semantic:ui-css
+semantic:ui-dropdown

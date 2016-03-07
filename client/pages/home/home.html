@@ -1,0 +1,47 @@
+<template name="home">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<!-- link to contentpage, make everything clickable -->
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-circle" />
+					<h3>
+						Contentpages
+					</h3>
+				</div>
+				<!-- Link to forum, make everything clickable -->
+				<div class="col-md-6">
+					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/" class="img-circle" />
+					<h3>
+						Forum
+					</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="container">
+
+			<div class="panel-group">
+			<h2>Newsfeed</h2>
+                <div class="panel panel-default">
+                    <div class="panel-heading">How to get a job</div>
+                    <div class="panel-body">A quick guide to getting jobs in norway</div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Where do i get cheap food?</div>
+                    <div class="panel-body">If you're wondering where to get a good deal on food, check this out</div>
+                </div>
+					<!-- makes a list of all content. Not Tested -->
+			    	{{#each getContent}}
+	        			<div class="panel panel-default">
+							<div class="panel-heading">{{title}}</div>
+							<div class="panel-body">{{description}}</div>
+						</div>
+	    			{{/each}}
+    		</div>
+		</div>
+	</div>
+</div>
+</template>
