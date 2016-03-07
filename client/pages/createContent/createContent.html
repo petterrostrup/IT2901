@@ -3,7 +3,12 @@
         <fieldset>
 
             <!-- Form Name -->
-            <legend>Create content</legend>
+            <legend>
+                Create content
+                {{#if get_current_category}}
+                    for {{get_current_category.name}}
+                {{/if}}
+            </legend>
 
             <!-- Text input-->
             <div class="form-group">

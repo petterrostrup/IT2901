@@ -4,7 +4,7 @@
 
 {{#each get_parent_url}}
     <li>
-        <a href="{{pathFor 'category'}}/{{_id}}">{{name}}</a>
+        <a href="{{pathFor 'category'}}/{{_id}}">{{name}} </a>
     </li>
 {{/each}}
 
@@ -32,8 +32,29 @@
     </tr>
     {{/each}}
 </table>
+<table class="table">
+    <tr>
+        <th>Content</th>
+        <th></th>
+    </tr>
+    {{#each get_content}}
+        <th><a href="{{pathFor 'content'}}/{{_id}}">{{title}}</a></th>
+    {{/each}}
+    <tr>
+        <td>
+            <form action="{{pathFor 'create_content'}}/{{data._id}}">
+                <input type="submit" value="Add new content" />
+            </form>
+        </td>
+        <td></td>
+    </tr>
+</table>
 <form id="new_subcategory">
     <table>
+        <tr>
+            <th>Ny sub kategori</th>
+            <th></th>
+        </tr>
         <tr>
             <td>Navn:</td>
             <td><input type="text" id="name"/></td>
@@ -43,7 +64,7 @@
             <td><input type="text" id="description"/></td>
         </tr>
         <tr>
-            <input type="submit"/>
+            <input type="submit" value="Add sub category" />
         </tr>
     </table>
 </form>

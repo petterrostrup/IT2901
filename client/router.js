@@ -17,15 +17,28 @@ Router.route("/content", {
     template: "content"
 });
 
+// Routing for the main category page
 Router.route("/category", {
     name: "category",
     template: "mainCategory"
 });
 
+// Routing for a distinct category page.
+// Takes the category's id as input from the url
 Router.route("/category/:_id", function() {
   var data = Category.findOne({_id: this.params._id});
   if (data)
     this.render("category");
+  else
+    this.render("page_not_found");
+});
+
+// Routing for a distinct content page.
+// Takes the content's id as input from the url
+Router.route("/content/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+  if (data)
+    this.render("content");
   else
     this.render("page_not_found");
 });
@@ -40,6 +53,18 @@ Router.route("/create_content", {
     else
       this.next();
   }
+});
+
+// Routing for creating content for a specific category
+// The input is the category id
+Router.route("/create_content/:_id", function() {
+  var cat_id = this.params._id;
+  var category = Category.findOne({_id: cat_id});
+  if (!category) {
+    this.render("page_not_found");
+  }
+  else
+    this.render("create_content");
 });
 
 // Routes the user to the login page.
