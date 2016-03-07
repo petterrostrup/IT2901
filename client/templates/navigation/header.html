@@ -12,20 +12,20 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a class="link" href="{{pathFor 'home'}}">Home</a></li>
-                        <li><a class="link" href="{{pathFor 'category'}}">Browse Content</a></li>
+                        <li><a id="home" class="link" href="{{pathFor 'home'}}">Home</a></li>
+                        <li><a id="category" class="link" href="{{pathFor 'category'}}">Browse Content</a></li>
                         {{#if currentUser }}
-                        <li><a class="link" href="{{pathFor 'create_content'}}">Create Content</a></li>
+                        <li><a id="createContent" class="link" href="{{pathFor 'create_content'}}">Create Content</a></li>
                         {{/if}}
-                        <li><a class="link" href="{{pathFor 'content'}}">Example Content</a></li>
+                        <li><a id="content" class="link" href="{{pathFor 'content'}}">Example Content</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
-                        <li><a class="link" href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
+                        <li><a id="profile" class="link" href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
                         <li><a href="{{pathFor 'home'}}" class="logout link">Logg Ut</a></li>
                         {{else}}
-                        <li><a class="link" href="{{pathFor 'login'}}">Login</a></li>
+                        <li><a id="login" class="link" href="{{pathFor 'login'}}">Login</a></li>
                         {{/if}}
                     </ul>
                 </div>

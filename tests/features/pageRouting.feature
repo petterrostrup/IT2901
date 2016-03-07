@@ -1,9 +1,9 @@
 Feature:
-User Login
+  User Login
 
-  As an existing user
-  I want to be able to login
-  So that I can access the awesome app
+  As a user
+  I want to be able to route to all the different pages
+  So that I can access all the content on the site
 
 
   Scenario: Log in
