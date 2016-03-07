@@ -49,12 +49,29 @@ Meteor.methods({
 		// Adds the id of the user in the post
 		post.createdById = Meteor.userId();
 
+		if (!post.category_id){
+			throw new Meteor.Error(400, "Missing category id.");
+		}
+
+		var category = Category.find({_id: post.category_id});
+		if (!category) {
+			throw new Meteor.Error(400, "Missing valid category id.");
+		}
+
+		var content_id = Content.insert(post);
+		if (!content_id) {
+			throw new Meteor.Error(400, "Content not added!");
+		}
+		category.content_ids.push(content_id);
+
+		Category.update({_id: category._id}, {"$set": {
+			content_ids: category.content_ids
+		}});
+
 		// Check if a user can insert a post in Content.
 		// If not, it will throw an error.
 		// Commenting this out so people not will hate me
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
-		console.log(post);
-		Content.insert(post);
 	},
 
 
@@ -70,8 +87,12 @@ Meteor.methods({
 		var parent = undefined;
 		if (category.parent_id) {
 			parent = Category.findOne({_id: category.parent_id});
+			if (!parent)
+				throw new Meteor.Error(400, "Parent category id not found.");
 		}
 		category.children_id = [];
+		category.children = [];
+		category.content_ids = [];
 		var id = Category.insert(category);
 		if (parent) {
 			parent.children_id.push(id);
@@ -79,6 +100,5 @@ Meteor.methods({
 				children_id: parent.children_id
 			}});
 		}
-
 	}
 });

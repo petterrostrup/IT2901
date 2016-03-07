@@ -109,9 +109,10 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	category: {
-  		type: Schema.Category,
-  		optional: false,
+  	category_id: {
+  		type: String,
+  		regEx: SimpleSchema.RegEx.Id,
+  		optional: false
   	},
   	description: {
   		type: String,
@@ -136,21 +137,26 @@ Schema.Category = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional: true
 	},
-	parent: {
-		type: Schema.Category,
-		optional: true
-	},
+	// parent: {
+	// 	type: Schema.Category,
+	// 	optional: true
+	// },
 	children_id: {
 		type: [String],
 		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
-	children: {
-		type: [Schema.Category],
-		optional: false
-	},
-	content: {
-		type: [Schema.Category],
+	// children: {
+	// 	type: [Schema.Category],
+	// 	optional: false
+	// },
+	// content: {
+	// 	type: [Schema.Category],
+	// 	optional: false
+	// },
+	content_ids: {
+		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
 	description: {

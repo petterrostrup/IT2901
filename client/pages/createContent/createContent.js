@@ -9,10 +9,21 @@ Template.createContent.helpers({
 	getTag: function() {
 		return Tag.find({});
 	},
-	getContentCategory: function() {
-		return Content.find({}).distinct('category', true);
+	// getContentCategory: function() {
+	// 	return Content.find({}).distinct('category', true);
+	// },
+	get_current_category: function() {
+		var cat_id = Router.current().params._id;
+		if (!cat_id){
+			return null;
+		}
+		var category = Category.findOne({_id: cat_id});
+		if (!category)
+			return null;
+		return category;	
 	}
 });
+
 Template.createContent.events({
 	"submit form": function (event) {
 	    // Prevent default browser form submit

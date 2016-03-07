@@ -11,6 +11,7 @@ Template.category.helpers({
 			list.push({_id: current._id, name: current.name});
 			current = Category.findOne({_id: current.parent_id});
 		}
+		list.reverse();
 		return list;
 	},
 	get_children: function() {
@@ -35,8 +36,6 @@ Template.category.events({
     		description: event.target.description.value,
     		url_name: event.target.name.value,
     		parent_id: Router.current().params._id,
-    		children: [],
-    		content: []
     	}
     	Meteor.call("add_category", cat, function(error, result) {
     		if (error)
