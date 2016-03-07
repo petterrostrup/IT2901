@@ -70,22 +70,6 @@ Schema.User = new SimpleSchema({
 	}
 });
 
-Schema.Tag = new SimpleSchema({
-	name: {
-		type: String,
-		unique: true
-	}
-});
-/*
-TODO: add support for subcategory
-
-Schema.ContentCategory = new SimpleSchema({
-	category: {
-		type: String,
-		optional: false
-	}
-});
-*/
 Schema.Content = new SimpleSchema({
 	createdById: {
 		type: String,
@@ -117,7 +101,24 @@ Schema.Content = new SimpleSchema({
   		type: String,
   		optional: false,
   		max: 140
-  	}
+  	}, 
+  	tags: {
+  		type: [Schema.Tags]
+  		optional: true
+  	  	}
+});
+
+schema.Tag = new SimpleSchema({
+	name: {
+		type: String,
+		optional: false,
+		max: 20
+	},
+	taggedContent: {
+		type:[String],
+  		regEx: SimpleSchema.RegEx.Id,
+  		optional: true
+	}
 });
 
 Schema.Category = new SimpleSchema({
