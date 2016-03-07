@@ -7,6 +7,7 @@ Meteor.autorun(function() {
 
 Template.createContent.helpers({
 	getTag: function() {
+		console.log(Tag.find({}))
 		return Tag.find({});
 	},
 	// getContentCategory: function() {

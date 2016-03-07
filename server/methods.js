@@ -101,12 +101,12 @@ Meteor.methods({
 			}});
 		}
 	},
-	tag_content: function(content, tag) {
+	tag_content: function(content, tagID) {
 
 		//check that input is valid
 		check(content, Object);
 		check(tag, Object);
-
+		tag = Tag.findOne({_id: tagID})
 		// If you are not logged in, you are not allowed to create content
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
@@ -118,7 +118,6 @@ Meteor.methods({
 			Tag.taggedContent.push(content._id);
 			Tag.update(
 				{_id: tag._id, taggedContent: Tag.taggedContent})
-			}
 		}
 	}
 });

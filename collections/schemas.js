@@ -104,12 +104,12 @@ Schema.Content = new SimpleSchema({
   		max: 140
   	}, 
   	tags: {
-  		type: [Schema.Tags]
+  		type: [Schema.Tags],
   		optional: true
   	  	}
 });
 
-schema.Tag = new SimpleSchema({
+Schema.Tag = new SimpleSchema({
 	name: {
 		type: String,
 		optional: false,
