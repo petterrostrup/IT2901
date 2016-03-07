@@ -48,6 +48,14 @@ Meteor.startup(function(){
             children_id: [],
             description: "Regning med tall",
             url_name: "mattematikk",
+        }); 
+    }
+    if (!Tag.findOne() && Meteor.settings.DEBUG){
+        console.log("Default tag totally made");
+        Tag.insert({
+            name: "Kult",
+            taggedContent: []
         });
     }
+
 });
