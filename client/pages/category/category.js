@@ -21,6 +21,14 @@ Template.category.helpers({
 			list.push(Category.findOne({_id: current.children_id[child]}));
 		}
 		return list;
+	},
+	get_content: function() {
+		var list = [];
+		var current = Category.findOne({_id: Router.current().params._id});
+		for (var content in current.content_ids){
+			list.push(Content.findOne({_id: current.content_ids[content]}))
+		}
+		return list;
 	}
 });
 

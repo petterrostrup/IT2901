@@ -28,12 +28,18 @@ Template.createContent.events({
 	"submit form": function (event) {
 	    // Prevent default browser form submit
 	    event.preventDefault();	 
+
+	    var cat_id = Router.current().params._id;
+	    if (!cat_id) {
+	    	cat_id = $('select#category').val();
+	    }
 	    // Get value from form element
 	 	var content = {
 	 		title: $('input#title').val(),
 	 		//tags: $('select#tags'),
     		description: $('textarea#description').val(),
-    		category: $('select#category').val()
+    		category_id: cat_id
+
     	}
 	    // Insert content into the collection
 	    Meteor.call("submit_content", content, function(error, result) {

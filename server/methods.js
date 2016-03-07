@@ -53,7 +53,7 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Missing category id.");
 		}
 
-		var category = Category.find({_id: post.category_id});
+		var category = Category.findOne({_id: post.category_id});
 		if (!category) {
 			throw new Meteor.Error(400, "Missing valid category id.");
 		}
@@ -116,9 +116,10 @@ Meteor.methods({
 			Content.update(
 				{_id: content._id, tags: content.tags});
 			Tag.taggedContent.push(content._id);
-			Tag.update(
-				{_id: tag._id, taggedContent: Tag.taggedContent})
-			}
+			Tag.update({
+				_id: tag._id, 
+				taggedContent: Tag.taggedContent
+			});
 		}
 	}
 });
