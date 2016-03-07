@@ -55,5 +55,30 @@ Meteor.methods({
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
 		console.log(post);
 		Content.insert(post);
+	},
+
+
+	// Method for adding a new category
+	add_category: function(category) {
+
+		check(category, Object);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+		// console.log(category.parent);
+		var parent = undefined;
+		if (category.parent_id) {
+			parent = Category.findOne({_id: category.parent_id});
+		}
+		category.children_id = [];
+		var id = Category.insert(category);
+		if (parent) {
+			parent.children_id.push(id);
+			Category.update({_id: parent._id}, {$set: {
+				children_id: parent.children_id
+			}});
+		}
+
 	}
 });

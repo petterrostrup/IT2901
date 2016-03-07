@@ -110,7 +110,7 @@ Schema.Content = new SimpleSchema({
 	    }
   	},
   	category: {
-  		type: String,
+  		type: Schema.Category,
   		optional: false,
   	},
   	description: {
@@ -120,6 +120,58 @@ Schema.Content = new SimpleSchema({
   	}
 });
 
+Schema.Category = new SimpleSchema({
+	name: {
+		type: String,
+		label: "Name",
+		optional: false,
+		max: 60
+	},
+	url_name: {
+		type: String,
+		optional: false
+	},
+	parent_id: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: true
+	},
+	parent: {
+		type: Schema.Category,
+		optional: true
+	},
+	children_id: {
+		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+	},
+	children: {
+		type: [Schema.Category],
+		optional: false
+	},
+	content: {
+		type: [Schema.Category],
+		optional: false
+	},
+	description: {
+		type: String,
+		optional: false
+	},
+	timestamp: {
+	    type: Date,
+	    autoValue: function() {
+		    if (this.isInsert) {
+		        return new Date();
+		    } else if (this.isUpsert) {
+		        return {$setOnInsert: new Date()};
+		    } else {
+		    	this.unset();  // Prevent user from supplying their own value
+		    }
+	    }
+  	},
+});
+
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
+Category.attachSchema(Schema.Category);
