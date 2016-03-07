@@ -28,15 +28,21 @@
             </div>
 
             <!-- Search input-->
+            {{#if get_current_category}}
+            {{else}}
             <div class="form-group">
                 <label class="col-md-4 control-label" for="category">Category</label>
                 <div class="col-md-4">
                     <select id="category" name="category" class="form-control" required="">
-                        <option value="1">Option one</option>
-                        <option value="2">Option two</option>
+                        {{#each get_all_categories}}
+
+                        <option id="{{_id}}">{{name}}</option>
+
+                        {{/each}}
                     </select>
                 </div>
             </div>
+            {{/if}}
 
 
             <!-- Select Multiple -->

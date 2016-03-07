@@ -1,9 +1,9 @@
-Session.set("tagname", "");
+// Session.set("tagname", "");
 
 
-Meteor.autorun(function() {
-	Meteor.subscribe("tags", Session.get("tagname"));
-});
+// Meteor.autorun(function() {
+// 	Meteor.subscribe("tags", Session.get("tagname"));
+// });
 
 Template.createContent.helpers({
 	getTag: function() {
@@ -21,17 +21,20 @@ Template.createContent.helpers({
 		if (!category)
 			return null;
 		return category;	
+	},
+	get_all_categories: function() {
+		return Category.find({});
 	}
 });
 
 Template.createContent.events({
-	"submit form": function (event) {
+	"submit form": function (event, template) {
 	    // Prevent default browser form submit
 	    event.preventDefault();	 
 
 	    var cat_id = Router.current().params._id;
 	    if (!cat_id) {
-	    	cat_id = $('select#category').val();
+	    	cat_id = event.target.category.options[event.target.category.selectedIndex].id;
 	    }
 	    // Get value from form element
 	 	var content = {
