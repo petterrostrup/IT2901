@@ -26,7 +26,7 @@ settings: function() {
           noMatchTemplate: Template.serverNoMatch
         },
         {
-          token: '!',
+          token: '#',
           collection: Fruits,  // Mongo.Collection object means client-side collection
           field: 'type',
           // set to true to search anywhere in the field, which cannot use an index.
@@ -65,16 +65,6 @@ Template.createContent.events({
 	    alert($('#title').val());
 
 	 	var content = {
-/* fix it later
-	 		// Title
-	 		title: $('#title').val(),
-	 		// Content
-	 		text: $('#text').val(),
-
-	 		community: $('#autocomplete-input-Com').val()
-    	};
-    	alert(content.community);
-*/
 	 		title: $('input#title').val(),
 	 		//tags: $('select#tags'),
     		description: $('textarea#description').val(),

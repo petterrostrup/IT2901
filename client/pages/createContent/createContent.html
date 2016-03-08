@@ -21,30 +21,21 @@
                 </div>
             </div>
 
-            <!-- Attach image-->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="imagefile">Attach File</label>
-                <div class="col-md-4">
-                    <input type="file" name="pic" accept="audio/*,video/*,image/*">
-                </div>
-            </div>
-
-
             <!-- Select Community -->
             <div class="form-group">
-                <label class="col-md-4 control-label" for="tags">Community</label>
-  <div class="well col-md-4">
-  {{#textareaAutocomplete settings=settings id="autocomplete-input-Com" class="form-control" placeholder="Type here..." autofocus="autofocus"}}{{/textareaAutocomplete}}
-  </div>
+                <label class="col-md-4 control-label" for="tags">Tag</label>
+                <div class="well col-md-4">
+                    {{#textareaAutocomplete settings=settings id="autocomplete-input-Com" class="form-control" placeholder="Type here..." autofocus="autofocus"}}{{/textareaAutocomplete}}
+                </div>
             </div>
 
             <!-- Select Category -->
             <div class="form-group">
                 <label class="col-md-4 control-label" for="tags">Category</label>
-                <div class="col-md-4">
-                    
-  {{#textareaAutocomplete settings=settings id="autocomplete-input-Cat" class="form-control" placeholder="Type here..." autofocus="autofocus"}}{{/textareaAutocomplete}}
-  </div>
+                <div class="col-md-4">               
+                    {{#textareaAutocomplete settings=settings id="autocomplete-input-Cat" class="form-control" placeholder="Type here..." autofocus="autofocus"}}
+                    {{/textareaAutocomplete}}
+                </div>
                 
             </div>
 
