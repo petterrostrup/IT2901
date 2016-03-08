@@ -105,8 +105,8 @@ Schema.Content = new SimpleSchema({
   	}, 
   	tags: {
   		type: [Schema.Tags],
-  		optional: false
-  	}
+  		optional: true
+  	  	}
 });
 
 Schema.Tag = new SimpleSchema({

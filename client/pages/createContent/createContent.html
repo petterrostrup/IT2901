@@ -9,15 +9,16 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="title">Title</label>
                 <div class="col-md-4">
-                    <input id="title" name="title1" type="text" placeholder="placeholder" class="form-control input-md" required="">
-
+                    <input id="title" name="title" type="text" placeholder="placeholder" class="form-control input-md" required="">
                 </div>
             </div>
 
             <!-- Textarea -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="Content">Content</label>
-              <textarea id="text" class="col-md-4" rows="4" cols="50"></textarea>
+                <label class="col-md-4 control-label" for="description">Description</label>
+                <div class="col-md-4">
+                    <textarea class="form-control" id="description" name="description" placeholder="placeholder" required=""></textarea>
+                </div>
             </div>
 
             <!-- Attach image-->
@@ -51,7 +52,11 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="tags">Language</label>
                 <div class="col-md-4">
-                  <input id="Language" name="Language" type="text" placeholder="Select Select Language" class="form-control input-md" required="">
+                    <select id="tag" name="tag" class="form-control" required="">
+                    {{#each getTag}}
+                        <option value="{{_id}}">{{name}}</option>
+                    {{/each}}
+                    </select>
                 </div>
             </div>
 

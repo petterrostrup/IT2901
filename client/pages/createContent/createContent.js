@@ -38,6 +38,7 @@ settings: function() {
   },
 
 	getTag: function() {
+		console.log(Tag.find({}))
 		return Tag.find({});
 	},
 	getContentCategory: function() {
@@ -64,6 +65,7 @@ Template.createContent.events({
 	    alert($('#title').val());
 
 	 	var content = {
+/* fix it later
 	 		// Title
 	 		title: $('#title').val(),
 	 		// Content
@@ -72,5 +74,28 @@ Template.createContent.events({
 	 		community: $('#autocomplete-input-Com').val()
     	};
     	alert(content.community);
+*/
+	 		title: $('input#title').val(),
+	 		//tags: $('select#tags'),
+    		description: $('textarea#description').val(),
+    		category: $('select#category').val()
+    	}
+	    // Insert content into the collection
+	    Meteor.call("submit_content", content, function(error, result) {
+	        if (error){
+	          	console.log(error);
+	          	console.log("u wot mate?");
+	        } else {
+	          	console.log("Content added.");
+	    	}
+	    });
+	    Meteor.call("tag_content", content, $("select#tag"), function(error, result) {
+	        if (error){
+	          	console.log(error);
+	          	console.log("u wot mate?");
+	        } else {
+	          	console.log("Tagged.");
+	    	}
+	    });
 	}
 });
