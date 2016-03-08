@@ -10,6 +10,11 @@ Router.route("/", {
   template:"home"
 });
 
+// Routing for the create content
+Router.route("/createContent", {
+    name: "createContent",
+    template: "createContent"
+});
 
 // Routing for the home page
 Router.route("/content", {
