@@ -107,6 +107,7 @@ Meteor.methods({
 		check(content, Object);
 		check(tag, Object);
 		tag = Tag.findOne({_id: tagID})
+		content = Content.findOne({name: content.name})
 		// If you are not logged in, you are not allowed to create content
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");

@@ -44,6 +44,14 @@ Template.createContent.events({
 	        } else {
 	          	console.log("Content added.");
 	    	}
-	    })
+	    });
+	    Meteor.call("tag_content", content, $("select#tag"), function(error, result) {
+	        if (error){
+	          	console.log(error);
+	          	console.log("u wot mate?");
+	        } else {
+	          	console.log("Tagged.");
+	    	}
+	    });
 	}
 });
