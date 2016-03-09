@@ -24,7 +24,12 @@ Schema.UserProfile = new SimpleSchema({
 		type: [String],
 		label: "Languages",
 		optional: true
-	}
+	},
+    home_adress: {
+        type: String,
+        label: "Home Adress",
+        optional: true
+    }
 });
 
 Schema.User = new SimpleSchema({
@@ -47,7 +52,7 @@ Schema.User = new SimpleSchema({
 	},
 	roles: {
 		type: String,
-		allowedValues: ["norm", "creator", "official"],
+		allowedValues: ["Standard", "creator", "official"],
 		optional: false,
 		label: "Roles"
 	},
@@ -92,6 +97,10 @@ Schema.Content = new SimpleSchema({
 		    	this.unset();  // Prevent user from supplying their own value
 		    }
 	    }
+  	},
+  	content: {
+  		type: String,
+  		optional: false
   	},
   	category_id: {
   		type: String,
