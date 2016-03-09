@@ -1,8 +1,6 @@
 
 var selectedCategory = [];
 Template.createContent.helpers({
-
-
 	settings: function() {
 	    return {
 	      position: Session.get("position"),
@@ -20,7 +18,9 @@ Template.createContent.helpers({
 	    }
 	  },
 
+
 	getTag: function() {
+		console.log(Tag.find({}))
 		return Tag.find({});
 	},
 
@@ -101,5 +101,6 @@ Template.createContent.events({
     			template.$("#createSuccess").show();
     		}
     	});
+
 	}
 });
