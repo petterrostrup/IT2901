@@ -108,7 +108,7 @@ Schema.Content = new SimpleSchema({
   		optional: true
   	},
   	text: {
-  		type: [Scheme.ContentText],
+  		type: [Schema.ContentText],
   		optional: true
   	}
 
@@ -194,7 +194,7 @@ Schema.ContentText = new SimpleSchema({
 		optional: false
 	},
 	metecontent: {
-		type: Scheme.Content,
+		type: Schema.Content,
 		optional: false
 	}
 });
