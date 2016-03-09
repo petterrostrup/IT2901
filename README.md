@@ -56,6 +56,9 @@ Testing framework
 
 ### [ongoworks:security](https://atmospherejs.com/ongoworks/security)
 
+### [mizzao:autocomplete](https://atmospherejs.com/mizzao/autocomplete)
+This is for multiple search selection for createContent
+
 Simple framework for adding constraints on adding, deleting and reading the mongdo database. Based on alanning:roles.
 
 ## How-to-git (simple)

@@ -1,41 +1,24 @@
-Session.set("tagname", "");
-// client-only collection to demo interoperability with server-side one
-Fruits = new Mongo.Collection(null);
 
-['Apple', 'Banana', 'Cherry', 'Date', 'Fig', 'Lemon', 'Melon', 'Prune', 'Raspberry', 'Strawberry', 'Blueberry', 'Blackberry', 'Boysenberry', 'Licorice', 'Watermelon', 'Tomato', 'Jackfruit', 'Kiwi', 'Lime', 'Clementine', 'Tangerine', 'Orange', 'Grape'].forEach(function (fruit) {
-  Fruits.insert({type: fruit})
-});
-
-Meteor.autorun(function() {
-	Meteor.subscribe("tags", Session.get("tagname"));
-});
-
+var selectedCategory = [];
 Template.createContent.helpers({
-settings: function() {
-    return {
-      position: Session.get("position"),
-      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
-      rules: [
-        {
-          token: '@',
-          // string means a server-side collection; otherwise, assume a client-side collection
-          collection: 'BigCollection',
-          field: 'name',
-          options: '', // Use case-sensitive match to take advantage of server index.
-          template: Template.serverCollectionPill,
-          noMatchTemplate: Template.serverNoMatch
-        },
-        {
-          token: '!',
-          collection: Fruits,  // Mongo.Collection object means client-side collection
-          field: 'type',
-          // set to true to search anywhere in the field, which cannot use an index.
-          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
-          template: Template.clientCollectionPill
-        }
-      ]
-    }
-  },
+
+
+	settings: function() {
+	    return {
+	      position: Session.get("position"),
+	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
+	      rules: [
+	        {
+	          token: '#',
+	          collection: Category,  // Mongo.Collection object means client-side collection
+	          field: 'name',
+	          // set to true to search anywhere in the field, which cannot use an index.
+	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
+	          template: Template.clientCollectionPill
+	        }
+	      ]
+	    }
+	  },
 
 	getTag: function() {
 		return Tag.find({});
@@ -45,32 +28,58 @@ settings: function() {
 	}
 });
 Template.createContent.events({
-  "autocompleteselect textarea": function(e, t, doc) {
-    console.log("selected ", doc);
-  },
+	"autocompleteselect textarea": function(e, t, doc) {
+		console.log("selected ", doc);
 
-'keyup #community': function (event) {
-	var url = event.currentTarget.value;
-	//get values from database
-//	template.$("#idforcommunitybox").value = databasestuff
-    console.log(url);
-  },
+		// Add all elements that was enter in the field
+		selectedCategory.push({"name": doc.name, "_id": doc._id});
 
-	"submit form": function (event) {
+	},
+
+	"submit form": function (event, template) {
 	    // Prevent default browser form submit
 	    event.preventDefault();	 
 	    // Get value from form element
-	    alert($('#autocomplete-input-Com').val());
-	    alert($('#title').val());
+//	    alert(selectedCategory[0]._id);
+	    // Crate array of category that was summitted
+	   	var cats = $("#autocomplete-input-Cat").val().split(" ");
+	   	for (var cat in cats) {
+	   		cats[cat] = cats[cat].replace("#", "");
+	   	}
 
+	   	// To get only id from cat's name that was summitted
+	   	var idList = [];
+	   	for (var el in cats) {
+		   	var name = cats[el];
+		   	for (var sel in selectedCategory) {
+		   		if (selectedCategory[sel].name === name) {
+		   			idList.push(selectedCategory[sel]._id);
+		   		}
+		   	}
+		}
+
+	    var tar = event.target;
 	 	var content = {
 	 		// Title
-	 		title: $('#title').val(),
+	 		title: tar.title.value,
+	 		// Description
+	 		description: tar.description.value,
 	 		// Content
-	 		text: $('#text').val(),
-
-	 		community: $('#autocomplete-input-Com').val()
+	 		content: $('#text').val(),
+	 		// Community or Group of people
+//	 		community: $('#autocomplete-input-Com').val()
+			// Category
+			category_id: idList[0],
+			// Language
+			//language: tar.language.value
     	};
-    	alert(content.community);
+
+    	Meteor.call("submit_content", centent, function(error, result){
+    		if (error) {
+    			console.log(error);
+    		} else {
+    			template.$("#createSuccess").show();
+    		}
+    	});
 	}
 });
