@@ -51,6 +51,7 @@ Template.createContent.events({
 	          	console.log("u wot mate?");
 	        } else {
 	          	console.log("Content added.");
+				template.$("#createSuccess").show();
 	    	}
 	    })
 	}
