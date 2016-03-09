@@ -23,18 +23,21 @@
                                         <td>{{ currentUser.createdAt }}</td>
                                     </tr>
                                     <tr>
-                                    <tr>
-                                        <td>Home Address</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email</td>
+                                        <td>Email:</td>
                                         <td>{{ getUserInfo.email }}</td>
                                     </tr>
-                                    <td>Phone Number</td>
-                                    <td>12345678
-                                    </td>
-
+                                    <tr>
+                                        <td>Home Address:</td>
+                                        <td>{{ getUserInfo.profile.home_adress }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>Phone Number:</td>
+                                        <td>12345678</td>
+                                    </tr>
+                                    <tr>
+                                        <td>User Privileges:</td>
+                                        <td> {{ getUserInfo.roles }}</td>
+                                    </tr>                                    
 
                                     </tbody>
                                 </table>

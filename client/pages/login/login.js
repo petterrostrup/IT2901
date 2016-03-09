@@ -38,8 +38,9 @@ Template.login.events({
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
+            home_adress: template.find("#home_adress").value,
         },
-        roles: "norm",
+        roles: "Standard",
       }
 
       // Calls the method "add_user" in the server. 
