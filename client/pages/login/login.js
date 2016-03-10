@@ -38,7 +38,7 @@ Template.login.events({
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
-            home_adress: template.find("#home_adress").value,
+            home_address: template.find("#home_address").value,
         },
         roles: "Standard",
       }

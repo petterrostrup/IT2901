@@ -25,9 +25,9 @@ Schema.UserProfile = new SimpleSchema({
 		label: "Languages",
 		optional: true
 	},
-    home_adress: {
+    home_address: {
         type: String,
-        label: "Home Adress",
+        label: "Home Address",
         optional: true
     }
 });
@@ -112,7 +112,7 @@ Schema.Content = new SimpleSchema({
   		type: String,
   		optional: false,
   		max: 140
-  	}
+  	}    
 });
 
 Meteor.users.attachSchema(Schema.User);
