@@ -1,14 +1,21 @@
 <template name="category">
 
-<ul class="list-inline">
-
+<ol class="breadcrumb">
 {{#each get_parent_url}}
     <li class="">
-        <a href="{{pathFor 'category'}}/{{_id}}"> {{name}}</a>
+        <a class="" href="{{pathFor 'category'}}/{{_id}}"> {{name}} </a>
     </li>
-{{/each}}
 
-</ul>
+{{/each}}
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+            <ul class="dropdown-menu scrollable-menu" role="menu">
+                {{#each get_children}}
+                    <li><a href="{{pathFor 'category'}}/{{_id}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+     </div>
+</ol>
 
 <table class="table">
     <tr>
@@ -19,18 +26,6 @@
         <td>Beskrivelse</td>
         <td>{{data.description}}</td>
     </tr>
-</table>
-<table class="table">
-    <tr>
-        <th>Subkategorier</th>
-        <th></th>
-    </tr>
-    {{#each get_children}}
-    <tr>
-        <td><a href="{{pathFor 'category'}}/{{_id}}">{{name}}</a></td>
-        <th></th>
-    </tr>
-    {{/each}}
 </table>
 <table class="table">
     <tr>
