@@ -107,9 +107,10 @@ Schema.Content = new SimpleSchema({
   		type: [Schema.Tags],
   		optional: true
   	},
-  	text: {
-  		type: [Schema.ContentText],
-  		optional: true
+  	textID: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
   	}
 
 });
@@ -194,7 +195,8 @@ Schema.ContentText = new SimpleSchema({
 		optional: false
 	},
 	metecontent: {
-		type: Schema.Content,
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	}
 });
