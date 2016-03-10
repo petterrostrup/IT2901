@@ -26,6 +26,10 @@ We will use this when we git:
 
 ## Packages that are used in the project
 
+### [meteor-froala](https://atmospherejs.com/froala/editor)
+
+A beautiful jQuery WYSIWYG HTML rich text editor.
+
 ### [accounts-password](https://atmospherejs.com/meteor/accounts-password)
 
 This package contains a simple and easy user login for the system.

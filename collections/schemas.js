@@ -106,7 +106,13 @@ Schema.Content = new SimpleSchema({
   	tags: {
   		type: [Schema.Tags],
   		optional: true
-  	  	}
+  	},
+  	textID: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+  	}
+
 });
 
 Schema.Tag = new SimpleSchema({
@@ -187,8 +193,12 @@ Schema.ContentText = new SimpleSchema({
 	text: {
 		type: String,
 		optional: false
+	},
+	metecontent: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
 	}
-
 });
 
 Meteor.users.attachSchema(Schema.User);
