@@ -18,7 +18,11 @@ Template.content.helpers({
 		}
 		list.reverse();
 		return list;
-	}
+	},
+	get_all_contentText: function(content) {
+		return ContentText.find({metacontent: content._id});
+	} 
+	//get_current_contentText: function()
 });
 
 

@@ -62,7 +62,6 @@ Template.createContent.events({
 		   	for (var cat in cats) {
 		   		cats[cat] = cats[cat].replace("#", "");
 		   	}
-
 		   	// To get only id from cat's name that was summitted
 		   	var idList = [];
 		   	for (var el in cats) {
