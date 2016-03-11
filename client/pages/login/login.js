@@ -32,14 +32,22 @@ Template.login.events({
         event.target.password2.focus();
         return;
       }
+      var regex=  /([a-z][A-Z])*\w{6,20}/;
+      if (!regex.test(passVar)){
+        template.$("#regErrorText").text("Password must be between 6 and 20 chars long");
+        template.$("#regError").show();
+        event.target.password2.focus();
+        return;
+      }
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
+            home_adress: template.find("#home_adress").value,
         },
-        roles: "norm",
+        roles: "Standard",
       }
 
       // Calls the method "add_user" in the server. 
@@ -49,6 +57,7 @@ Template.login.events({
           template.$("#regErrorText").text(error.reason);
           template.$("#regError").show();
         } else {
+          template.$("#logSuccess").show();
           console.log("User added.");
 
           // Switches from the registration page to login page
