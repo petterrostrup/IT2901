@@ -69,12 +69,14 @@ Template.createContent.events({
 			   	var name = cats[el];
 			   	for (var sel in selectedCategory) {
 			   		if (selectedCategory[sel].name === name) {
-			   			console.log(selectedCategory[sel]);
+			   			console.log(selectedCategory[sel]._id);
 			   			idList.push(selectedCategory[sel]._id);
 			   		}
 			   	}
 			}
+			console.log(idList[0]);
 			cat_id = idList[0];
+			console.log(cat_id);
 		}
 	    
 
@@ -85,7 +87,8 @@ Template.createContent.events({
 	 		// Description
 	 		description: tar.description.value,
 	 		// Content
-	 		content: $('#text').val(),
+	 	//	console.log($('#content').val());
+	 		content: tar.content.value,
 	 		// Community or Group of people
 //	 		community: $('#autocomplete-input-Com').val()
 			// Category
