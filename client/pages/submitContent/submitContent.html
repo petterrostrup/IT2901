@@ -1,14 +1,23 @@
 <template name="submitContent">
+<!-- Submit button -->
 
+<form class="form-horizontal">
+	<textarea id="edit" name="content"></textarea>
 
-<form>
-<textarea id="edit" name="content"></textarea>
+	<div class="form-group">
+	<label class="col-md-4 control-label" for="singlebutton"></label>
+		<div class="col-md-4">
+	    	<input type="submit" name="content-submit" id="content-submit" value="Submit">
+		</div>
+	</div>
 </form>
 
 <!-- Initialize the editor. -->
 <script>
   $(function() {
-      $('#edit').froalaEditor()
+      $('#edit').froalaEditor({
+      	height: 500
+      })
   });
 </script>
 
