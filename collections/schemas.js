@@ -98,10 +98,6 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	content: {
-  		type: String,
-  		optional: false
-  	},
   	category_id: {
   		type: String,
   		regEx: SimpleSchema.RegEx.Id,
@@ -115,11 +111,6 @@ Schema.Content = new SimpleSchema({
   	tags: {
   		type: [Schema.Tags],
   		optional: true
-  	},
-  	textID: {
-		type: String,
-		regEx: SimpleSchema.RegEx.Id,
-		optional: false
   	}
 
 });
@@ -195,9 +186,8 @@ Schema.Category = new SimpleSchema({
 
 Schema.ContentText = new SimpleSchema({
 	language: {
-		type: String,
-		optional: false,
-		max: 20
+		type: Schema.Language,
+		optional: false
 	},
 	text: {
 		type: String,
@@ -210,8 +200,17 @@ Schema.ContentText = new SimpleSchema({
 	}
 });
 
+Schema.Language = new SimpleSchema({
+	name:  {
+		type: String,
+		optional: false,
+		max: 20
+	}});
+
+
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
+Language.attachSchema(Schema.Language);

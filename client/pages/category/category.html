@@ -1,12 +1,11 @@
 <template name="category">
 
 <ol class="breadcrumb">
-{{#each get_parent_url}}
+    {{#each get_parent_url}}
     <li class="">
         <a class="" href="{{pathFor 'category'}}/{{_id}}"> {{name}} </a>
     </li>
-
-{{/each}}
+    {{/each}}
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
             <ul class="dropdown-menu scrollable-menu" role="menu">
