@@ -186,8 +186,9 @@ Schema.Category = new SimpleSchema({
 
 Schema.ContentText = new SimpleSchema({
 	language: {
-		type: Schema.Language,
-		optional: false
+		type: String,
+		optional: false,
+		max: 20
 	},
 	text: {
 		type: String,
@@ -200,12 +201,6 @@ Schema.ContentText = new SimpleSchema({
 	}
 });
 
-Schema.Language = new SimpleSchema({
-	name:  {
-		type: String,
-		optional: false,
-		max: 20
-	}});
 
 
 Meteor.users.attachSchema(Schema.User);
@@ -213,4 +208,3 @@ Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
-Language.attachSchema(Schema.Language);

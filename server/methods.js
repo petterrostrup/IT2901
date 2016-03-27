@@ -74,14 +74,13 @@ Meteor.methods({
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
 	},
 
-	submit_content: function(text) {
-		check(text, String);
+	submit_content: function(ContentText) {
+		check(ContentText, Object);
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
-		var lang = Language.find({name: "english"})
-		ContentText.insert({language: lang, text: text});
+		ContentText.insert(ContentText);
 	},
 
 

@@ -4,12 +4,19 @@
         <fieldset>
 
         	<div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Language selection <span class="caret"></span></button>
-                <ul class="dropdown-menu scrollable-menu" role="menu">
-                {{#each getLang}}
-                    <li><a value="{{name}}">{{name}}</a></li>
+            	<select class="form-control" id="content">
+                <!-- -->
+                {{#each getCategory}}
+                    <option value="{{_id}}">{{name}}</option>
                 {{/each}}
-                </ul>
+                </select>
+            </div>
+            <div class="btn-group">
+            	<select class="form-control" id="lang">
+    				<option value="english">English</option>
+    				<option value="norwegian">Norwegian</option>
+    				<option value="swenglish">Swenglish</option>
+				</select>
             </div>
 
 			<div class="form-group">

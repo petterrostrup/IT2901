@@ -58,11 +58,5 @@ Meteor.startup(function(){
             taggedContent: []
         });
     }
-    if (!Language.findOne() && Meteor.settings.DEBUG){
-        console.log("Default language totally made");
-        Tag.insert({
-            name: "english"
-        });
-    }
 
 });
