@@ -1,6 +1,10 @@
 Template.submitContent.helpers({
     getContent: function() {
         return Content.find({});
+    },
+    data: function() {
+        var data = Category.findOne({_id: Router.current().params._id});
+        return data;
     }
 });
 

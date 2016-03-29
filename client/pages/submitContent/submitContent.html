@@ -1,30 +1,89 @@
 <template name="submitContent">
+<script src='../languages/ar.js'></script>
+<script src='../languages/bs.js'></script>
+<script src='../languages/cs.js'></script>
+<script src='../languages/da.js'></script>
+<script src='../languages/en_ca.js'></script>
+<script src='../languages/en_gb.js'></script>
+<script src='../languages/en_us.js'></script>
+<script src='../languages/et.js'></script>
+<script src='../languages/es.js'></script>
+<script src='../languages/fa.js'></script>
+<script src='../languages/fi.js'></script>
+<script src='../languages/fr.js'></script>
+<script src='../languages/he.js'></script>
+<script src='../languages/hr.js'></script>
+<script src='../languages/hu.js'></script>
+<script src='../languages/id.js'></script>
+<script src='../languages/it.js'></script>
+<script src='../languages/ja.js'></script>
+<script src='../languages/ko.js'></script>
+<script src='../languages/me.js'></script>
+<script src='../languages/nb.js'></script>
+<script src='../languages/nl.js'></script>
+<script src='../languages/pl.js'></script>
+<script src='../languages/pt_br.js'></script>
+<script src='../languages/pt_pt.js'></script>
+<script src='../languages/ro.js'></script>
+<script src='../languages/ru.js'></script>
+<script src='../languages/sr.js'></script>
+<script src='../languages/sv.js'></script>
+<script src='../languages/th.js'></script>
+<script src='../languages/tr.js'></script>
+<script src='../languages/ua.js'></script>
+<script src='../languages/zh_cn.js'></script>
+<script src='../languages/zh_tw.js'></script>
+
+
 <!-- Submit button -->
     <form class="form-horizontal">
         <fieldset>
-
-        	<div class="btn-group">
-            	<select class="form-control" id="content">
-                <!-- -->
-                {{#each getCategory}}
-                    <option value="{{_id}}">{{name}}</option>
-                {{/each}}
-                </select>
-            </div>
-            <div class="btn-group">
-            	<select class="form-control" id="lang">
-    				<option value="english">English</option>
-    				<option value="norwegian">Norwegian</option>
-    				<option value="swenglish">Swenglish</option>
-				</select>
-            </div>
+             <p>
+             <a class="language" data-lang="ar">Arabic (ar)</a>
+             <a class="language" data-lang="bs">Bosnian (bs)</a>
+             <a class="language" data-lang="cs">Czech (cs)</a>
+             <a class="language" data-lang="da">Danish(da)</a>
+             <a class="language" data-lang="de">German (de)</a>
+             <a class="language" data-lang="en_ca">English Canada (en_ca)</a>
+             <a class="language" data-lang="en_gb">English United Kingdom (en_gb)</a>
+             <a class="language" data-lang="en_us">English United States (en_us)</a>
+             <a class="language" data-lang="et">Estonian (et)</a>
+             <a class="language" data-lang="es">Spanish (es)</a>
+             <a class="language" data-lang="fa">Persian (fa)</a>
+             <a class="language" data-lang="fi">Finnish (fi)</a>
+             <a class="language" data-lang="fr">French (fr)</a>
+             <a class="language" data-lang="he">Hebrew (he)</a>
+             <a class="language" data-lang="hr">Croatian (hr)</a>
+             <a class="language" data-lang="hu">Hungarian (hu)</a>
+             <a class="language" data-lang="id">Indonesian (id)</a>
+             <a class="language" data-lang="it">Italian (it)</a>
+             <a class="language" data-lang="ja">Japanese (ja)</a>
+             <a class="language" data-lang="ko">Korean (ko)</a>
+             <a class="language" data-lang="me">Montenegrin (me)</a>
+             <a class="language" data-lang="nb">Norwegian (nb)</a>
+             <a class="language" data-lang="nl">Dutch (nl)</a>
+             <a class="language" data-lang="pl">Polish (pl)</a>
+             <a class="language" data-lang="pt_br">Portuguese Brazil (pt_br)</a>
+             <a class="language" data-lang="pt_pt">Portuguese Portugal (pt_pt)</a>
+             <a class="language" data-lang="ro">Romanian (ro)</a>
+             <a class="language" data-lang="ru">Russian (ru)</a>
+             <a class="language" data-lang="sr">Serbian (sr)</a>
+             <a class="language" data-lang="sv">Swedish (sv)</a>
+             <a class="language" data-lang="th">Thai (th)</a>
+             <a class="language" data-lang="tr">Turkish (tr)</a>
+             <a class="language" data-lang="ua">Ukrainian (ua)</a>
+             <a class="language" data-lang="zh_cn">Chinese China (zh_cn)</a>
+             <a class="language" data-lang="zh_tw">Chinese Taiwan (zh_tw)</a>
+             </p>
 
 			<div class="form-group">
-				<textarea id="edit" name="content"></textarea>
+				<textarea id="edit" name="content">
+				</textarea>
 			</div>
 
 		    <div class="form-group">
-		        <label class="col-md-4 control-label" for="singlebutton"></label>
+		        <label class="col-md-4 control-label" for="singlebutton">
+		        </label>
 		        <div class="col-md-4">
 		            <input type="submit" name="content-submit" id="content-submit" value="Submit">
 		        </div>
