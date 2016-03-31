@@ -77,9 +77,8 @@ Template.createContent.events({
 			cat_id = idList[0];
 			console.log(cat_id);
 		}
-	    
 
-	    var tar = event.target;
+		var tar = event.target;
 	 	var content = {
 	 		// Title
 	 		title: tar.title.value,
