@@ -14,7 +14,6 @@ Template.submitContent.events({
 	    event.preventDefault();	    
 
 	    var tar = event.target;
-        var text = $('#edit').froalaEditor('html.get', true);
         console.log(text);
         var contentText = {
             lang: tar.lang,
