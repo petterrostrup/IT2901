@@ -8,10 +8,16 @@ Template.submitContent.helpers({
     }
 });
 
+Template.submitContent.onDestroyed(function () {
+    $('#editor').trumbowyg('destroy');
+});
+
 Template.submitContent.events({
 	"submit": function (event, template) {
 	    // Prevent default browser form submit
-	    event.preventDefault();	    
+	    event.preventDefault();	
+
+        var text = $('#editor').trumbowyg('html');    
 
 	    var tar = event.target;
         console.log(text);
