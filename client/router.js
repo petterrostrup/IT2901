@@ -10,6 +10,16 @@ Router.route("/", {
   template:"home"
 });
 
+Router.route("/submitContent",{
+  name:"submitContent",
+  template:"submitContent"
+})
+
+// Routing for the create content
+Router.route("/createContent", {
+    name: "createContent",
+    template: "createContent"
+});
 
 // Routing for the home page
 Router.route("/content", {

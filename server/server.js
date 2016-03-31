@@ -20,8 +20,9 @@ Meteor.publish("tags", function(tag_string) {
     // return Tag.find({});
 });
 
-Meteor.publish("category", function() {
-    return Category.find({});
+Meteor.publish("categories", function() {
+   // return Category.find({});
+   return Category.find({});
 });
 
 Meteor.startup(function(){

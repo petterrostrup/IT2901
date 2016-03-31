@@ -1,3 +1,8 @@
+Template.registerHelper('last',
+    function(list, elem) {
+        return _.last(list) === elem;
+    }
+);
 
 Template.category.helpers({
 	data: function() {

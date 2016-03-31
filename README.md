@@ -26,6 +26,14 @@ We will use this when we git:
 
 ## Packages that are used in the project
 
+### [summernote:summernote](https://atmospherejs.com/summernote/summernote)
+
+summernote (official): jQuery+Bootstrap WYSIWYG editor with embedded images support
+
+### [mrt:jquery-hotkeys](https://atmospherejs.com/mrt/jquery-hotkeys)
+
+jQuery Hotkeys lets you watch for keyboard events anywhere in your code supporting almost any key combination.
+
 ### [accounts-password](https://atmospherejs.com/meteor/accounts-password)
 
 This package contains a simple and easy user login for the system.
@@ -55,6 +63,9 @@ Simple check for elements that are not supposed to be database injections.
 Testing framework
 
 ### [ongoworks:security](https://atmospherejs.com/ongoworks/security)
+
+### [mizzao:autocomplete](https://atmospherejs.com/mizzao/autocomplete)
+This is for multiple search selection for createContent
 
 Simple framework for adding constraints on adding, deleting and reading the mongdo database. Based on alanning:roles.
 

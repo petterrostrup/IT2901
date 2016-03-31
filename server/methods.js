@@ -36,7 +36,7 @@ Meteor.methods({
 	},
 
 	// Method for insert new content to the database.
-	submit_content: function(post) {
+	create_content: function(post) {
 
 		// Simple check that the input are valid
 		check(post, Object);
@@ -74,6 +74,15 @@ Meteor.methods({
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
 	},
 
+	submit_content: function(ContentText) {
+		check(ContentText, Object);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+		ContentText.insert(ContentText);
+	},
+
 
 	// Method for adding a new category
 	add_category: function(category) {
@@ -101,12 +110,13 @@ Meteor.methods({
 			}});
 		}
 	},
-	tag_content: function(content, tag) {
+	tag_content: function(content, tagID) {
 
 		//check that input is valid
 		check(content, Object);
 		check(tag, Object);
-
+		tag = Tag.findOne({_id: tagID})
+		content = Content.findOne({name: content.name})
 		// If you are not logged in, you are not allowed to create content
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
@@ -116,10 +126,8 @@ Meteor.methods({
 			Content.update(
 				{_id: content._id, tags: content.tags});
 			Tag.taggedContent.push(content._id);
-			Tag.update({
-				_id: tag._id, 
-				taggedContent: Tag.taggedContent
-			});
+			Tag.update(
+				{_id: tag._id, taggedContent: Tag.taggedContent})
 		}
 	}
 });
