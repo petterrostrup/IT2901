@@ -25,6 +25,14 @@ Meteor.publish("categories", function() {
    return Category.find({});
 });
 
+Meteor.publish("LanguageTags", function() {
+    return LanguageTags.find({});
+});
+
+Meteor.publish("CommunityTags", function() {
+    return CommunityTags.find({});
+});
+
 Meteor.startup(function(){
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");
@@ -40,6 +48,7 @@ Meteor.startup(function(){
         });
         Accounts.setPassword(userid, defUser.password);
     }
+    // add something in database for test
     if (!Category.findOne() && Meteor.settings.DEBUG){
         console.log("Default category created.");
         Category.insert({
@@ -51,6 +60,34 @@ Meteor.startup(function(){
             url_name: "mattematikk",
         }); 
     }
+
+    // add something in database for language test
+    if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
+        console.log("Default LanguageTags created.");
+        LanguageTags.insert({
+            name: "Norwegian",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Regning med tall",
+            url_name: "norwegian",
+        }); 
+    }
+
+    // add something in database for community test
+    if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
+        console.log("Default CommunityTags created.");
+        CommunityTags.insert({
+            name: "StudentInTrondheim",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Regning med tall",
+            url_name: "sit",
+        }); 
+    }
+
+
     if (!Tag.findOne() && Meteor.settings.DEBUG){
         console.log("Default tag totally made");
         Tag.insert({
@@ -58,5 +95,7 @@ Meteor.startup(function(){
             taggedContent: []
         });
     }
+
+
 
 });
