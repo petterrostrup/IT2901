@@ -98,10 +98,6 @@ Schema.Content = new SimpleSchema({
 		    }
 	    }
   	},
-  	content: {
-  		type: String,
-  		optional: false
-  	},
   	category_id: {
   		type: String,
   		regEx: SimpleSchema.RegEx.Id,
@@ -213,11 +209,14 @@ Schema.ContentText = new SimpleSchema({
 	metecontent: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
-		optional: false
+		optional: true
 	}
 });
+
+
 
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
+ContentText.attachSchema(Schema.ContentText);

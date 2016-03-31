@@ -14,10 +14,15 @@
 
     <p>{{get_information.description}}</p>
 
-    <!--{{{#each get_all_contentText get_information}}}
+    <p>
+    {{#each getContentText get_information}}
         <span> {{language}} </span>
     {{/each}}
-    -->
+    </p>
     <!-- TODO: Add way to show content.
     Find out way to store it in DB so that it is easy to show. -->
+    {{#each getContentText get_information}}
+        {{text}}
+    {{/each}}
+    
 </template>

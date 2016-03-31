@@ -36,7 +36,7 @@ Meteor.methods({
 	},
 
 	// Method for insert new content to the database.
-	submit_content: function(post) {
+	create_content: function(post) {
 
 		// Simple check that the input are valid
 		check(post, Object);
@@ -93,6 +93,15 @@ Meteor.methods({
 		// If not, it will throw an error.
 		// Commenting this out so people not will hate me
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
+	},
+
+	submit_content: function(ContentText) {
+		check(ContentText, Object);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+		ContentText.insert(ContentText);
 	},
 
 

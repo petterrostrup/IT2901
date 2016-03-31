@@ -35,4 +35,5 @@ flemay:less-autoprefixer
 semantic:ui-css
 semantic:ui-dropdown
 mizzao:autocomplete
-froala:editor
+mrt:jquery-hotkeys
+summernote:summernote

@@ -26,9 +26,13 @@ We will use this when we git:
 
 ## Packages that are used in the project
 
-### [meteor-froala](https://atmospherejs.com/froala/editor)
+### [summernote:summernote](https://atmospherejs.com/summernote/summernote)
 
-A beautiful jQuery WYSIWYG HTML rich text editor.
+summernote (official): jQuery+Bootstrap WYSIWYG editor with embedded images support
+
+### [mrt:jquery-hotkeys](https://atmospherejs.com/mrt/jquery-hotkeys)
+
+jQuery Hotkeys lets you watch for keyboard events anywhere in your code supporting almost any key combination.
 
 ### [accounts-password](https://atmospherejs.com/meteor/accounts-password)
 
