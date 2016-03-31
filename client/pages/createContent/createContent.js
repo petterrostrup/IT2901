@@ -1,7 +1,9 @@
 
 var selectedCategory = [];
+var selectedCommunity = [];
+var selectedLanguage = [];
 Template.createContent.helpers({
-	settings: function() {
+	settingsCat: function() {
 	    return {
 	      position: Session.get("position"),
 	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
@@ -16,7 +18,41 @@ Template.createContent.helpers({
 	        }
 	      ]
 	    }
-	  },
+	},
+
+	settingsCom: function() {
+	    return {
+	      position: Session.get("position"),
+	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
+	      rules: [
+	        {
+	          token: '#',
+	          collection: CommunityTags,  // Mongo.Collection object means client-side collection
+	          field: 'name',
+	          // set to true to search anywhere in the field, which cannot use an index.
+	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
+	          template: Template.clientCollectionPill
+	        }
+	      ]
+	    }
+	},
+
+	settingsLang: function() {
+	    return {
+	      position: Session.get("position"),
+	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
+	      rules: [
+	        {
+	          token: '#',
+	          collection: LanguageTags,  // Mongo.Collection object means client-side collection
+	          field: 'name',
+	          // set to true to search anywhere in the field, which cannot use an index.
+	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
+	          template: Template.clientCollectionPill
+	        }
+	      ]
+	    }
+	},
 
 
 	getTag: function() {
@@ -43,17 +79,30 @@ Template.createContent.events({
 	"autocompleteselect textarea": function(e, t, doc) {
 		console.log("selected ", doc);
 
-		// Add all elements that was enter in the field
-		selectedCategory.push({"name": doc.name, "_id": doc._id});
+		if (e.target.id === "autocomplete-input-Com") {
+			// Add all elements that was enter in the field
+			selectedCommunity.push({"name": doc.name, "_id": doc._id});
+		}
+		
+		//if (t.$("#autocomplete-input-Cat")) same as e.target.id
+
+		if (e.target.id === "autocomplete-input-Cat") {
+			// Add all elements that was enter in the field
+			selectedCategory.push({"name": doc.name, "_id": doc._id});
+		}
+		
+		if (e.target.id === "autocomplete-input-Lang") {
+			// Add all elements that was enter in the field
+			selectedLanguage.push({"name": doc.name, "_id": doc._id});
+		}
 
 	},
 
 	"submit form": function (event, template) {
 	    // Prevent default browser form submit
-	    event.preventDefault();	 
-	    // Get value from form element
-//	    alert(selectedCategory[0]._id);
+	    event.preventDefault();
 
+		//check category
 		var cat_id = Router.current().params._id;
 
 		if (!cat_id) {
@@ -68,16 +117,58 @@ Template.createContent.events({
 			   	var name = cats[el];
 			   	for (var sel in selectedCategory) {
 			   		if (selectedCategory[sel].name === name) {
-			   			console.log(selectedCategory[sel]._id);
 			   			idList.push(selectedCategory[sel]._id);
 			   		}
 			   	}
 			}
-			console.log(idList[0]);
 			cat_id = idList[0];
-			console.log(cat_id);
+		}
+		// check community
+		var com_id = Router.current().params._id;;
+		if (!com_id) {
+			// Crate array of category that was summitted
+		   	var coms = $("#autocomplete-input-Com").val().split(" ");
+		   	console.log(coms);
+		   	for (var com in coms) {
+		   		coms[com] = coms[com].replace("#", "");
+		   	}
+		   	// To get only id from cat's name that was summitted
+		   	var idList = [];
+		   	for (var el in coms) {
+			   	var name = coms[el];
+			   	for (var sel in selectedCommunity) {
+			   		if (selectedCommunity[sel].name === name) {
+			   			idList.push(selectedCommunity[sel]._id);
+			   		}
+			   	}
+			}
+			com_id = idList[0];
 		}
 
+		// check language
+		var lang_id = Router.current().params._id;
+
+		if (!lang_id) {
+			// Crate array of category that was summitted
+		   	var langs = $("#autocomplete-input-Lang").val().split(" ");
+		   	for (var lang in langs) {
+		   		langs[lang] = langs[lang].replace("#", "");
+		   	}
+		   	// To get only id from cat's name that was summitted
+		   	var idList = [];
+		   	for (var el in langs) {
+			   	var name = langs[el];
+			   	for (var sel in selectedLanguage) {
+			   		if (selectedLanguage[sel].name === name) {
+			   			idList.push(selectedLanguage[sel]._id);
+			   		}
+			   	}
+			}
+			lang_id = idList[0];
+		}
+		console.log(com_id);
+		console.log(cat_id);
+		console.log(lang_id);
 		var tar = event.target;
 	 	var content = {
 	 		// Title
@@ -87,12 +178,12 @@ Template.createContent.events({
 	 		// Content
 	 	//	console.log($('#content').val());
 	 		content: tar.content.value,
-	 		// Community or Group of people
-//	 		community: $('#autocomplete-input-Com').val()
 			// Category
 			category_id: cat_id,
+			community_id: com_id,
 			// Language
-			//language: tar.language.value
+			language_id: lang_id
+
     	};
 
     	Meteor.call("submit_content", content, function(error, result){
