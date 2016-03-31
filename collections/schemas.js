@@ -115,11 +115,6 @@ Schema.Content = new SimpleSchema({
   	tags: {
   		type: [Schema.Tags],
   		optional: true
-  	},
-  	textID: {
-		type: String,
-		regEx: SimpleSchema.RegEx.Id,
-		optional: false
   	}
 
 });
