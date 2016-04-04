@@ -95,13 +95,14 @@ Meteor.methods({
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
 	},
 
-	submit_content: function(ContentText) {
-		check(ContentText, Object);
+	submit_content: function(content) {
+		check(content, Object);
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
-		ContentText.insert(ContentText);
+		console.log(content);
+		ContentText.insert(content);
 	},
 
 
@@ -109,7 +110,7 @@ Meteor.methods({
 	add_category: function(category) {
 
 		check(category, Object);
-
+		console.log(category);
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
