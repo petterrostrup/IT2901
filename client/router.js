@@ -53,6 +53,14 @@ Router.route("/content/:_id", function() {
     this.render("page_not_found");
 });
 
+Router.route("/submitContent/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+  if (data)
+    this.render("submitContent");
+  else
+    this.render("page_not_found");
+});
+
 // Routing for creating content
 Router.route("/create_content", {
   name: "create_content",
