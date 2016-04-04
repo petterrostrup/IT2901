@@ -124,51 +124,39 @@ Template.createContent.events({
 			cat_id = idList[0];
 		}
 		// check community
-		var com_id = Router.current().params._id;;
-		if (!com_id) {
-			// Crate array of category that was summitted
-		   	var coms = $("#autocomplete-input-Com").val().split(" ");
-		   	console.log(coms);
-		   	for (var com in coms) {
-		   		coms[com] = coms[com].replace("#", "");
+	   	var coms = $("#autocomplete-input-Com").val().split(" ");
+	   	for (var com in coms) {
+	   		coms[com] = coms[com].replace("#", "");
+	   	}
+	   	// To get only id from cat's name that was summitted
+	   	var idList = [];
+	   	for (var el in coms) {
+		   	var name = coms[el];
+		   	for (var sel in selectedCommunity) {
+		   		if (selectedCommunity[sel].name === name) {
+		   			idList.push(selectedCommunity[sel]._id);
+		   		}
 		   	}
-		   	// To get only id from cat's name that was summitted
-		   	var idList = [];
-		   	for (var el in coms) {
-			   	var name = coms[el];
-			   	for (var sel in selectedCommunity) {
-			   		if (selectedCommunity[sel].name === name) {
-			   			idList.push(selectedCommunity[sel]._id);
-			   		}
-			   	}
-			}
-			com_id = idList[0];
 		}
-
+		com_id = idList;
 		// check language
-		var lang_id = Router.current().params._id;
-
-		if (!lang_id) {
-			// Crate array of category that was summitted
-		   	var langs = $("#autocomplete-input-Lang").val().split(" ");
-		   	for (var lang in langs) {
-		   		langs[lang] = langs[lang].replace("#", "");
+		// Crate array of category that was summitted
+	   	var langs = $("#autocomplete-input-Lang").val().split(" ");
+	   	for (var lang in langs) {
+	   		langs[lang] = langs[lang].replace("#", "");
+	   	}
+	   	// To get only id from cat's name that was summitted
+	   	var idList = [];
+	   	for (var el in langs) {
+		   	var name = langs[el];
+		   	for (var sel in selectedLanguage) {
+		   		if (selectedLanguage[sel].name === name) {
+		   			idList.push(selectedLanguage[sel]._id);
+		   		}
 		   	}
-		   	// To get only id from cat's name that was summitted
-		   	var idList = [];
-		   	for (var el in langs) {
-			   	var name = langs[el];
-			   	for (var sel in selectedLanguage) {
-			   		if (selectedLanguage[sel].name === name) {
-			   			idList.push(selectedLanguage[sel]._id);
-			   		}
-			   	}
-			}
-			lang_id = idList[0];
 		}
-		console.log(com_id);
-		console.log(cat_id);
-		console.log(lang_id);
+		lang_id = idList;
+
 		var tar = event.target;
 	 	var content = {
 	 		// Title
@@ -179,14 +167,18 @@ Template.createContent.events({
 	 	//	console.log($('#content').val());
 	 		content: tar.content.value,
 			// Category
-			category_id: cat_id,
-			community_id: com_id,
-			// Language
-			language_id: lang_id
-
+			category_id: cat_id
     	};
 
-    	Meteor.call("submit_content", content, function(error, result){
+    	if (com_id) {
+    		content.community_id = com_id[0];
+    	}
+
+    	if (lang_id) {
+    		content.language_id = lang_id[0];
+    	}
+
+    	Meteor.call("create_content", content, function(error, result){
     		if (error) {
     			console.log(error);
     		} else {
