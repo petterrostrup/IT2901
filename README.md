@@ -49,7 +49,8 @@ Bootstrap.
 ### [alanning:roles](https://atmospherejs.com/alanning/roles)
 
 Simple roles implementation for Meteor. 
-
+### [meteor-comments-ui](https://github.com/ARKHAM-Enterprises/meteor-comments-ui)
+Handles comments.
 ### [check](https://atmospherejs.com/meteor/check)
 
 Simple check for elements that are not supposed to be database injections.

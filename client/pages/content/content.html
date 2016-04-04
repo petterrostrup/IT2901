@@ -14,6 +14,7 @@
 
     <p>{{get_information.description}}</p>
 
+
     <p>
     {{#each getContentText get_information}}
         <span> {{language}} </span>
@@ -24,5 +25,10 @@
     {{#each getContentText get_information}}
         {{text}}
     {{/each}}
+
+
+    <div class="comment-section">
+        {{> commentsBox id=get_information._id}}
+    </div>
     
 </template>

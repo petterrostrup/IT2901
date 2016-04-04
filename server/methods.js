@@ -49,6 +49,7 @@ Meteor.methods({
 		// Adds the id of the user in the post
 		post.createdById = Meteor.userId();
 
+		// Category id
 		if (!post.category_id){
 			throw new Meteor.Error(400, "Missing category id.");
 		}
@@ -56,6 +57,26 @@ Meteor.methods({
 		var category = Category.findOne({_id: post.category_id});
 		if (!category) {
 			throw new Meteor.Error(400, "Missing valid category id.");
+		}
+
+		// Community id
+		if (!post.community_id){
+			throw new Meteor.Error(400, "Missing community id.");
+		}
+
+		var community = CommunityTags.findOne({_id: post.community_id});
+		if (!community) {
+			throw new Meteor.Error(400, "Missing valid community id.");
+		}
+
+		// Language id
+		if (!post.language_id){
+			throw new Meteor.Error(400, "Missing language_id id.");
+		}
+
+		var language = LanguageTags.findOne({_id: post.language_id});
+		if (!language) {
+			throw new Meteor.Error(400, "Missing valid language id.");
 		}
 
 		var content_id = Content.insert(post);

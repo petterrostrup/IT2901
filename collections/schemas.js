@@ -103,6 +103,18 @@ Schema.Content = new SimpleSchema({
   		regEx: SimpleSchema.RegEx.Id,
   		optional: false
   	},
+  	community_id: {
+  		type: String,
+  		//check if the value is id
+  		regEx: SimpleSchema.RegEx.Id,
+  		optional: false
+  	},
+  	language_id: {
+  		type: String,
+  		//check if the value is id
+  		regEx: SimpleSchema.RegEx.Id,
+  		optional: false
+  	},
   	description: {
   		type: String,
   		optional: false,
