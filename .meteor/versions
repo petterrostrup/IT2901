@@ -72,6 +72,8 @@ mdg:validation-error@0.2.0
 meteor@1.1.12
 meteor-base@1.0.2
 meteorhacks:inject-initial@1.0.4
+meteorhacks:picker@1.0.3
+meteorhacks:search-source@1.4.2
 meteorspark:util@0.2.0
 minifier-css@1.1.9
 minifier-js@1.1.9

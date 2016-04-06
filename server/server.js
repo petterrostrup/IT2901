@@ -1,4 +1,28 @@
 
+SearchSource.defineSource('categorySearch', function(searchText, options) {
+  var options = {sort: {isoScore: -1}, limit: 20};
+  
+  if(searchText) {
+    var regExp = buildRegExp(searchText);
+    var selector = {$or: [
+      {packageName: regExp},
+      {description: regExp}
+    ]};
+    
+    return Category.find(selector, options).fetch();
+  } else {
+    return Category.find({}, options).fetch();
+  }
+});
+
+function buildRegExp(searchText) {
+  // this is a dumb implementation
+  var parts = searchText.trim().split(/[ \-\:]+/);
+  return new RegExp("(" + parts.join('|') + ")", "ig");
+}
+
+
+
 // Publishes your personal information for use in the profile page
 Meteor.publish("personalInfo", function() {
     if (this.userId) {
