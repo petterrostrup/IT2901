@@ -4,14 +4,18 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-4">
-					<h3>LOGO</h3>
+                    <img src="images/examplelogo.png" width="300px" height="200px" alt="...">
 				</div>
 				<div class="col-md-8">
 					<h3>
-						Tittel #SWAGULICIUS
+						Shared Intelligence Platform
 					</h3>
 					<p>
-						Who are we? What is this site? How cool is batman? How many roads must Jørgen walk down, before you can call him "men, øl?"
+						This is a page where everyone can share their knowledge and experience
+                        in a way that could help others.
+                        It could be about simple things like "I know a place that has cheap and good food"
+                        or it could be about how to get a job.
+                        So please, share your knowledge and help others
 					</p>
 				</div>
 			</div>
@@ -24,7 +28,7 @@
 					<!-- makes a list of all content. Not Tested -->
 			    	{{#each getContent}}
 	        			<div class="panel panel-info">
-							<div class="panel-heading">{{title}}</div>
+							<div class="panel-heading"><a href="{{pathFor 'content'}}/{{_id}}">{{title}}  ({{getCategory category_id}})</a></div>
 							<div class="panel-body">{{description}}</div>
 						</div>
 	    			{{/each}}
