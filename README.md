@@ -26,13 +26,9 @@ We will use this when we git:
 
 ## Packages that are used in the project
 
-### [summernote:summernote](https://atmospherejs.com/summernote/summernote)
+### [malkesh:trumbowyg](https://atmospherejs.com/malkesh/trumbowyg)
 
-summernote (official): jQuery+Bootstrap WYSIWYG editor with embedded images support
-
-### [mrt:jquery-hotkeys](https://atmospherejs.com/mrt/jquery-hotkeys)
-
-jQuery Hotkeys lets you watch for keyboard events anywhere in your code supporting almost any key combination.
+A lightweight WYSIWYG editor.
 
 ### [accounts-password](https://atmospherejs.com/meteor/accounts-password)
 
@@ -53,7 +49,8 @@ Bootstrap.
 ### [alanning:roles](https://atmospherejs.com/alanning/roles)
 
 Simple roles implementation for Meteor. 
-
+### [meteor-comments-ui](https://github.com/ARKHAM-Enterprises/meteor-comments-ui)
+Handles comments.
 ### [check](https://atmospherejs.com/meteor/check)
 
 Simple check for elements that are not supposed to be database injections.

@@ -34,7 +34,7 @@ flemay:less-autoprefixer
 semantic:ui-css
 semantic:ui-dropdown
 mizzao:autocomplete
-mrt:jquery-hotkeys
-summernote:summernote
+malkesh:trumbowyg
 standard-minifier-css
 standard-minifier-js
+arkham:comments-ui

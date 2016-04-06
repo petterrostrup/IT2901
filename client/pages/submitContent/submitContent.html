@@ -1,25 +1,30 @@
 <template name="submitContent">
 
-<!-- Submit button -->
-    <form class="form-horizontal">
-        <fieldset>
-			<div class="form-group">
-				<textarea id="edit" name="content">
-				</textarea>
-			</div>
+<div id="editor" placeholder="Your text as placeholder" ></div>
 
-		    <div class="form-group">
-		        <label class="col-md-4 control-label" for="singlebutton">
-		        </label>
-		        <div class="col-md-4">
-		            <input type="submit" name="content-submit" id="content-submit" value="Submit">
-		        </div>
-		    </div>
-		</fieldset>
-	</form>
+<label class="col-md-4 control-label" for="singlebutton">
+</label>
+<form role="form">
+  	<div class="form-group">
+	<input type="submit" name="content-submit" id="content-submit" value="Submit">
+	</div>
+</form>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#edit').summernote();
+		$('#editor').trumbowyg({
+			autogrow: true,
+			btns: [
+		        ['formatting'],
+		        'btnGrp-semantic',
+		        ['superscript', 'subscript'],
+		        ['link'],
+		        ['insertImage'],
+		        'btnGrp-justify',
+		        'btnGrp-lists',
+		        ['horizontalRule'],
+		        ['removeformat'],
+		        ['fullscreen']
+	    		]});
 	});
 </script>
 </template>
