@@ -79,6 +79,18 @@ Router.route("/create_content", {
   }
 });
 
+
+Router.route("/fill_content/:_id", function() {
+  var content_id = this.params._id;
+  var content = Content.findOne({_id: content_id});
+  console.log("hiesann du din raring!");
+  if (!content) {
+    this.render("page_not_found");
+  }
+  else
+    this.render("submitContent");
+}, {"name": "fill_content"});
+
 // Routing for creating content for a specific category
 // The input is the category id
 Router.route("/create_content/:_id", function() {

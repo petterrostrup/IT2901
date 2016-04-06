@@ -22,7 +22,8 @@ Template.submitContent.events({
         var id = Router.current().params._id;
 
         var contentText = {
-            lang: tar.lang,
+            // lang: tar.lang,
+            language: "no",
             text: text,
             metacontent: id
         }
