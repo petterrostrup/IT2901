@@ -56,3 +56,12 @@ p.small.text-muted {
     top: 50%;
     transform: translateY(-50%);
 }
+
+@media (max-width:500px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+}

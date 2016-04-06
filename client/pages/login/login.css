@@ -97,3 +97,12 @@ body {
     background-color: #1CA347;
     border-color: #1CA347;
 }
+
+@media (max-width:767px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+}

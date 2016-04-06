@@ -1,29 +1,32 @@
 <template name="mainCategory">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for content">
+
+    <div class="wrapper">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for content">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4">
+                <button type="button" class="btn btn-default">Specify User-customized content</button>
             </div>
         </div>
-        <div class="col-lg-3">
-        </div>
-        <div class="col-lg-4">
-            <button type="button" class="btn btn-default">Specify User-customized content</button>
-        </div>
-    </div>
 
-    <div class="col-lg-15">
-        <div class="row">
-            {{#each all_categories}}
-                <div class="col-cs-6 col-md-3">
-                    <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
-                        <img class="category-icon" src="/images/category/jobs.png" alt="...">
-                    </a>
-                </div>
-            {{/each}}
+        <div class="col-lg-15">
+            <div class="row">
+                {{#each all_categories}}
+                    <div class="col-cs-6 col-md-3 category">
+                        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
+                            <img class="category-icon" src="/images/category/jobs.png" alt="...">
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
         </div>
     </div>
 
