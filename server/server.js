@@ -62,11 +62,17 @@ Meteor.startup(function(){
         console.log("Create default user");
 
         var defUser = Meteor.settings.defaultUser;
-
+        var proflie = {
+            first_name: "Ping",
+            last_name: "Pong",
+            organization: "CC AS",
+            languages: ["en", "no"],
+            home_adress: "Trondheim"
+        }
         userid = Meteor.users.insert({
             username: defUser.username,
             email: defUser.email,
-            profile:{},
+            profile:proflie,
             roles: "creator"
 
         });
@@ -119,7 +125,5 @@ Meteor.startup(function(){
             taggedContent: []
         });
     }
-
-
 
 });

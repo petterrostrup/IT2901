@@ -1,11 +1,12 @@
-<template name="profile">
+<template name="editProfile">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
+
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Welcome {{ getUserProfile.first_name}} {{currentUser.profile.last_name}}</h3>
+                        <h3 class="panel-title">{{ getUserInfo.username }} hahaha{{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -19,19 +20,19 @@
                                     </tr>
                                     <tr>
                                         <td>First Name:</td>
-                                        <td>{{ getUserProfile.first_name }}</td>
+                                        <td><input id="first_name" class="editInput" type="text" name="first_name" value="{{ getUserProfile.first_name }}"></td>
                                     </tr>
                                     <tr>
                                         <td>Last Name:</td>
-                                        <td>{{ getUserProfile.last_name }}</td>
+                                        <td><input id="last_name" class="editInput" type="text" name="last_name" value="{{ getUserProfile.last_name }}"></td>
                                     </tr>
                                     <tr>
                                         <td>Organization:</td>
-                                        <td>{{ getUserProfile.organization }}</td>
+                                        <td><input id="organization" class="editInput" type="text" name="organization" value="{{ getUserProfile.organization }}" readonly="readonly"></td>
                                     </tr>
                                     <tr>
                                         <td>Language:</td>
-                                        <td>{{ getUserProfile.languages }}</td>
+                                        <td><input id="languages" class="editInput" type="text" name="language" value="{{ getUserProfile.languages }}"></td>
                                     </tr>
                                     <tr>
                                         <td>Joined:</td>
@@ -41,12 +42,12 @@
                                     </tr>
                                     <tr>
                                         <td>Email:</td>
-                                        <td>{{ getUserInfo.email }}</td>
+                                        <td><input id="email" class="editInput" type="text" name="email" value="{{ getUserInfo.email }}"></td>
                                     </tr>
                                     <tr>
                                         <td>User Privileges:</td>
                                         <td> {{ getUserInfo.roles }}</td>
-                                    </tr>                                    
+                                    </tr>                                     
 
                                     </tbody>
                                 </table>
@@ -55,7 +56,11 @@
                     </div>
                     <div class="panel-footer">
                         <span>
-                            <a href="{{pathFor 'editProfile'}}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <form id="edit-profile-submit">
+                                 <input type="submit" name="edit-profile-submit"  value="Save">
+                            </form>
+                           
                         </span>
                     </div>
 

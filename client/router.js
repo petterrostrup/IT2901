@@ -15,6 +15,12 @@ Router.route("/submitContent",{
   template:"submitContent"
 })
 
+// Routing for the edit profile
+Router.route("/editprofile", {
+    name: "editProfile",
+    template: "editProfile"
+});
+
 // Routing for the create content
 Router.route("/createContent", {
     name: "createContent",
