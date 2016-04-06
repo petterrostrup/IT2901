@@ -17,13 +17,13 @@
 
     <div class="col-lg-15">
         <div class="row">
-            <div class="col-cs-6 col-md-3">
-                {{#each all_categories}}
+            {{#each all_categories}}
+                <div class="col-cs-6 col-md-3">
                     <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
                         <img class="category-icon" src="/images/category/jobs.png" alt="...">
                     </a>
-                {{/each}}
-            </div>
+                </div>
+            {{/each}}
         </div>
 
         <!-- <div class="row">
