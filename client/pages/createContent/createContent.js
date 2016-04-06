@@ -182,6 +182,7 @@ Template.createContent.events({
     		if (error) {
     			console.log(error);
     		} else {
+    			console.log("created");
     			template.$("#createSuccess").show();
     		}
     	});

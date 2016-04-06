@@ -72,6 +72,11 @@ Schema.User = new SimpleSchema({
 	    type: Object,
 	    optional: true,
 	    blackbox: true
+	}, 
+	createdContents: {
+		type: [String],
+		optional: false,
+		regEx: SimpleSchema.RegEx.Id
 	}
 });
 
