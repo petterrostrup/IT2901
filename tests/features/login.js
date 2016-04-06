@@ -22,7 +22,7 @@
                 };
                 if(!Meteor.users.find({user:userid})){
                     Meteor.users.insert({"user":userid});
-                    Accounts.setPassword(userid, "123");
+                    Accounts.setPassword(userid, "1");
                 }
 
             });
@@ -64,7 +64,7 @@
 
         this.Then(/^I should see the home page$/, function () {
             // Write the automation code here
-            browser.waitForExist('h1');
+            browser.waitForExist('#profile');
         });
     };
 

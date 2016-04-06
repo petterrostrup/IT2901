@@ -9,6 +9,6 @@ User Login
   Scenario: Log in
     Given I am an existing user
     And I navigate to "localhost:3000/login"
-    When I enter my email "erik" and password "123"
+    When I enter my email "erik" and password "1"
     And I submit the form
     Then I should see the home page
