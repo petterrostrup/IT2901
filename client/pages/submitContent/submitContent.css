@@ -1,0 +1,12 @@
+@media (max-width:767px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+    #editor{
+        margin-top: 40px;
+    }
+
+}

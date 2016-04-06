@@ -31,3 +31,12 @@
 .toppad
 {margin-top:20px;
 }
+
+@media (max-width:767px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+}
