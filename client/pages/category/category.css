@@ -5,7 +5,7 @@
  	overflow: auto;
  }
 
-@media (max-width:767px) {
+@media (max-width:500px) {
     .row{
         overflow: auto;
     }

@@ -3,11 +3,12 @@
     overflow-y: visible;
 }
 
-@media (max-width:767px) {
-    .row{
-        overflow: auto;
-    }
+@media (max-width:500px) {
     .wrapper{
-        width: 500px;
+        width: 350px;
+    }
+    #timeline{
+        width: 425px;
+        overflow: hidden;
     }
 }

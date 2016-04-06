@@ -1,9 +1,9 @@
-@media (max-width:767px) {
+@media (max-width:500px) {
     .row{
         overflow: auto;
     }
     .wrapper{
-        width: 500px;
+        width: 425px;
     }
     #editor{
         margin-top: 40px;

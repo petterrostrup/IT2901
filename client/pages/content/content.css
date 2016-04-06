@@ -57,7 +57,7 @@ p.small.text-muted {
     transform: translateY(-50%);
 }
 
-@media (max-width:767px) {
+@media (max-width:500px) {
     .row{
         overflow: auto;
     }
