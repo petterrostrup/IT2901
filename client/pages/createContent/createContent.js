@@ -186,6 +186,8 @@ Template.createContent.events({
 
     	};
 
+    	console.log(content);
+
     	Meteor.call("submit_content", content, function(error, result){
     		if (error) {
     			console.log(error);

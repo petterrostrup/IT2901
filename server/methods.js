@@ -131,6 +131,21 @@ Meteor.methods({
 			}});
 		}
 	},
+
+	// edit_profile with first_name, last_name, language, email
+	edit_profile: function(userInfo, newEmail) {
+		console.log(userInfo.languages);
+		check(userInfo, Object);
+		check(newEmail, String);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
+	},
+
 	tag_content: function(content, tagID) {
 
 		//check that input is valid
