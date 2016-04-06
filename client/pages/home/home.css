@@ -9,6 +9,8 @@
     }
     #timeline{
         width: 425px;
-        overflow: hidden;
+    }
+    .logo{
+        margin-left: 60px;
     }
 }
