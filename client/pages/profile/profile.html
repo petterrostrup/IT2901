@@ -48,10 +48,14 @@
                                             <td>User Privileges:</td>
                                             <td> {{ getUserInfo.roles }}</td>
                                         </tr>
+                                    </tbody>
+                                </table>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <ul>
+                                    {{#each getContents}}
+                                    {{> titles}}
+                                    {{/each}}
+                                </ul>
                             </div>
                         </div>
                         <div class="panel-footer">
@@ -65,5 +69,10 @@
             </div>
         </div>
     </div>
+
+</template>
+
+<template name="titles">
+  <li><a href="{{pathFor 'content'}}/{{id}}">{{title}}</a></li>
 
 </template>
