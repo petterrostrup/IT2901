@@ -57,7 +57,7 @@ Router.route("/content/:_id", function() {
     this.render("content");
   else
     this.render("page_not_found");
-});
+}, {"name": "show_content"});
 
 Router.route("/submitContent/:_id", function() {
   var data = Content.findOne({_id: this.params._id});

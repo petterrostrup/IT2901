@@ -105,7 +105,7 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
-		console.log(content);
+		// console.log(content);
 		ContentText.insert(content);
 	},
 
