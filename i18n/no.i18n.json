@@ -1,6 +1,12 @@
 {
-  "header": {
-    "hello": "Hei"
+    "header": {
+        "Home": "Hjem",
+        "BrowseContent": "Bla i innhold",
+        "CreateContent": "Lag innhold",
+        "LogOut": "Logg ut",
+        "Login": "Logg inn"
+    },
+    "profile": {
 
   }
 }

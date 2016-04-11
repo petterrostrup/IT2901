@@ -1,6 +1,10 @@
 {
-  "header": {
-    "hello": "Hello"
-  }
+    "header": {
+        "Home": "Home",
+        "BrowseContent": "Browse Content",
+        "CreateContent": "Create Content",
+        "LogOut": "Log Out",
+        "Login": "Login"
+    }
 }
 
