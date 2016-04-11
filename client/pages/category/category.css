@@ -4,3 +4,12 @@
  .table {
  	overflow: auto;
  }
+
+@media (max-width:500px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+}
