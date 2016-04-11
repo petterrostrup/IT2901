@@ -1,4 +1,6 @@
-
+Template.createContent.rendered = function() {
+	$('[data-toggle="popover"]').popover();
+}
 var selectedCategory = [];
 var selectedCommunity = [];
 var selectedLanguage = [];
