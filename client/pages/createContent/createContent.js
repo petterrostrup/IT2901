@@ -151,7 +151,7 @@ Template.createContent.events({
     			template.$("#createSuccess").show();
     		}
     		if (result) {
-    			Router.go("fill_content", {_id: result});
+    			Router.go("submit_content", {_id: result});
     		}
     	});
 

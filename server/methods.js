@@ -105,6 +105,8 @@ Meteor.methods({
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
 		console.log(content);
+		content.text = cat(content.text);
+		console.log(content);
 		ContentText.insert(content);
 	},
 

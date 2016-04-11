@@ -1,8 +1,8 @@
 
 Template.content.helpers({
 	get_information: function() {
-		var data = Content.findOne({_id: Router.current().params._id});
-		return data;
+		return Content.findOne({_id: Router.current().params._id});
+
 	},
 	get_parent_url: function() {
 		var list = [];
@@ -19,16 +19,23 @@ Template.content.helpers({
 		list.reverse();
 		return list;
 	},
-	getContentText: function(content) {
+	getContentText: function(contentID) {
+		content = Content.findOne({_id: Router.current().params._id});
 		return ContentText.find({metacontent: content._id});
-	} 
-	//get_current_contentText: function()
+	},
+	getCurrentLang: function(){
+		return Session.get("ContentLang");
+	}
+
 });
 
 
 Template.content.events({
     "scroll":function(event, template){
-    }
+    },
+    'click .lang_button' : function() {
+      Session.set('ContentLang', event.target.id);
+   }
 });
 
 Comments.ui.config({

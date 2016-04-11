@@ -1,4 +1,4 @@
-Template.submitContent.helpers({
+Template.submit_content.helpers({
     getContent: function() {
         return Content.find({});
     },
@@ -8,11 +8,11 @@ Template.submitContent.helpers({
     }
 });
 
-Template.submitContent.onDestroyed(function () {
+Template.submit_content.onDestroyed(function () {
     $('#editor').trumbowyg('destroy');
 });
 
-Template.submitContent.events({
+Template.submit_content.events({
 	"submit": function (event, template) {
 	    // Prevent default browser form submit
 	    event.preventDefault();	
