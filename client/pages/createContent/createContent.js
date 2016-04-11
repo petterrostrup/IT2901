@@ -131,7 +131,7 @@ Template.createContent.events({
 	 		description: tar.description.value,
 	 		// Content
 	 	//	console.log($('#content').val());
-	 		content: tar.content.value,
+	 		// content: tar.content.value,
 			// Category
 			category_id: cat_id
     	};

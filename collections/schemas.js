@@ -23,6 +23,7 @@ Schema.UserProfile = new SimpleSchema({
 	languages: {
 		type: [String],
 		label: "Languages",
+		regEx: SimpleSchema.RegEx.Id,
 		optional: true
 	},
     home_adress: {
@@ -128,6 +129,11 @@ Schema.Content = new SimpleSchema({
   	tags: {
   		type: [Schema.Tags],
   		optional: true
+  	},
+  	contents: {
+  		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
   	}
 
 });
@@ -215,6 +221,21 @@ Schema.ContentText = new SimpleSchema({
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
 		optional: true
+	}
+});
+
+Schema.LanguageTags = new SimpleSchema({
+	name: {
+		type: String,
+		optional: false
+	},
+	english_name: {
+		type: String,
+		optional: false
+	},
+	short_form: {
+		type: String,
+		optional: false
 	}
 });
 

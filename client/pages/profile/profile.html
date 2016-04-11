@@ -20,7 +20,8 @@
                                         </tr>
                                         <tr>
                                             <td>First Name:</td>
-                                            <td>{{ getUserProfile.first_name }}</td>
+                                            <td>{{ getUserProfile.first_name }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Last Name:</td>
@@ -32,7 +33,11 @@
                                         </tr>
                                         <tr>
                                             <td>Language:</td>
-                                            <td>{{ getUserProfile.languages }}</td>
+                                            <td>
+                                                {{#each getUserLanguages}}
+                                                    {{english_name}},
+                                                {{/each}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Joined:</td>

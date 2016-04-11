@@ -43,5 +43,15 @@ Template.profile.helpers({
     		console.log("profile cant get profile from database.");
     		return null;
     	}
+    },
+
+    getUserLanguages: function() {
+        var languages = Meteor.user().profile.languages;
+        var langNames = [];
+        for (var a in languages) {
+            langNames.push(LanguageTags.findOne({_id: languages[a]}));
+        }
+        // console.log(langNames);
+        return langNames;
     }
 });
