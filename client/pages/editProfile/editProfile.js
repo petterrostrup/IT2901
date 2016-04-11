@@ -27,7 +27,7 @@ Template.editProfile.events({
     			console.log(error);
     		} else {
     			console.log("done edit");
-    			template.$("#createSuccess").show();
+    			template.$("#editSuccess").show();
     		}
     	});
 

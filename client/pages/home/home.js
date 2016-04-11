@@ -9,6 +9,12 @@ Template.home.helpers({
 		return cat.name;
 	},
 
+	getIcon: function(catId) {
+
+		var cat = Category.findOne({_id: catId});
+		return cat.icon;
+	},
+
 	timeSince: function(time) {
 
 		then = new Date(time);

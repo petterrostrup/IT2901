@@ -23,6 +23,8 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Email was taken.");
 		}
 
+		user.createdContents = [];
+
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
 
