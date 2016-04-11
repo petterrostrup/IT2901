@@ -1,18 +1,19 @@
 <template name="content">
 
-    <ul class="list-inline">
+    <div class="wrapper">
+        <ol class="breadcrumb">
 
-    {{#each get_parent_url}}
-        <li>
-            <a href="{{pathFor 'category'}}/{{_id}}">{{name}} </a>
-        </li>
-    {{/each}}
+            {{#each get_parent_url}}
+                <li>
+                    <a href="{{pathFor 'category'}}/{{_id}}">{{name}} </a>
+                </li>
+            {{/each}}
 
-    </ul>
+        </ol>
 
-    <h1>{{get_information.title}}</h1>
+        <h1>{{get_information.title}}</h1>
 
-    <p>{{get_information.description}}</p>
+        <p>{{get_information.description}}</p>
 
 
     {{#each getContentText}}
@@ -21,8 +22,8 @@
     {{/each}}
 
 
-    <div class="comment-section">
-        {{> commentsBox id=get_information._id}}
+        <div class="comment-section">
+            {{> commentsBox id=get_information._id}}
+        </div>
     </div>
-    
 </template>

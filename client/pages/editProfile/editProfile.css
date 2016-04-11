@@ -32,3 +32,12 @@
 .toppad
 {margin-top:20px;
 }
+
+@media (max-width:500px) {
+    .row{
+        overflow: auto;
+    }
+    .toppad{
+        width: 425px;
+    }
+}

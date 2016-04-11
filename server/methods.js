@@ -95,6 +95,7 @@ Meteor.methods({
 		// If not, it will throw an error.
 		// Commenting this out so people not will hate me
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
+		
 		return content_id;
 	},
 
