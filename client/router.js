@@ -76,6 +76,7 @@ Router.route("/create_content", {
       Router.go("/");
     else
       this.next();
+    
   }
 });
 
