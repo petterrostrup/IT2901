@@ -5,6 +5,32 @@
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
         "Login": "Login"
+    },
+    "profile": {
+        "Username": "Username",
+        "FirstName": "First Name",
+        "LastName": "Last Name",
+        "Organization": "Organization",
+        "Language": "Language",
+        "Joined": "Joined",
+        "Email": "Email",
+        "UserPrivileges": "User Privileges",
+        "CreatedContent": "Created content"
+    },
+    "createContent": {
+        "CreateContent": "Create Content",
+        "Title": "Title",
+        "Description": "Description",
+        "Content": "Content",
+        "Community": "Community",
+        "Category": "Category",
+        "Language": "Language"
+    },
+    "submit": {
+        "Submit": "Submit"
+    },
+    "typeHere": {
+        "TypeHere": "Type Here"
     }
 }
 

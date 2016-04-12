@@ -7,7 +7,30 @@
         "Login": "Logg inn"
     },
     "profile": {
-
-  }
+        "Username": "Brukernavn",
+        "FirstName": "Fornavn",
+        "LastName": "Etternavn",
+        "Organization": "Organisasjon",
+        "Language": "Språk",
+        "Joined": "Ble med",
+        "Email": "Epost",
+        "UserPrivileges": "Brukerrettigheter",
+        "CreatedContent": "Lagd innhold"
+    },
+    "createContent": {
+        "CreateContent": "Lag innhold",
+        "Title": "Tittel",
+        "Description": "Beskrivelse",
+        "Content": "Innhold",
+        "Community": "Samfunn",
+        "Category": "Kategori",
+        "Language": "Språk"
+    },
+    "submit": {
+        "Submit": "Send inn"
+    },
+    "typeHere": {
+        "TypeHere": "Skriv her"
+    }
 }
 
