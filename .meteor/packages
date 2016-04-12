@@ -29,12 +29,11 @@ accounts-ui
 check
 xolvio:backdoor
 ongoworks:security
-semantic:ui
 flemay:less-autoprefixer
-semantic:ui-css
-semantic:ui-dropdown
 mizzao:autocomplete
 malkesh:trumbowyg
 standard-minifier-css
 standard-minifier-js
 arkham:comments-ui
+semantic:ui-css
+fortawesome:fontawesome
