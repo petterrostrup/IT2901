@@ -197,5 +197,24 @@ Meteor.methods({
 		}else {
 			throw new Meteor.Error(400, "Language not found.");
 		}
+	},
+
+
+	add_language_profile: function(languageId) {
+		check(languageId, String);
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!LanguageTags.findOne({_id: languageId})) 
+			throw new Meteor.Error(400, "Language not found.");
+
+		var languages = Meteor.user().profile.languages;
+		for (var a in languages) {
+			if (languages[a] === languageId) 
+				throw new Meteor.Error(400, "Language already exist.");
+		}
+		languages.push(languageId);
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
 	}
 });

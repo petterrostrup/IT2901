@@ -34,9 +34,9 @@
                 <!-- Select Community -->
                 <div class="form-group">
 
-                    <label class="col-md-4 control-label" for="tags">Community</label>
+                    <label class="col-md-4 control-label" for="tags">Groups</label>
                     <div class="col-md-4">
-                        {{#textareaAutocomplete settings=settingsCom id="autocomplete-input-Com" class="form-control" placeholder="Type # to search for communities" autofocus="autofocus"}}{{/textareaAutocomplete}}
+                        {{> inputAutocomplete settings=settingsCom id="autocomplete-input-Com" class="form-control" placeholder="Type # to search for groups" autofocus="autofocus"}}
                     </div>
 
                 </div>
@@ -49,7 +49,7 @@
                         <label class="col-md-4 control-label" for="tags">Category</label>
                         <div class="col-md-4">
 
-                            {{#textareaAutocomplete settings=settingsCat id="autocomplete-input-Cat" class="form-control" placeholder="Type # to search for categories" autofocus="autofocus"}}{{/textareaAutocomplete}}
+                            {{> inputAutocomplete settings=settingsCat id="autocomplete-input-Cat" class="form-control" placeholder="Type # to search for categories" autofocus="autofocus"}}
 
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="tags">Language</label>
                     <div class="col-md-4">
-                        {{#textareaAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder="Type # to search in languages" autofocus="autofocus"}}{{/textareaAutocomplete}}
+                        {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder="Type # to search in languages" autofocus="autofocus"}}
 
                     </div>
                 </div>
@@ -79,11 +79,11 @@
 
 </template>
 <template name="serverCollectionPill" id="{{_id}}">
-  {{name}} <span>{{_id}}</span>
+  {{name}}
 </template>
 
 <template name="clientCollectionPill" id="{{_id}}">
-  {{name}} <span>{{_id}}</span>
+  {{name}}
 </template>
 
 <template name="serverNoMatch">

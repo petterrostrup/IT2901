@@ -21,7 +21,7 @@ Template.languages.helpers({
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
 	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
-	          template: Template.clientCollectionPill
+	          template: Template.languagePill
 	        }
 	      ]
 	    }
@@ -30,16 +30,33 @@ Template.languages.helpers({
 
 
 Template.languages.events({
-	"autocompleteselect textarea": function(e, t, doc) {
-		console.log(e);
-		console.log(t);
-		console.log(doc);
+	"autocompleteselect input": function(event, template, doc) {
+		// console.log(doc);
+		Meteor.call("add_language_profile", doc._id, function(error, result) {
+			if (error) {
+				console.log(error);
+				template.$("#regErrorText").text(error);
+          		template.$("#regError").show();
+          		event.target.value = "";
+          		setTimeout(function() {
+          			template.$("#regError").hide();
+          		}, 3000);
+			}
+			else {
+				event.target.value = "";
+			}
+		});
 	},
 	"click .delete_button": function(event, template) {
-		console.log(event.target.id);
 		Meteor.call("remove_language_profile", event.target.id, function(error, result) {
 			if (error) {
 				console.log(error);
+				template.$("#regErrorText").text(error);
+          		template.$("#regError").show();
+          		template.$("#autocomplete-input-Lang").value = "";
+          		setTimeout(function() {
+          			template.$("#regError").hide();
+          		}, 3000);
 			}
 		});
 	}

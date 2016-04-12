@@ -246,3 +246,4 @@ Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
+LanguageTags.attachSchema(Schema.LanguageTags);
