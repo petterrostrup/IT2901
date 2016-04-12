@@ -187,6 +187,10 @@ Schema.Category = new SimpleSchema({
 		type: String,
 		optional: false
 	},
+	icon: {
+		type: String,
+		optional: true
+	},
 	timestamp: {
 	    type: Date,
 	    autoValue: function() {
