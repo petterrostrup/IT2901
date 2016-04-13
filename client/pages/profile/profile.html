@@ -1,7 +1,6 @@
 <template name="profile">
-
-        <div class="container">
-            <div class="wrapper">
+    <div class="container">
+        <div class="wrapper">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
                     <div class="panel panel-info">
@@ -32,7 +31,11 @@
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.Language"}}:</td>
-                                            <td>{{ getUserProfile.languages }}</td>
+                                            <td>
+                                                {{#each getUserLanguages}}
+                                                    {{english_name}},
+                                                {{/each}}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.Joined"}}:</td>
@@ -61,6 +64,7 @@
                         <div class="panel-footer">
                         <span>
                             <a href="{{pathFor 'editProfile'}}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="{{pathFor 'languages'}}" class="edit-lang">Edit languages</a>
                         </span>
                         </div>
                     </div>

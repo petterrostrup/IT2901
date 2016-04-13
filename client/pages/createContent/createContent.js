@@ -79,7 +79,7 @@ Template.createContent.helpers({
 	}
 });
 Template.createContent.events({
-	"autocompleteselect textarea": function(e, t, doc) {
+	"autocompleteselect input": function(e, t, doc) {
 		// console.log("selected ", doc);
 
 		// if (e.target.id === "autocomplete-input-Com") {
@@ -137,7 +137,7 @@ Template.createContent.events({
 	 		description: tar.description.value,
 	 		// Content
 	 	//	console.log($('#content').val());
-	 		content: tar.content.value,
+	 		// content: tar.content.value,
 			// Category
 			category_id: cat_id
     	};

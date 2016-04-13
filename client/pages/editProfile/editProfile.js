@@ -5,29 +5,28 @@ Template.editProfile.events({
 	    // Prevent default browser form submit
 	    event.preventDefault();
 
-	    console.log("in submit");
 	    console.log($("#first_name").val());
 	    console.log($("#last_name").val());
-	    console.log($("#organization").val());
-	    console.log($("#languages").val());
+	    // console.log($("#organization").val());
+	    // console.log($("#languages").val());
 	    console.log($("#email").val());
 	    var profile = {
 	    	first_name: $("#first_name").val(),
 	    	last_name: $("#last_name").val(),
-	    	organization: $("#organization").val(),
-	    	languages: $("#languages").val().split(","),
+	    	// organization: $("#organization").val(),
+	    	// languages: $("#languages").val().split(","),
 	    	home_adress: "Oslo"
 	    }
 
 	    var email = $("#email").val();
-	    console.log(profile.languages);
+	    // console.log(profile.languages);
 
     	Meteor.call("edit_profile", profile, email, function(error, result){
     		if (error) {
     			console.log(error);
     		} else {
-    			console.log("done edit");
-    			template.$("#editSuccess").show();
+    			// template.$("#createSuccess").show();
+                Router.go("profile");
     		}
     	});
 
