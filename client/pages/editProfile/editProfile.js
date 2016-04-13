@@ -25,7 +25,7 @@ Template.editProfile.events({
     		if (error) {
     			console.log(error);
     		} else {
-    			template.$("#createSuccess").show();
+    			// template.$("#createSuccess").show();
                 Router.go("profile");
     		}
     	});

@@ -5,7 +5,7 @@
             <fieldset>
                 <!-- Form Name -->
                 <legend>
-                    Create content
+                    {{_ "createContent.CreateContent"}}
                     {{#if get_current_category}}
                         for {{get_current_category.name}}
                     {{/if}}
@@ -14,29 +14,26 @@
                 <div class="alert alert-success" id="createSuccess" style="display: none" role="alert">Content is created</div>
 
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="title">Title</label>
+                    <label class="col-md-4 control-label" for="title">{{_ "createContent.Title"}}</label>
                     <div class="col-md-4">
-                        <input id="title" name="title" type="text" placeholder="Your title for the content" class="form-control input-md" required="">
-
-
+                        <input id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="">
                     </div>
                 </div>
 
                 <!-- Description input-->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="description">Description</label>
+                    <label class="col-md-4 control-label" for="description">{{_ "createContent.Description"}}</label>
                     <div class="col-md-4">
-                    <input type="text" required="true" id="description" class="form-control input-md" placeholder="Short description of your content."/>
-
+                    <input type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"/>
                     </div>
                 </div>
 
                 <!-- Select Community -->
                 <div class="form-group">
 
-                    <label class="col-md-4 control-label" for="tags">Groups</label>
+                    <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" title="How to choose groups" data-content="Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g." class="glyphicon glyphicon-info-sign"></a>
                     <div class="col-md-4">
-                        {{> inputAutocomplete settings=settingsCom id="autocomplete-input-Com" class="form-control" placeholder="Type # to search for groups" autofocus="autofocus"}}
+                        {{> inputAutocomplete settings=settingsCom id="autocomplete-input-Com" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
                     </div>
 
                 </div>
@@ -46,10 +43,10 @@
 
                 {{else}}
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="tags">Category</label>
+                        <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" title="How to choose categories" data-content="Write a # before the categories you want your content under. #Mat #Økonomi f.eks" class="glyphicon glyphicon-info-sign"></a>
                         <div class="col-md-4">
 
-                            {{> inputAutocomplete settings=settingsCat id="autocomplete-input-Cat" class="form-control" placeholder="Type # to search for categories" autofocus="autofocus"}}
+                            {{> inputAutocomplete settings=settingsCat id="autocomplete-input-Cat" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
 
                         </div>
                     </div>
@@ -57,10 +54,10 @@
 
                 <!-- Select Language -->
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="tags">Language</label>
-                    <div class="col-md-4">
-                        {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder="Type # to search in languages" autofocus="autofocus"}}
+                    <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
 
+                    <div class="col-md-4">
+                        {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
                     </div>
                 </div>
 
@@ -69,7 +66,7 @@
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                     <div class="col-md-4">
 
-                        <input type="submit" name="content-submit" id="content-submit" value="Submit">
+                        <input type="submit" name="content-submit" id="content-submit" value= "{{_ 'submit.Submit'}}" >
                     </div>
                 </div>
 
