@@ -34,8 +34,18 @@
         "TypeHere": "Skriv her"
     },
     "admin": {
-        "edit_language": "Endre språk",
-        "settings": "Instillinger"
+        "menu": {
+            "add_language": "Legg til språk",
+            "rm_language": "Fjern språk"
+        },
+        "add_language": {
+            "name": "Navn på språket",
+            "short_name": "Kort navn på språk",
+            "english": "Engelsk navn på språk",
+            "lang_added": "Språket ble lagt til."
+        },
+        "settings": "Instillinger",
+        "add": "Legg til nytt språk"
     }
 }
 

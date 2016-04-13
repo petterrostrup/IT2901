@@ -217,5 +217,33 @@ Meteor.methods({
 		}
 		languages.push(languageId);
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+	},
+
+
+	// Administrator methods
+	add_language_system: function(language) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(language, {
+			"name": String,
+			"english_name": String,
+			"short_form": String
+		});
+
+		if (LanguageTags.findOne({name: language.name})) 
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({english_name: language.english_name}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({short_form: language.short_form}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		LanguageTags.insert(language);
 	}
 });

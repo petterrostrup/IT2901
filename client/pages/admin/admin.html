@@ -1,12 +1,40 @@
 <template name="admin">
-	<div>
-		<ul class="nav nav-pills nav-stacked">
-			<li role="presentation" class="active"><a href="#">Home</a></li>
-		  <li role="presentation"><a href="#">Profile</a></li>
-		  <li role="presentation"><a href="#">Messages</a></li>
-		</ul>	
+	<div class="row">
+		<div class="alert alert-danger" id="regError" style="display: none;">
+			<div id="regErrorText"></div>
+		</div>
+		<div class="col-md-3">
+			<ul class="nav nav-pills nav-stacked" id="choose_action">
+				<li role="presentation" class="active menu-btn" id="add_language"><a href="">{{_ "admin.menu.add_language"}}</a></li>
+				<li role="presentation" class="menu-btn" id="remove_language"><a href="">{{_ "admin.menu.rm_language"}}</a></li>
+			  <!-- <li role="presentation"><a href="#">Profile</a></li>
+			  <li role="presentation"><a href="#">Messages</a></li> -->
+			</ul>	
+		</div>
+		<div class="col-md-8" id="content">
+			<div class="" id="add_language_content" style="display: visible;">
+				<form id="sub_add_lang">
+					<fieldset class="form-group">
+						<label for="lang_name">{{_ "admin.add_language.name"}}</label>
+						<input type="text" class="form-control" id="lang_name" placeholder="" required>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="eng_lang_name">{{_ "admin.add_language.english"}}</label>
+						<input type="text" class="form-control" id="eng_lang_name" placeholder="" required>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="short_lang_name">{{_ "admin.add_language.short_name"}}</label>
+						<input type="text" class="form-control" id="short_lang_name" placeholder="" required>
+					</fieldset>
+					<input type="submit" class="btn btn-default" value="{{_ 'admin.add'}}">
+				</form>
+			</div>
+			<div class="" id="remove_language_content" style="display: none;">
+				delete languages
+			</div>
+		</div>
 	</div>
-	<div class="container">
+	<!-- <div class="container">
 		<div class="dropdown">
 			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{_ "admin.settings"}}
 			<span class="caret"></span></button>
@@ -15,5 +43,5 @@
 
 			</ul>
 		</div>
-	</div>
+	</div> -->
 </template>

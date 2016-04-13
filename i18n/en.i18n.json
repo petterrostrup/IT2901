@@ -34,8 +34,18 @@
         "TypeHere": "Type Here"
     },
     "admin": {
-        "edit_language": "Edit languages",
-        "settings": "Settings"
+        "menu": {
+            "add_language": "Add language",
+            "rm_language": "Remove language"
+        },
+        "add_language": {
+            "name": "Name",
+            "short_name": "Short name",
+            "english": "English name",
+            "lang_added": "The language was added."
+        },
+        "settings": "Settings",
+        "add": "Add language"
     }
 }
 
