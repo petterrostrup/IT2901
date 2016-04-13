@@ -53,7 +53,7 @@ Schema.User = new SimpleSchema({
 	},
 	roles: {
 		type: String,
-		allowedValues: ["Standard", "creator", "official"],
+		allowedValues: ["Standard", "creator", "official", "admin"],
 		optional: false,
 		label: "Roles"
 	},

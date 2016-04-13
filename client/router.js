@@ -76,7 +76,6 @@ Router.route("/create_content", {
       Router.go("/");
     else
       this.next();
-    
   }
 });
 
@@ -143,5 +142,17 @@ Router.route("/languages", {
     }else{
       Router.go("/");
     }
+  }
+});
+
+Router.route("/admin", {
+  name: "admin",
+  template: "admin",
+
+  onBeforeAction: function() {
+    if (Meteor.userId() && Roles.userIsInRole(Meteor.user(), ["admin"]))
+      this.next();
+    else
+      this.render("access_denied");
   }
 });

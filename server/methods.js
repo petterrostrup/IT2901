@@ -24,6 +24,7 @@ Meteor.methods({
 		}
 
 		user.createdContents = [];
+		user.roles = "Standard";
 
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);

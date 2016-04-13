@@ -1,0 +1,19 @@
+<template name="admin">
+	<div>
+		<ul class="nav nav-pills nav-stacked">
+			<li role="presentation" class="active"><a href="#">Home</a></li>
+		  <li role="presentation"><a href="#">Profile</a></li>
+		  <li role="presentation"><a href="#">Messages</a></li>
+		</ul>	
+	</div>
+	<div class="container">
+		<div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{_ "admin.settings"}}
+			<span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">{{_ "admin.edit_language"}}</a></li>
+
+			</ul>
+		</div>
+	</div>
+</template>

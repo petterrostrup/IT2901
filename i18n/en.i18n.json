@@ -4,7 +4,8 @@
         "BrowseContent": "Browse Content",
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
-        "Login": "Login"
+        "Login": "Login",
+        "Admin": "Admin"
     },
     "profile": {
         "Username": "Username",
@@ -31,6 +32,10 @@
     },
     "typeHere": {
         "TypeHere": "Type Here"
+    },
+    "admin": {
+        "edit_language": "Edit languages",
+        "settings": "Settings"
     }
 }
 

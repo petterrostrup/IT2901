@@ -21,6 +21,13 @@
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
+                        {{#if isInRole 'admin'}}
+                        <li>
+                            <a href="{{pathFor 'admin'}}" class="link">
+                                {{_ "header.Admin"}}
+                            </a>
+                        </li>
+                        {{/if}}
                         <li><a id="profile" class="link" href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
                         <li><a href="{{pathFor 'home'}}" class="logout link">{{_ "header.LogOut"}}</a></li>
                         {{else}}
