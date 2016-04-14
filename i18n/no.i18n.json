@@ -36,7 +36,8 @@
     "admin": {
         "menu": {
             "add_language": "Legg til språk",
-            "rm_language": "Fjern språk"
+            "rm_language": "Fjern språk",
+            "show_users": "Vis alle brukere"
         },
         "add_language": {
             "name": "Navn på språket",
@@ -44,6 +45,14 @@
             "english": "Engelsk navn på språk",
             "lang_added": "Språket ble lagt til."
         },
+        "users": {
+            "username": "Brukernavn",
+            "email": "E-post",
+            "roles": "Roller"
+
+        },
+        "delete_language": "Slett språk",
+        "delete_language_msg": "Språket ble slettet.",
         "settings": "Instillinger",
         "add": "Legg til nytt språk"
     }

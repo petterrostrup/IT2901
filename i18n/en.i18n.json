@@ -36,7 +36,8 @@
     "admin": {
         "menu": {
             "add_language": "Add language",
-            "rm_language": "Remove language"
+            "rm_language": "Remove language",
+            "show_users": "Show all users"
         },
         "add_language": {
             "name": "Name",
@@ -44,6 +45,14 @@
             "english": "English name",
             "lang_added": "The language was added."
         },
+        "users": {
+            "username": "Username",
+            "email": "Email",
+            "roles": "Roles"
+
+        },
+        "delete_language": "Delete language",
+        "delete_language_msg": "The language was deleted",
         "settings": "Settings",
         "add": "Add language"
     }

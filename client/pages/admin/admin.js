@@ -1,5 +1,7 @@
 
-var show_message = function(msg) {
+Meteor.subscribe("allUsers", Meteor.user());
+
+var show_message_error = function(msg) {
 	$("#regErrorText").text(msg);
 	$("#regError").show();
 	setTimeout(function() {
@@ -7,9 +9,22 @@ var show_message = function(msg) {
 	}, 3000);
 }
 
+var show_message = function(msg) {
+	$("#regMsgText").text(msg);
+	$("#regMsg").show();
+	setTimeout(function() {
+		$("#regMsg").hide();
+	}, 3000);
+}
+
 
 Template.admin.helpers({
-
+	get_languages: function() {
+		return LanguageTags.find({});
+	},
+	get_users: function() {
+		return Meteor.users.find({});
+	}
 });
 
 
@@ -39,7 +54,7 @@ Template.admin.events({
 		}
 		Meteor.call("add_language_system", language, function(error, result) {
 			if (error) {
-				show_message(error);				
+				show_message_error(error);				
 			} 
 			else {
 				show_message("{{_ 'lang_added'}}");
@@ -48,5 +63,18 @@ Template.admin.events({
 				event.target.short_lang_name.value = "";
 			}
 		});	
+	},
+	"click button.del_lang": function(event, template) {
+		var id = event.target.id;
+		Meteor.call("remove_language_system", id, function(error, result) {
+			if (error) {
+				show_message_error(error);
+			}
+			else
+				show_message("{{_ 'admin.delete_language_msg'}}");
+			if (result) {
+				console.log(result);
+			}
+		});
 	}
 });

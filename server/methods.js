@@ -245,5 +245,20 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Language already exist.");
 
 		LanguageTags.insert(language);
+	},
+	remove_language_system: function(lang_id) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(lang_id, String);
+		var is_deleted = LanguageTags.remove({_id: lang_id});
+		if (!is_deleted)
+			throw new Meteor.Error(404, "Language does not exist");
+
+		
 	}
 });

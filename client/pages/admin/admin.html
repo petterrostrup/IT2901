@@ -3,10 +3,16 @@
 		<div class="alert alert-danger" id="regError" style="display: none;">
 			<div id="regErrorText"></div>
 		</div>
+		<div class="alert alert-info" id="regMsg" style="display: none;">
+			<div id="regMsgText"></div>
+		</div>
 		<div class="col-md-3">
 			<ul class="nav nav-pills nav-stacked" id="choose_action">
 				<li role="presentation" class="active menu-btn" id="add_language"><a href="">{{_ "admin.menu.add_language"}}</a></li>
 				<li role="presentation" class="menu-btn" id="remove_language"><a href="">{{_ "admin.menu.rm_language"}}</a></li>
+				<li role="presentation" class="menu-btn" id="list_users">
+					<a href="">{{_ "admin.menu.show_users"}}</a>
+				</li>
 			  <!-- <li role="presentation"><a href="#">Profile</a></li>
 			  <li role="presentation"><a href="#">Messages</a></li> -->
 			</ul>	
@@ -30,7 +36,52 @@
 				</form>
 			</div>
 			<div class="" id="remove_language_content" style="display: none;">
-				delete languages
+				<table class="table">
+					<thead>
+						<tr>
+							<th>{{_ "admin.add_language.name"}}</th>
+							<th>{{_ "admin.add_language.short_name"}}</th>
+							<th>{{_ "admin.add_language.english"}}</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each get_languages}}
+						<tr>
+							<td>{{name}}</td>
+							<td>{{english_name}}</td>
+							<td>{{short_form}}</td>
+							<td>
+								<button class="btn btn-warning del_lang" id="{{_id}}">
+									{{_ "admin.delete_language"}}
+								</button>
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div id="list_users_content" style="display: none;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>{{_ "admin.users.username"}}</th>
+							<th>{{_ "admin.users.email"}}</th>
+							<th>{{_ "admin.users.roles"}}</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each get_users}}
+						<tr>
+							<td>{{username}}</td>
+							<td>{{email}}</td>
+							<td>{{roles}}</td>
+							<td></td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

@@ -8,6 +8,12 @@ Meteor.publish("personalInfo", function() {
     }
 });
 
+Meteor.publish("allUsers", function(user) {
+    if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {
+        return Meteor.users.find({});
+    }
+});
+
 Meteor.publish("content", function(){
 	return Content.find({});
 });
