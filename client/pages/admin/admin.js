@@ -17,6 +17,47 @@ var show_message = function(msg) {
 	}, 3000);
 }
 
+Template.admin_user_page.helpers({
+	get_user_information: function() {
+		var user_id = Session.get("user_id");
+		return Meteor.users.findOne({_id: user_id});
+	},
+	is_admin: function() {
+		return Roles.userIsInRole(Session.get("user_id"), ["admin"]);
+	}
+});
+
+Template.admin_user_page.events({
+	"click .toggle_admin": function(event, template) {
+		if (event.target.id === "remove_admin") {
+			Meteor.call("remove_user_from_role", {
+				user_id: Session.get("user_id"),
+				role: "admin"
+			}, function(error, result) {
+				if (error) 
+					show_message_error(error);
+				else {
+					event.target.className = "btn btn-default toggle_admin";
+					event.target.id = "add_admin";
+					event.target.value = "Give admin";
+				}
+			});
+		}else {
+			Meteor.call("add_user_to_role", {
+				user_id: Session.get("user_id"),
+				role: "admin"
+			}, function(error, result) {
+				if (error)
+					show_message_error(error);
+				else {
+					event.target.className = "btn btn-warning toggle_admin";
+					event.target.id = "remove_admin";
+					event.target.value = "Remove admin";
+				}
+			});
+		}
+	}
+});
 
 Template.admin.helpers({
 	get_languages: function() {
@@ -76,5 +117,35 @@ Template.admin.events({
 				console.log(result);
 			}
 		});
+	},
+
+
+	"click button.del_user": function(event, template) {
+		var id = event.target.id;
+		Meteor.call("remove_user_system", id, function(error, result) {
+			if (error) {
+				show_message_error(error);
+			}
+			else
+				show_message("User removed.");
+			if (result) {
+				console.log(result);
+			}
+		});
+	},
+
+
+	"click button.show_user": function(event, template) {
+		var id = event.target.id;
+		Session.set("user_id", id);
+		template.$("#list_users_content").hide();
+		// template.$("#list_users_content").style.display = "none";
+		template.$("#show_user_content").show();
+	},
+
+
+	"click #users_back": function(event, template) {
+		template.$("#show_user_content").hide();
+		template.$("#list_users_content").show()	
 	}
 });

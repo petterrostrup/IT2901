@@ -42,7 +42,7 @@ Meteor.publish("CommunityTags", function() {
 Meteor.startup(function(){
     
     // add something in database for test
-    if (!Category.findOne() && Meteor.settings.DEBUG){
+    if (!Category.findOne()){
         console.log("Default category created.");
         Category.insert({
             name: "By",
@@ -206,9 +206,8 @@ Meteor.startup(function(){
             username: defUser.username,
             email: defUser.email,
             profile:proflie,
-            roles: "admin",
+            roles: ["admin"],
             createdContents: []
-
         });
         Accounts.setPassword(userid, defUser.password);
     }

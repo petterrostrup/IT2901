@@ -48,8 +48,10 @@
         "users": {
             "username": "Username",
             "email": "Email",
-            "roles": "Roles"
-
+            "roles": "Roles",
+            "delete": "Delete user",
+            "show": "Show user",
+            "back": "Back"
         },
         "delete_language": "Delete language",
         "delete_language_msg": "The language was deleted",

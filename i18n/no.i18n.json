@@ -48,8 +48,10 @@
         "users": {
             "username": "Brukernavn",
             "email": "E-post",
-            "roles": "Roller"
-
+            "roles": "Roller",
+            "delete": "Slett bruker",
+            "show": "Vis bruker",
+            "back": "Tilbake"
         },
         "delete_language": "Slett språk",
         "delete_language_msg": "Språket ble slettet.",
