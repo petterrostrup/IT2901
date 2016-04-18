@@ -1,3 +1,10 @@
+// Search
+Router.route("/search", {
+  name: "search",
+  template: "search"
+})
+// End of search
+
 /* Client-side router settings */
 Router.configure({
   layoutTemplate:"layout",

@@ -1,3 +1,5 @@
+
+
 Meteor.methods({
 
 	// Method for creating a new user in the system.

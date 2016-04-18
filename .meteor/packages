@@ -26,7 +26,6 @@ tap:i18n-db
 tap:i18n
 
 accounts-ui
-check
 xolvio:backdoor
 ongoworks:security
 semantic:ui
@@ -38,3 +37,6 @@ malkesh:trumbowyg
 standard-minifier-css
 standard-minifier-js
 arkham:comments-ui
+check
+ejson
+meteorhacks:search-source

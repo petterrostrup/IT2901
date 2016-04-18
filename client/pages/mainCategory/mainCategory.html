@@ -4,7 +4,14 @@
         <div class="row">
             <div class="col-lg-5">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for content">
+                    <!-- Search function-->
+                    
+                        {{> searchBox }}
+                        {{#if isEmptyField}}
+                        {{> searchResult}}
+                        {{/if}}
+                    
+                    <!-- End of Search function-->
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
@@ -31,3 +38,36 @@
     </div>
 
 </template>
+
+<!-- Search function-->
+<template name="searchBox">
+  <input type="text" id="search-box" placeholder="search packages here" />
+</template>
+
+<template name="searchResult">
+  <div id='search-result'>
+    <div id="search-meta">
+      {{#if isLoading}}
+        searching ...
+      {{/if}}
+    </div>
+
+    {{#each getPackages}}
+    <div class="package">
+      <h4 class="name">
+        <a href="{{git}}" target="_blank">{{{name}}}</a>
+      </h4>
+      <div class="description">
+        {{{description}}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
+<!--
+  Search function
+  Edited file for search : search(all), router.js, header.html, server.js
+  Packages : meteor add meteorhacks:search-source, meteor add ejson
+-->
+
+<!-- End of Search function-->
