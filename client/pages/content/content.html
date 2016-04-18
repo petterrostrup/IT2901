@@ -1,7 +1,7 @@
 <template name="content">
 
     <div class="wrapper">
-        <ul class="list-inline">
+        <ol class="breadcrumb">
 
             {{#each get_parent_url}}
                 <li>
@@ -9,7 +9,11 @@
                 </li>
             {{/each}}
 
-        </ul>
+            <li>
+                <a href="#">{{get_information.title}}</a>
+            </li>
+
+        </ol>
 
         <h1>{{get_information.title}}</h1>
 

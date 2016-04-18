@@ -12,10 +12,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a id="home" class="link" href="{{pathFor 'home'}}">Home</a></li>
-                        <li><a id="category" class="link" href="{{pathFor 'category'}}">Browse Content</a></li>
+                        <li><a id="home" class="link" href="{{pathFor 'home'}}">{{_ "header.Home"}}</a></li>
+                        <li><a id="category" class="link" href="{{pathFor 'category'}}">{{_ "header.BrowseContent"}}</a></li>
                         {{#if currentUser }}
-                        <li><a id="createContent" class="link" href="{{pathFor 'createContent'}}">Create Content</a></li>
+                        <li><a id="createContent" class="link" href="{{pathFor 'createContent'}}">{{_ "header.CreateContent"}}</a></li>
                         {{/if}}
                         <!-- Search -->
                         <li>
@@ -27,10 +27,12 @@
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
                         <li><a id="profile" class="link" href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
-                        <li><a href="{{pathFor 'home'}}" class="logout link">Logg Ut</a></li>
+                        <li><a href="{{pathFor 'home'}}" class="logout link">{{_ "header.LogOut"}}</a></li>
                         {{else}}
-                        <li><a id="login" class="link" href="{{pathFor 'login'}}">Login</a></li>
+                        <li><a id="login" class="link" href="{{pathFor 'login'}}">{{_ "header.Login"}}</a></li>
                         {{/if}}
+
+                        <li><a id="language" name="language" class="link"><i  class="fa fa-language"></i></a></li>
                     </ul>
                 </div>
             </div>

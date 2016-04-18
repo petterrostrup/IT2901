@@ -28,9 +28,11 @@
             <div class="row">
                 {{#each all_categories}}
                     <div class="col-cs-6 col-md-3 category">
+                        <h4 style="text-align: center">{{name}}</h4>
                         <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
-                            <img class="category-icon" src="/images/category/jobs.png" alt="...">
+                            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
                         </a>
+
                     </div>
                 {{/each}}
             </div>

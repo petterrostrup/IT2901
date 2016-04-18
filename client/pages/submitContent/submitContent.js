@@ -2,6 +2,9 @@ Template.submitContent.helpers({
     getContent: function() {
         return Content.find({});
     },
+    getContentId: function () {
+        return {_id: Router.current().params._id};
+    },
     data: function() {
         var data = Content.findOne({_id: Router.current().params._id});
         return data;
@@ -22,7 +25,8 @@ Template.submitContent.events({
         var id = Router.current().params._id;
 
         var contentText = {
-            lang: tar.lang,
+            // lang: tar.lang,
+            language: "no",
             text: text,
             metacontent: id
         }
@@ -31,7 +35,8 @@ Template.submitContent.events({
     		if (error) {
     			console.log(error);
     		} else {
-                console.log("Added contentText")
+                console.log("Added contentText");
+                Router.go("show_content", {_id: id});
     		}
     	});
 

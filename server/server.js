@@ -59,63 +59,146 @@ Meteor.publish("CommunityTags", function() {
 });
 
 Meteor.startup(function(){
-
-    if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
-        console.log("Create default user");
-
-        var defUser = Meteor.settings.defaultUser;
-        var proflie = {
-            first_name: "Ping",
-            last_name: "Pong",
-            organization: "CC AS",
-            languages: ["en", "no"],
-            home_adress: "Trondheim"
-        }
-        userid = Meteor.users.insert({
-            username: defUser.username,
-            email: defUser.email,
-            profile:proflie,
-            roles: "creator"
-
-        });
-        Accounts.setPassword(userid, defUser.password);
-    }
+    
     // add something in database for test
     if (!Category.findOne() && Meteor.settings.DEBUG){
         console.log("Default category created.");
         Category.insert({
-            name: "Matematikk",
+            name: "By",
             children: [],
             content_ids: [],
             children_id: [],
-            description: "Regning med tall",
-            url_name: "mattematikk",
-        }); 
+            description: "Informasjon anngående byen",
+            icon: "city2",
+            url_name: "city"
+        });
+        Category.insert({
+            name: "Samfunn",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående samfunnet",
+            icon: "community2",
+            url_name: "community"
+        });
+        Category.insert({
+            name: "Økonomi",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående økonomi",
+            icon: "economy2",
+            url_name: "economy"
+        });
+        Category.insert({
+            name: "Utdanning",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående utdanning og skolering",
+            icon: "education2",
+            url_name: "education"
+        });
+        Category.insert({
+            name: "Food",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
+            icon: "food2",
+            url_name: "food"
+        });
+        Category.insert({
+            name: "Helse",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående helse og hvor man kan få hjelp",
+            icon: "health2",
+            url_name: "health"
+        });
+        Category.insert({
+            name: "Hjelp",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
+            icon: "help2",
+            url_name: "help"
+        });
+        Category.insert({
+            name: "Bolig",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Hvordan å få tak i bolig og annet relevant informasjon",
+            icon: "housing2",
+            url_name: "housing"
+        });
+        Category.insert({
+            name: "Jobb",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
+            icon: "jobs2",
+            url_name: "jobs"
+        });
+        Category.insert({
+            name: "Språk",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
+            icon: "language2",
+            url_name: "language"
+        });
+        Category.insert({
+            name: "Rettshjelp",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Rettshjelp, lover etc.",
+            icon: "legal2",
+            url_name: "legal"
+        });
+        Category.insert({
+            name: "Transport",
+            children: [],
+            content_ids: [],
+            children_id: [],
+            description: "Informasjon anngående transport",
+            icon: "transport2",
+            url_name: "transport"
+        });
     }
 
+    var languageIds = [];
     // add something in database for language test
     if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default LanguageTags created.");
-        LanguageTags.insert({
-            name: "Norwegian",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Regning med tall",
-            url_name: "norwegian",
-        }); 
+        languageIds.push(LanguageTags.insert({
+            name: "Norsk",
+            english_name: "Norwegian",
+            short_form: "no"
+        })); 
+        languageIds.push(LanguageTags.insert({
+            name: "English",
+            english_name: "English",
+            short_form: "en"
+        }));
+        languageIds.push(LanguageTags.insert({
+            name: "Español",
+            "english_name": "Spanish",
+            short_form: "es"
+        }));
     }
 
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default CommunityTags created.");
         CommunityTags.insert({
-            name: "StudentInTrondheim",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Regning med tall",
-            url_name: "sit",
+            name: "StudentInTrondheim"
         }); 
     }
 
@@ -126,6 +209,27 @@ Meteor.startup(function(){
             name: "Kult",
             taggedContent: []
         });
+    }
+    if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
+        console.log("Create default user");
+
+        var defUser = Meteor.settings.defaultUser;
+        var proflie = {
+            first_name: "Ping",
+            last_name: "Pong",
+            organization: "CC AS",
+            languages: languageIds,
+            home_adress: "Trondheim"
+        }
+        userid = Meteor.users.insert({
+            username: defUser.username,
+            email: defUser.email,
+            profile:proflie,
+            roles: "creator",
+            createdContents: []
+
+        });
+        Accounts.setPassword(userid, defUser.password);
     }
 
 });
