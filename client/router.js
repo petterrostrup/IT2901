@@ -84,7 +84,6 @@ Router.route("/create_content", {
 Router.route("/fill_content/:_id", function() {
   var content_id = this.params._id;
   var content = Content.findOne({_id: content_id});
-  console.log("hiesann du din raring!");
   if (!content) {
     this.render("page_not_found");
   }
@@ -132,4 +131,17 @@ Router.route("/profile", {
       else
         Router.go("/");
     }
+});
+
+Router.route("/languages", {
+  name: "languages",
+  template: "languages",
+
+  onBeforeAction: function() {
+    if (Meteor.userId()) {
+      this.next();
+    }else{
+      Router.go("/");
+    }
+  }
 });

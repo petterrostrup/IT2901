@@ -23,6 +23,7 @@ Schema.UserProfile = new SimpleSchema({
 	languages: {
 		type: [String],
 		label: "Languages",
+		regEx: SimpleSchema.RegEx.Id,
 		optional: true
 	},
     home_adress: {
@@ -128,6 +129,11 @@ Schema.Content = new SimpleSchema({
   	tags: {
   		type: [Schema.Tags],
   		optional: true
+  	},
+  	contents: {
+  		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
   	}
 
 });
@@ -222,6 +228,21 @@ Schema.ContentText = new SimpleSchema({
 	}
 });
 
+Schema.LanguageTags = new SimpleSchema({
+	name: {
+		type: String,
+		optional: false
+	},
+	english_name: {
+		type: String,
+		optional: false
+	},
+	short_form: {
+		type: String,
+		optional: false
+	}
+});
+
 
 
 Meteor.users.attachSchema(Schema.User);
@@ -229,3 +250,4 @@ Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
+LanguageTags.attachSchema(Schema.LanguageTags);

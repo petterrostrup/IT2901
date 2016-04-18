@@ -34,26 +34,7 @@ Meteor.publish("CommunityTags", function() {
 });
 
 Meteor.startup(function(){
-    if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
-        console.log("Create default user");
-
-        var defUser = Meteor.settings.defaultUser;
-        var proflie = {
-            first_name: "Ping",
-            last_name: "Pong",
-            organization: "CC AS",
-            languages: ["en", "no"],
-            home_adress: "Trondheim"
-        }
-        userid = Meteor.users.insert({
-            username: defUser.username,
-            email: defUser.email,
-            profile:proflie,
-            roles: "creator",
-            createdContents: []
-        });
-        Accounts.setPassword(userid, defUser.password);
-    }
+    
     // add something in database for test
     if (!Category.findOne() && Meteor.settings.DEBUG){
         console.log("Default category created.");
@@ -167,29 +148,32 @@ Meteor.startup(function(){
         });
     }
 
+    var languageIds = [];
     // add something in database for language test
     if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default LanguageTags created.");
-        LanguageTags.insert({
-            name: "Norwegian",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Regning med tall",
-            url_name: "norwegian",
-        }); 
+        languageIds.push(LanguageTags.insert({
+            name: "Norsk",
+            english_name: "Norwegian",
+            short_form: "no"
+        })); 
+        languageIds.push(LanguageTags.insert({
+            name: "English",
+            english_name: "English",
+            short_form: "en"
+        }));
+        languageIds.push(LanguageTags.insert({
+            name: "Español",
+            "english_name": "Spanish",
+            short_form: "es"
+        }));
     }
 
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default CommunityTags created.");
         CommunityTags.insert({
-            name: "StudentInTrondheim",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Regning med tall",
-            url_name: "sit",
+            name: "StudentInTrondheim"
         }); 
     }
 
@@ -200,6 +184,27 @@ Meteor.startup(function(){
             name: "Kult",
             taggedContent: []
         });
+    }
+    if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
+        console.log("Create default user");
+
+        var defUser = Meteor.settings.defaultUser;
+        var proflie = {
+            first_name: "Ping",
+            last_name: "Pong",
+            organization: "CC AS",
+            languages: languageIds,
+            home_adress: "Trondheim"
+        }
+        userid = Meteor.users.insert({
+            username: defUser.username,
+            email: defUser.email,
+            profile:proflie,
+            roles: "creator",
+            createdContents: []
+
+        });
+        Accounts.setPassword(userid, defUser.password);
     }
 
 });
