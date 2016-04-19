@@ -20,15 +20,18 @@ Template.submit_content.events({
 	    // Prevent default browser form submit
 	    event.preventDefault();	
 
-        var text = $('#editor').trumbowyg('html');    
-	    var tar = event.target;
+        console.log($('#editor').trumbowyg('html'));
+
+
+        var temp = html2json($('#editor').trumbowyg('html'));
+
+        console.log(temp)
         var id = Router.current().params._id;
 
         var contentText = {
-            // lang: tar.lang,
             language: "no",
-            text: text,
-            metacontent: id
+            metacontent: id,
+            text: temp,
         }
 
     	Meteor.call("submit_content", contentText, function(error, result){
@@ -42,3 +45,5 @@ Template.submit_content.events({
 
 	}
 });
+
+

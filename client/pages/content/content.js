@@ -19,12 +19,17 @@ Template.content.helpers({
 		list.reverse();
 		return list;
 	},
-	getContentText: function(contentID) {
-		content = Content.findOne({_id: Router.current().params._id});
-		return ContentText.find({metacontent: content._id});
+	getContentText: function() {
+		var content = Content.findOne({_id: Router.current().params._id});	
+		var foo = ContentText.find({metacontent: content._id});
+		return foo;
 	},
-	getCurrentLang: function(){
-		return Session.get("ContentLang");
+
+	print_contentText:function(contentJson){
+		console.log(contentJson);
+		var temp = json2html(contentJson);
+		console.log(temp);
+		return temp;
 	}
 
 });
@@ -32,10 +37,7 @@ Template.content.helpers({
 
 Template.content.events({
     "scroll":function(event, template){
-    },
-    'click .lang_button' : function() {
-      Session.set('ContentLang', event.target.id);
-   }
+    }
 });
 
 Comments.ui.config({

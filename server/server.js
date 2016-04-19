@@ -12,6 +12,10 @@ Meteor.publish("content", function(){
 	return Content.find({});
 });
 
+Meteor.publish("contentText", function() {
+    return ContentText.find({});
+});
+
 Meteor.publish("tags", function(tag_string) {
     console.log(tag_string);
     return Tag.find({
@@ -49,7 +53,8 @@ Meteor.startup(function(){
             username: defUser.username,
             email: defUser.email,
             profile:proflie,
-            roles: "creator"
+            roles: "creator",
+            createdContents: []
 
         });
         Accounts.setPassword(userid, defUser.password);
