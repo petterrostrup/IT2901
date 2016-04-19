@@ -8,6 +8,8 @@ Meteor.publish("personalInfo", function() {
     }
 });
 
+
+// Publishes all user info to administrators. If the user are not admin, the user cannot access all user information
 Meteor.publish("allUsers", function(user) {
     if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {
         return Meteor.users.find({});
@@ -41,7 +43,7 @@ Meteor.publish("CommunityTags", function() {
 
 Meteor.startup(function(){
     
-    // add something in database for test
+    // If no category is found, it will create all the standard categories
     if (!Category.findOne()){
         console.log("Default category created.");
         Category.insert({
@@ -174,6 +176,7 @@ Meteor.startup(function(){
             short_form: "es"
         }));
     }
+
 
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){

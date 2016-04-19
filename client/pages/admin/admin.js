@@ -1,5 +1,8 @@
 
-Meteor.subscribe("allUsers", Meteor.user());
+Template.admin.rendered = function() {
+	Meteor.subscribe("allUsers", Meteor.user());
+}
+
 
 var show_message_error = function(msg) {
 	$("#regErrorText").text(msg);
