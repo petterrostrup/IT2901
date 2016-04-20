@@ -17,17 +17,11 @@ Template.content.helpers({
 	},
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
-		var foo = ContentText.find({metacontent: content._id});
+		var foo = ContentText.find({metacontent: content._id}).fetch();
+		//var temp = json2html(contentJson);
+		console.log(foo);
 		return foo;
-	},
-
-	print_contentText:function(contentJson){
-		console.log(contentJson);
-		var temp = json2html(contentJson);
-		console.log(temp);
-		return temp;
 	}
-
 });
 
 
