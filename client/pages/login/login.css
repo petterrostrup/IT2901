@@ -58,7 +58,7 @@ body {
     outline: none;
     color: #fff;
     font-size: 14px;
-    height: auto;
+    height: 50px;
     font-weight: normal;
     padding: 14px 0;
     text-transform: uppercase;
@@ -85,7 +85,7 @@ body {
     outline: none;
     color: #fff;
     font-size: 14px;
-    height: auto;
+    height: 50px;
     font-weight: normal;
     padding: 14px 0;
     text-transform: uppercase;
@@ -97,6 +97,7 @@ body {
     background-color: #1CA347;
     border-color: #1CA347;
 }
+
 
 @media (max-width:767px) {
     .row{
