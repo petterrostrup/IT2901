@@ -1,8 +1,8 @@
 
 Template.content.helpers({
 	get_information: function() {
-		var data = Content.findOne({_id: Router.current().params._id});
-		return data;
+		return Content.findOne({_id: Router.current().params._id});
+
 	},
 	get_parent_url: function() {
 		var list = [];
@@ -15,10 +15,19 @@ Template.content.helpers({
 		list.reverse();
 		return list;
 	},
-	getContentText: function(content) {
-		return ContentText.find({metacontent: content._id});
-	} 
-	//get_current_contentText: function()
+	getContentText: function() {
+		var content = Content.findOne({_id: Router.current().params._id});	
+		var foo = ContentText.find({metacontent: content._id});
+		return foo;
+	},
+
+	print_contentText:function(contentJson){
+		console.log(contentJson);
+		var temp = json2html(contentJson);
+		console.log(temp);
+		return temp;
+	}
+
 });
 
 

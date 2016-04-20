@@ -218,10 +218,10 @@ Schema.ContentText = new SimpleSchema({
 		max: 20
 	},
 	text: {
-		type: String,
+		type: Object,
 		optional: false
 	},
-	metecontent: {
+	metacontent: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
 		optional: true

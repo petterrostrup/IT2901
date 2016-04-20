@@ -20,6 +20,10 @@ Meteor.publish("content", function(){
 	return Content.find({});
 });
 
+Meteor.publish("contentText", function() {
+    return ContentText.find({});
+});
+
 Meteor.publish("tags", function(tag_string) {
     console.log(tag_string);
     return Tag.find({

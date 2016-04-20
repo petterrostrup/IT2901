@@ -26,6 +26,9 @@ We will use this when we git:
 
 ## Packages that are used in the project
 
+### [Jxck:html2json](https://github.com/Jxck/html2json)
+converting html to json and back to html. 
+
 ### [malkesh:trumbowyg](https://atmospherejs.com/malkesh/trumbowyg)
 
 A lightweight WYSIWYG editor.

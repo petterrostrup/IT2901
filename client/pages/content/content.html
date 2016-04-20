@@ -20,17 +20,7 @@
         <p>{{get_information.description}}</p>
 
 
-        <p>
-            {{#each getContentText get_information}}
-                <span> {{language}} </span>
-            {{/each}}
-        </p>
-        <!-- TODO: Add way to show content.
-        Find out way to store it in DB so that it is easy to show. -->
-        {{#each getContentText get_information}}
-            {{text}}
-        {{/each}}
-
+        {{print_contentText getContentText}}
 
         <div class="comment-section">
             {{> commentsBox id=get_information._id}}

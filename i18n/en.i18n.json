@@ -57,6 +57,9 @@
         "delete_language_msg": "The language was deleted",
         "settings": "Settings",
         "add": "Add language"
+    },
+    "changeLanguage": {
+        "ChangeLanguage": "Change Language"
     }
 }
 

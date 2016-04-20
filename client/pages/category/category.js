@@ -42,6 +42,18 @@ Template.category.events({
     "scroll":function(event, template){
 
     },
+	"click #subCatButton":function(event, template){
+		if (template.$("#new_subcategory").hasClass('active')){
+			template.$("#new_subcategory").removeClass('active');
+			template.$("#new_subcategory").hide();
+			template.$("#subCatButton").html("&#xf150; Create Subcategory");
+		}
+		else{
+			template.$("#new_subcategory").addClass('active');
+			template.$("#new_subcategory").show();
+			template.$("#subCatButton").html("&#xf151; Cancel");
+		}
+	},
     "submit #new_subcategory": function(event, template) {
     	event.preventDefault();
     	var cat = {

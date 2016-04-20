@@ -57,6 +57,9 @@
         "delete_language_msg": "Språket ble slettet.",
         "settings": "Instillinger",
         "add": "Legg til nytt språk"
+    },
+    "changeLanguage":{
+        "ChangeLanguage": "Skift språk"
     }
 }
 

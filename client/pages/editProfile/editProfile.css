@@ -1,4 +1,6 @@
-
+.headerText{
+    color: rgba(88, 88, 88, 0.78) !important;
+}
 .user-row {
     margin-bottom: 14px;
 }

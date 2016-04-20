@@ -6,12 +6,12 @@
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{ getUserInfo.username }} {{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
+                        <h3 class="panel-title headerText">{{ getUserInfo.username }} - {{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
                     </div>
                     <div class="panel-body">
                         <div class="alert alert-success" id="editSuccess" style="display: none" role="alert">Profile information is edited</div>
                         <div class="row">
-                            <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="/images/placeholder.png" height="100px" width="100px" class="img-circle img-responsive"> </div>
+                            <div class="col-md-3 col-lg-3 " align="center"></div>
                             <div class=" col-md-9 col-lg-9 ">
                                 <table class="table table-user-information">
                                     <tbody>
@@ -58,7 +58,7 @@
                     <div class="panel-footer">
                         <span>
                             <form id="edit-profile-submit">
-                                 <input type="submit" name="edit-profile-submit"  value="Save">
+                                 <input type="submit" name="edit-profile-submit" style="font-family: FontAwesome;"  value="Save Changes  &#xf0c7;">
                             </form>
                         </span>
                     </div>

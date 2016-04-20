@@ -17,7 +17,7 @@
         float: left;
         width: auto!important;
     }
-    .custom-navbar .navbar-collapse {
+    .custom-navbar .navbar-collapse{
         clear: both;
         float: none;
     }
@@ -26,7 +26,9 @@
     }
 
 }
-
+.popover{
+    
+}
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #4f4f4f;  /*Sets the text hover color on navbar*/
 }
