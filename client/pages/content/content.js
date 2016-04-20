@@ -7,11 +7,7 @@ Template.content.helpers({
 	get_parent_url: function() {
 		var list = [];
 		var current = Content.findOne({_id: Router.current().params._id});
-		current = {
-			_id: current._id, 
-			parent_id: current.category_id,
-			name: current.title
-		}
+		current = Category.findOne({_id: current.category_id});
 		while (current) {
 			list.push({_id: current._id, name: current.name});
 			current = Category.findOne({_id: current.parent_id});

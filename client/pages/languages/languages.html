@@ -1,0 +1,61 @@
+<template name="languages">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3>Your languages</h3>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="alert alert-danger" id="regError" style="display: none;">
+					<div id="regErrorText"></div>
+				</div>
+				<div class="row">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>English name</th>
+								<th>Short form</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{{#each getUserLanguages}}
+								<tr>
+									<td>{{name}}</td>
+									<td>{{english_name}}</td>
+									<td>{{short_form}}</td>
+									<td>
+										<button class="delete_button btn btn-sm" id="{{_id}}">
+											Delete
+										</button>
+									</td>
+								</tr>
+							{{/each}}
+						</tbody>
+					</table>
+					<table class="table">
+						<tr>
+							<td>Add language</td>
+							<td>
+								{{> inputAutocomplete 
+									settings=settingsLang 
+									id="autocomplete-input-Lang" 
+									class="form-control" 
+									placeholder="Type language" 
+									autofocus="autofocus"
+								}}
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="languagePill">
+  {{name}}
+</template>

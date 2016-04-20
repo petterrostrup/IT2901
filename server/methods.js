@@ -23,6 +23,8 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Email was taken.");
 		}
 
+		user.createdContents = [];
+
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
 
@@ -81,6 +83,8 @@ Meteor.methods({
 		}
 		post.language_id = language_id;
 
+		post.contents = [];
+
 		var content_id = Content.insert(post);
 		if (!content_id) {
 			throw new Meteor.Error(400, "Content not added!");
@@ -106,8 +110,6 @@ Meteor.methods({
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
 		console.log(content);
-		content.text = content.text;
-		console.log(content);
 		ContentText.insert(content);
 	},
 
@@ -127,6 +129,12 @@ Meteor.methods({
 			if (!parent)
 				throw new Meteor.Error(400, "Parent category id not found.");
 		}
+		else
+			throw new Meteor.Error(400, "Parent category is required.");
+
+		// If the name of the category already exists, you are not allowed to create one.
+		if (Category.findOne({name: category.name}))
+			throw new Meteor.Error(422, "The category name already exists.");
 		category.children_id = [];
 		category.children = [];
 		category.content_ids = [];
@@ -141,14 +149,14 @@ Meteor.methods({
 
 	// edit_profile with first_name, last_name, language, email
 	edit_profile: function(userInfo, newEmail) {
-		console.log(userInfo.languages);
 		check(userInfo, Object);
 		check(newEmail, String);
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
-
+		userInfo.languages = Meteor.user().profile.languages;
+		userInfo.organization = "Company AS";
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
 	},
@@ -172,5 +180,41 @@ Meteor.methods({
 			Tag.update(
 				{_id: tag._id, taggedContent: Tag.taggedContent})
 		}
+	},
+
+	remove_language_profile: function(lang_id) {
+		check(lang_id, String);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		var languages = Meteor.user().profile.languages;
+		var index = languages.indexOf(lang_id);
+		if (index > -1) {
+			languages.splice(index, 1);
+			Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+		}else {
+			throw new Meteor.Error(400, "Language not found.");
+		}
+	},
+
+
+	add_language_profile: function(languageId) {
+		check(languageId, String);
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!LanguageTags.findOne({_id: languageId})) 
+			throw new Meteor.Error(400, "Language not found.");
+
+		var languages = Meteor.user().profile.languages;
+		for (var a in languages) {
+			if (languages[a] === languageId) 
+				throw new Meteor.Error(400, "Language already exist.");
+		}
+		languages.push(languageId);
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
 	}
 });

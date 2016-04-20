@@ -44,7 +44,7 @@
             <tr>
                 <td>
                     <form action="{{pathFor 'create_content'}}/{{data._id}}">
-                        <input type="submit" value="Add new content" />
+                        <input type="submit" style="font-family: FontAwesome" value="&#xf067; Add Content" />
                     </form>
                 </td>
                 <td></td>
@@ -61,7 +61,8 @@
                 </tr>
             {{/each}}
         </table>
-        <form id="new_subcategory">
+        <button id="subCatButton" style="font-family: FontAwesome;">&#xf150; Create Subcategory</button>
+        <form id="new_subcategory" style="display: none">
             <table>
                 <tr>
                     <th>Ny sub kategori</th>
@@ -76,7 +77,7 @@
                     <td><input type="text" id="description"/></td>
                 </tr>
                 <tr>
-                    <input type="submit" value="Add sub category" />
+                    <input type="submit" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; Add Subcategory" />
                 </tr>
             </table>
         </form>

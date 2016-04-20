@@ -12,20 +12,22 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a id="home" class="link" href="{{pathFor 'home'}}">Home</a></li>
-                        <li><a id="category" class="link" href="{{pathFor 'category'}}">Browse Content</a></li>
+                        <li><a id="home" class="link" href="{{pathFor 'home'}}"><i class="fa fa-home" aria-hidden="true">  </i> {{_ "header.Home"}} </a></li>
+                        <li><a id="category" class="link" href="{{pathFor 'category'}}"><i class="fa fa-files-o" aria-hidden="true">  </i> {{_ "header.BrowseContent"}}</a></li>
                         {{#if currentUser }}
-                        <li><a id="createContent" class="link" href="{{pathFor 'createContent'}}">Create Content</a></li>
+                        <li><a id="createContent" class="link" href="{{pathFor 'createContent'}}"><i class="fa fa-plus" aria-hidden="true">  </i> {{_ "header.CreateContent"}}</a></li>
                         {{/if}}
                     </ul>
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
-                        <li><a id="profile" class="link" href="{{pathFor 'profile'}}">{{currentUser.username}}</a></li>
-                        <li><a href="{{pathFor 'home'}}" class="logout link">Logg Ut</a></li>
+                        <li><a id="profile" class="link" href="{{pathFor 'profile'}}"><i class="fa fa-user" aria-hidden="true">  </i>  {{currentUser.username}}</a></li>
+                        <li><a href="{{pathFor 'home'}}" class="logout link"><i class="fa fa-sign-out" aria-hidden="true"> </i>  {{_ "header.LogOut"}}</a></li>
                         {{else}}
-                        <li><a id="login" class="link" href="{{pathFor 'login'}}">Login</a></li>
+                        <li><a id="login" class="link" href="{{pathFor 'login'}}"><i class="fa fa-sign-in" aria-hidden="true"> </i> {{_ "header.Login"}}</a></li>
                         {{/if}}
+
+                        <li><a id="language" name="language" class="link"><i  class="fa fa-language"></i></a></li>
                     </ul>
                 </div>
             </div>

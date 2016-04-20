@@ -26,8 +26,9 @@ if (Meteor.isClient) {
     });
 }
 
-Template.navigation.events = {
-    'click #language': function(){
+Template.navigation.events({
+    'click #language': function(event){
+        event.preventDefault();
         if(TAPi18n.getLanguage() == 'en'){
             var lang = 'no';
         }
@@ -43,5 +44,5 @@ Template.navigation.events = {
                 console.log(error_message);
             });
     }
-}
+});
 
