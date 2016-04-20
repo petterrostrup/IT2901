@@ -40,7 +40,7 @@ Template.editProfile.helpers({
     		user.createdAt = user.createdAt.toISOString().slice(0, 10);
     		return user;
     	} else {
-    		console.log("edit profile cant get user from database.");
+    		console.log("edit profile can't get user from database.");
     		return null;
     	}
     },
@@ -50,7 +50,7 @@ Template.editProfile.helpers({
     	if (profile) {
     		return profile;
     	} else {
-    		console.log("edit profile cant get profile from database.");
+    		console.log("edit profile can't get profile from database.");
     		return null;
     	}
     }
