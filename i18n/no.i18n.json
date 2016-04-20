@@ -4,7 +4,8 @@
         "BrowseContent": "Bla i innhold",
         "CreateContent": "Lag innhold",
         "LogOut": "Logg ut",
-        "Login": "Logg inn"
+        "Login": "Logg inn",
+        "Admin": "Admin"
     },
     "profile": {
         "Username": "Brukernavn",
@@ -31,6 +32,31 @@
     },
     "typeHere": {
         "TypeHere": "Skriv her"
+    },
+    "admin": {
+        "menu": {
+            "add_language": "Legg til språk",
+            "rm_language": "Fjern språk",
+            "show_users": "Vis alle brukere"
+        },
+        "add_language": {
+            "name": "Navn på språket",
+            "short_name": "Kort navn på språk",
+            "english": "Engelsk navn på språk",
+            "lang_added": "Språket ble lagt til."
+        },
+        "users": {
+            "username": "Brukernavn",
+            "email": "E-post",
+            "roles": "Roller",
+            "delete": "Slett bruker",
+            "show": "Vis bruker",
+            "back": "Tilbake"
+        },
+        "delete_language": "Slett språk",
+        "delete_language_msg": "Språket ble slettet.",
+        "settings": "Instillinger",
+        "add": "Legg til nytt språk"
     },
     "changeLanguage":{
         "ChangeLanguage": "Skift språk"
