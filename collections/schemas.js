@@ -72,6 +72,11 @@ Schema.User = new SimpleSchema({
 	    type: Object,
 	    optional: true,
 	    blackbox: true
+	}, 
+	createdContents: {
+		type: [String],
+		optional: false,
+		regEx: SimpleSchema.RegEx.Id
 	}
 });
 
@@ -203,10 +208,10 @@ Schema.ContentText = new SimpleSchema({
 		max: 20
 	},
 	text: {
-		type: String,
+		type: Object,
 		optional: false
 	},
-	metecontent: {
+	metacontent: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
 		optional: true

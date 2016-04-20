@@ -60,24 +60,26 @@ Meteor.methods({
 		}
 
 		// Community id
-		if (!post.community_id){
-			throw new Meteor.Error(400, "Missing community id.");
+		if (!post.community){
+			throw new Meteor.Error(400, "Missing community.");
 		}
 
-		var community = CommunityTags.findOne({_id: post.community_id});
-		if (!community) {
+		var community_id = CommunityTags.findOne({name: post.community})._id;
+		if (!community_id) {
 			throw new Meteor.Error(400, "Missing valid community id.");
 		}
+		post.community_id = community_id;
 
 		// Language id
-		if (!post.language_id){
-			throw new Meteor.Error(400, "Missing language_id id.");
+		if (!post.language){
+			throw new Meteor.Error(400, "Missing language.");
 		}
 
-		var language = LanguageTags.findOne({_id: post.language_id});
-		if (!language) {
+		var language_id = LanguageTags.findOne({name: post.language})._id;
+		if (!language_id) {
 			throw new Meteor.Error(400, "Missing valid language id.");
 		}
+		post.language_id = language_id;
 
 		var content_id = Content.insert(post);
 		if (!content_id) {
@@ -93,6 +95,8 @@ Meteor.methods({
 		// If not, it will throw an error.
 		// Commenting this out so people not will hate me
 		// Security.can(this.userId).insert(post).for(Content).throw(); 
+		
+		return content_id;
 	},
 
 	submit_content: function(content) {
@@ -101,6 +105,8 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
+		console.log(content);
+		content.text = content.text;
 		console.log(content);
 		ContentText.insert(content);
 	},
@@ -132,6 +138,21 @@ Meteor.methods({
 			}});
 		}
 	},
+
+	// edit_profile with first_name, last_name, language, email
+	edit_profile: function(userInfo, newEmail) {
+		console.log(userInfo.languages);
+		check(userInfo, Object);
+		check(newEmail, String);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
+		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
+	},
+
 	tag_content: function(content, tagID) {
 
 		//check that input is valid

@@ -4,6 +4,7 @@ Meteor.subscribe("personalInfo");
 Meteor.subscribe("categories");
 Meteor.subscribe("LanguageTags");
 Meteor.subscribe("CommunityTags");
+Meteor.subscribe("contentText");
 
 getUserLanguage = function () {
     // Put logic for determining the user language

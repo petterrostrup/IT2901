@@ -10,11 +10,17 @@ Router.route("/", {
   template:"home"
 });
 
-Router.route("/submitContent",{
-  name:"submitContent",
-  template:"submitContent"
+Router.route("/submit_content",{
+  name:"submit_content",
+  template:"submit_content"
 })
 
+// Routing for the edit profile
+Router.route("/editprofile", {
+    name: "editProfile",
+    template: "editProfile"
+});
+  
 // Routing for the create content
 Router.route("/createContent", {
     name: "createContent",
@@ -51,12 +57,12 @@ Router.route("/content/:_id", function() {
     this.render("content");
   else
     this.render("page_not_found");
-});
+}, {"name": "show_content"});
 
-Router.route("/submitContent/:_id", function() {
+Router.route("/submit_content/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
   if (data)
-    this.render("submitContent");
+    this.render("submit_content");
   else
     this.render("page_not_found");
 });
@@ -70,6 +76,7 @@ Router.route("/create_content", {
       Router.go("/");
     else
       this.next();
+    
   }
 });
 
