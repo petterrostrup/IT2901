@@ -31,6 +31,9 @@
     },
     "typeHere": {
         "TypeHere": "Skriv her"
+    },
+    "changeLanguage":{
+        "ChangeLanguage": "Skift språk"
     }
 }
 

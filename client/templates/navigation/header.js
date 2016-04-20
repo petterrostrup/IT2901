@@ -4,6 +4,7 @@ Template.navigation.events({
      Meteor.logout(function(){
 
      });
-  },
+  }
 });
+
 
