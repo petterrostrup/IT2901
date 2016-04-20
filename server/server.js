@@ -8,6 +8,14 @@ Meteor.publish("personalInfo", function() {
     }
 });
 
+
+// Publishes all user info to administrators. If the user are not admin, the user cannot access all user information
+Meteor.publish("allUsers", function(user) {
+    if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {
+        return Meteor.users.find({});
+    }
+});
+
 Meteor.publish("content", function(){
 	return Content.find({});
 });
@@ -38,8 +46,9 @@ Meteor.publish("CommunityTags", function() {
 });
 
 Meteor.startup(function(){
-    // add something in database for test
-    if (!Category.findOne() && Meteor.settings.DEBUG){
+    
+    // If no category is found, it will create all the standard categories
+    if (!Category.findOne()){
         console.log("Default category created.");
         Category.insert({
             name: "By",
@@ -172,6 +181,7 @@ Meteor.startup(function(){
         }));
     }
 
+
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default CommunityTags created.");
@@ -203,9 +213,8 @@ Meteor.startup(function(){
             username: defUser.username,
             email: defUser.email,
             profile:proflie,
-            roles: "creator",
+            roles: ["admin"],
             createdContents: []
-
         });
         Accounts.setPassword(userid, defUser.password);
     }

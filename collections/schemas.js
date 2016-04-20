@@ -52,8 +52,8 @@ Schema.User = new SimpleSchema({
 		optional: false
 	},
 	roles: {
-		type: String,
-		allowedValues: ["Standard", "creator", "official"],
+		type: [String],
+		allowedValues: ["standard", "creator", "official", "admin"],
 		optional: false,
 		label: "Roles"
 	},

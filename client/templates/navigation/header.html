@@ -1,7 +1,8 @@
 <template name="navigation">
     <!-- Navbar -->
+
 	<nav class="navbar navbar-default custom-navbar" role="navigation">
-        <div class="col-lg-12  col-md-12 text-nowrap">
+        <div class="col-lg-12  col-md-12 text-nowrap" style="display: inline-block">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -9,7 +10,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+
                 </div>
+
+                <div class="pull-right">
+                        <ul class="nav navbar-nav">
+                            <li><a style="white-space: nowrap"  id="language" class="link" name="language" title="Languages" data-toggle="popover" data-placement="bottom" data-content=""><i class="fa fa-language fa-lg" aria-hidden="true"></i></a></li>
+                        </ul>
+                </div>
+
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a id="home" class="link" href="{{pathFor 'home'}}"><i class="fa fa-home" aria-hidden="true">  </i> {{_ "header.Home"}} </a></li>
@@ -21,16 +30,27 @@
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
-                        <li><a id="profile" class="link" href="{{pathFor 'profile'}}"><i class="fa fa-user" aria-hidden="true">  </i>  {{currentUser.username}}</a></li>
+                        {{#if isInRole 'admin'}}
+                        <li>
+                            <a href="{{pathFor 'admin'}}" class="link">
+                                <i class="fa fa-cog" aria-hidden="true">  </i>
+                                {{_ "header.Admin"}}
+                            </a>
+                        </li>
+                        {{/if}}
+                        <li>
+                        <a id="profile" class="link" href="{{pathFor 'profile'}}"><i class="fa fa-user" aria-hidden="true">  </i>  {{currentUser.username}}</a></li>
                         <li><a href="{{pathFor 'home'}}" class="logout link"><i class="fa fa-sign-out" aria-hidden="true"> </i>  {{_ "header.LogOut"}}</a></li>
                         {{else}}
                         <li><a id="login" class="link" href="{{pathFor 'login'}}"><i class="fa fa-sign-in" aria-hidden="true"> </i> {{_ "header.Login"}}</a></li>
                         {{/if}}
 
-                        <li><a id="language" name="language" class="link"><i  class="fa fa-language"></i></a></li>
+
                     </ul>
                 </div>
             </div>
         </div>
+
     </nav>
 </template>
+

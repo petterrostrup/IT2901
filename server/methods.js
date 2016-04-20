@@ -24,6 +24,7 @@ Meteor.methods({
 		}
 
 		user.createdContents = [];
+		user.roles = ["standard", "creator"];
 
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
@@ -216,5 +217,112 @@ Meteor.methods({
 		}
 		languages.push(languageId);
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+	},
+
+
+	// Administrator methods
+	add_language_system: function(language) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(language, {
+			"name": String,
+			"english_name": String,
+			"short_form": String
+		});
+
+		if (LanguageTags.findOne({name: language.name})) 
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({english_name: language.english_name}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({short_form: language.short_form}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		LanguageTags.insert(language);
+	},
+
+
+	remove_language_system: function(lang_id) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(lang_id, String);
+		var is_deleted = LanguageTags.remove({_id: lang_id});
+		if (!is_deleted)
+			throw new Meteor.Error(404, "Language does not exist");
+	},
+
+
+	remove_user_system: function(user_id) {
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(430, "You do not have access.");
+
+		check(user_id, String);
+
+		if (user_id === Meteor.userId()) 
+			throw new Meteor.Error(430, "Cannot delete your self.");
+
+		var is_deleted = Meteor.users.remove({_id: user_id});
+		if (!is_deleted)
+			throw new Meteor.Error(404, "User not found.");
+	},
+
+
+	add_user_to_role: function(obj) {
+		check(obj, {
+			user_id: String,
+			role: String
+		});
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
+			throw new Meteor.Error(430, "You do not have access.");
+		}
+
+		if (!Meteor.users.findOne({_id: obj.user_id}))
+			throw new Meteor.Error(404, "User not found.");
+
+		Roles.addUsersToRoles(obj.user_id, obj.role);
+
+	},
+
+
+	remove_user_from_role: function(obj) {
+		check(obj, {
+			user_id: String,
+			role: String
+		});
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
+			throw new Meteor.Error(430, "You do not have access.");
+		}
+
+		if (!Meteor.users.findOne({_id: obj.user_id}))
+			throw new Meteor.Error(404, "User not found.");
+
+		if (obj.user_id === Meteor.userId() && obj.role === "admin")
+			throw new Meteor.Error(430, "You cannot remove admin from your self.");
+
+		Roles.removeUsersFromRoles(obj.user_id, obj.role);
 	}
 });
