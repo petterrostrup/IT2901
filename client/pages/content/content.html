@@ -15,12 +15,19 @@
 
         </ol>
 
-        <h1>{{get_information.title}}</h1>
+        {{#with get_information}}
 
-        <p>{{get_information.description}}</p>
+            <h1>{{title}}</h1>
 
+            <p>{{description}}</p>
 
-        {{print_contentText getContentText}}
+            {{#markdown}}
+                {{#each getContentText}}
+                    {{text}}
+                {{/each}}
+            {{/markdown}}
+
+        {{/with}}
 
         <div class="comment-section">
             {{> commentsBox id=get_information._id}}

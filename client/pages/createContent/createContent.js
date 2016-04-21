@@ -158,6 +158,7 @@ Template.createContent.events({
     			template.$("#createSuccess").show();
     		}
     		if (result) {
+    			console.log(result);
     			Router.go("submit_content", {_id: result});
     		}
     	});

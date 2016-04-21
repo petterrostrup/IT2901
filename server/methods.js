@@ -111,6 +111,7 @@ Meteor.methods({
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
 		console.log(content);
+		content.language = "no";
 		ContentText.insert(content);
 	},
 

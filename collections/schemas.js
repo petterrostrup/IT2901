@@ -218,7 +218,7 @@ Schema.ContentText = new SimpleSchema({
 		max: 20
 	},
 	text: {
-		type: Object,
+		type: String,
 		optional: false
 	},
 	metacontent: {

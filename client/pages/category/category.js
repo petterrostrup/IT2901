@@ -33,6 +33,7 @@ Template.category.helpers({
 		for (var content in current.content_ids){
 			list.push(Content.findOne({_id: current.content_ids[content]}))
 		}
+		console.log(list);
 		return list;
 	}
 });

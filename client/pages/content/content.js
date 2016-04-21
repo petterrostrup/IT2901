@@ -17,7 +17,7 @@ Template.content.helpers({
 	},
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
-		var foo = ContentText.find({metacontent: content._id});
+		var foo = ContentText.find({metacontent: content._id}).fetch();
 		return foo;
 	},
 

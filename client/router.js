@@ -10,10 +10,10 @@ Router.route("/", {
   template:"home"
 });
 
-Router.route("/submit_content",{
-  name:"submit_content",
-  template:"submit_content"
-})
+// Router.route("/submit_content",{
+//   name:"submit_content",
+//   template:"submit_content"
+// })
 
 // Routing for the edit profile
 Router.route("/editprofile", {
@@ -59,13 +59,17 @@ Router.route("/content/:_id", function() {
     this.render("page_not_found");
 }, {"name": "show_content"});
 
+// Router.route("/fix_content/", function() {
+//   this.render("fix_content");
+// }, {name: "fix_content"}); 
+
 Router.route("/submit_content/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
   if (data)
-    this.render("submit_content");
+    this.render("fix_content");
   else
     this.render("page_not_found");
-});
+}, {name: "submit_content"});
 
 // Routing for creating content
 Router.route("/create_content", {
@@ -79,15 +83,15 @@ Router.route("/create_content", {
   }
 });
 
-Router.route("/fill_content/:_id", function() {
-  var content_id = this.params._id;
-  var content = Content.findOne({_id: content_id});
-  if (!content) {
-    this.render("page_not_found");
-  }
-  else
-    this.render("submitContent");
-}, {"name": "fill_content"});
+// Router.route("/submit_content/:_id", function() {
+//   var content_id = this.params._id;
+//   var content = Content.findOne({_id: content_id});
+//   if (!content) {
+//     this.render("page_not_found");
+//   }
+//   else
+//     this.render("submitContent");
+// }, {"name": "submit_content"});
 
 // Routing for creating content for a specific category
 // The input is the category id
