@@ -10,21 +10,19 @@
             {{/each}}
 
             <li>
-                <a href="#">{{get_information.title}}</a>
+                <a href="#">{{getContentText.title}}</a>
             </li>
 
         </ol>
 
-        {{#with get_information}}
+        {{#with getContentText}}
 
             <h1>{{title}}</h1>
 
             <p>{{description}}</p>
 
             {{#markdown}}
-                {{#each getContentText}}
-                    {{text}}
-                {{/each}}
+                {{{text}}}
             {{/markdown}}
 
         {{/with}}

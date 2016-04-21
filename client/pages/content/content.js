@@ -18,7 +18,12 @@ Template.content.helpers({
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
 		var foo = ContentText.find({metacontent: content._id}).fetch();
-		return foo;
+		// Fortsett med å legge inn språk til content som følger
+		// språket til programmet.
+		for (var a in foo) {
+
+		}
+		return foo[0];
 	},
 
 	print_contentText:function(contentJson){

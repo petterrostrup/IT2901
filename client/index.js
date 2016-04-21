@@ -8,7 +8,7 @@ Meteor.subscribe("contentText");
 
 
 var supportedLanguages = require("../i18n/supportedLanguages.json");
-console.log(supportedLanguages);
+// console.log(supportedLanguages);
 supportedLanguages = $.map(supportedLanguages, function(val, index) { console.log(val +" " + index); return val + " " + index });
 
 
@@ -24,6 +24,7 @@ if (Meteor.isClient) {
         TAPi18n.setLanguage(getUserLanguage())
             .done(function () {
                 Session.set("showLoadingIndicator", false);
+                Session.set("current_language", getUserLanguage());
             })
             .fail(function (error_message) {
                 // Handle the situation
@@ -67,6 +68,7 @@ Template.navigation.events({
         TAPi18n.setLanguage(lang)
             .done(function () {
                 Session.set("showLoadingIndicator", false);
+                Session.set("current_language", lang);
             })
             .fail(function (error_message) {
                 // Handle the situation

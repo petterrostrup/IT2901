@@ -87,11 +87,6 @@ Schema.Content = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional:false
 	},
-	title: {
-		type: String,
-		optional: false,
-		max: 50
-	},
 	timestamp: {
 	    type: Date,
 	    autoValue: function() {
@@ -115,17 +110,6 @@ Schema.Content = new SimpleSchema({
   		regEx: SimpleSchema.RegEx.Id,
   		optional: false
   	},
-  	language_id: {
-  		type: String,
-  		//check if the value is id
-  		regEx: SimpleSchema.RegEx.Id,
-  		optional: false
-  	},
-  	description: {
-  		type: String,
-  		optional: false,
-  		max: 140
-  	}, 
   	tags: {
   		type: [Schema.Tags],
   		optional: true
@@ -212,6 +196,16 @@ Schema.Category = new SimpleSchema({
 });
 
 Schema.ContentText = new SimpleSchema({
+	title: {
+		type: String,
+		optional: false,
+		max: 50
+	},
+	description: {
+		type: String,
+		optional: false,
+		max: 140
+	},
 	language: {
 		type: String,
 		optional: false,
@@ -225,7 +219,19 @@ Schema.ContentText = new SimpleSchema({
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
 		optional: true
-	}
+	},
+	timestamp: {
+	    type: Date,
+	    autoValue: function() {
+		    if (this.isInsert) {
+		        return new Date();
+		    } else if (this.isUpsert) {
+		        return {$setOnInsert: new Date()};
+		    } else {
+		    	this.unset();  // Prevent user from supplying their own value
+		    }
+	    }
+  	}
 });
 
 Schema.LanguageTags = new SimpleSchema({

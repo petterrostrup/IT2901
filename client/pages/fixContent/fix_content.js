@@ -1,17 +1,4 @@
 
-console.log(Epic);
-
-Template.fix_content.helpers({
-	get_editor: function() {
-		editor = new EpicEditor({
-
-		});
-
-		// return editor
-	}
-});
-
-
 Template.fix_content.events({
 	"click #save_btn": function(event, template) {
 		event.preventDefault();
