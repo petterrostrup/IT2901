@@ -39,54 +39,107 @@ Meteor.methods({
 	},
 
 	// Method for insert new content to the database.
-	create_content: function(post) {
+	// create_content: function(post) {
 
-		// Simple check that the input are valid
-		check(post, Object);
+	// 	// Simple check that the input are valid
+	// 	check(post, Object);
 
-		// If you are not logged in, you are not allowed to create content
+	// 	// If you are not logged in, you are not allowed to create content
+	// 	if (!Meteor.userId()) {
+	// 		throw new Meteor.Error(530, "You are not logged in.");
+	// 	}
+	// 	post.tags = [];
+	// 	// Adds the id of the user in the post
+	// 	post.createdById = Meteor.userId();
+
+	// 	// Category id
+	// 	if (!post.category_id){
+	// 		throw new Meteor.Error(400, "Missing category id.");
+	// 	}
+
+	// 	var category = Category.findOne({_id: post.category_id});
+	// 	if (!category) {
+	// 		throw new Meteor.Error(400, "Missing valid category id.");
+	// 	}
+
+	// 	// Community id
+	// 	if (!post.community){
+	// 		throw new Meteor.Error(400, "Missing community.");
+	// 	}
+
+	// 	var community_id = CommunityTags.findOne({name: post.community})._id;
+	// 	if (!community_id) {
+	// 		throw new Meteor.Error(400, "Missing valid community id.");
+	// 	}
+	// 	post.community_id = community_id;
+
+	// 	// Language id
+	// 	// if (!post.language){
+	// 	// 	throw new Meteor.Error(400, "Missing language.");
+	// 	// }
+
+	// 	// var language_id = LanguageTags.findOne({name: post.language})._id;
+	// 	// if (!language_id) {
+	// 	// 	throw new Meteor.Error(400, "Missing valid language id.");
+	// 	// }
+	// 	// post.language_id = language_id;
+
+	// 	post.contents = [];
+
+	// 	var content_id = Content.insert(post);
+	// 	if (!content_id) {
+	// 		throw new Meteor.Error(400, "Content not added!");
+	// 	}
+	// 	category.content_ids.push(content_id);
+
+	// 	Category.update({_id: category._id}, {"$set": {
+	// 		content_ids: category.content_ids
+	// 	}});
+
+	// 	// Check if a user can insert a post in Content.
+	// 	// If not, it will throw an error.
+	// 	// Commenting this out so people not will hate me
+	// 	// Security.can(this.userId).insert(post).for(Content).throw(); 
+		
+	// 	return content_id;
+	// },
+
+	submit_content: function(main, content) {
+
 		if (!Meteor.userId()) {
-			throw new Meteor.Error(530, "You are not logged in.");
-		}
-		post.tags = [];
-		// Adds the id of the user in the post
-		post.createdById = Meteor.userId();
-
-		// Category id
-		if (!post.category_id){
-			throw new Meteor.Error(400, "Missing category id.");
+			throw new Meteor.Error(530, "You are not logged in!");
 		}
 
-		var category = Category.findOne({_id: post.category_id});
+		check(main, {
+			category_id: String,
+			community: String
+		});
+
+		check(content, {
+			title: String,
+			description: String,
+			language: String,
+			text: String,
+		});
+
+		main.tags = [];
+		main.contents = [];
+		// Adds the id of the user in the main
+		main.createdById = Meteor.userId();
+
+		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
 			throw new Meteor.Error(400, "Missing valid category id.");
 		}
 
-		// Community id
-		if (!post.community){
-			throw new Meteor.Error(400, "Missing community.");
-		}
-
-		var community_id = CommunityTags.findOne({name: post.community})._id;
+		var community_id = CommunityTags.findOne({name: main.community})._id;
 		if (!community_id) {
 			throw new Meteor.Error(400, "Missing valid community id.");
 		}
-		post.community_id = community_id;
 
-		// Language id
-		if (!post.language){
-			throw new Meteor.Error(400, "Missing language.");
-		}
+		main.community_id = community_id;
 
-		var language_id = LanguageTags.findOne({name: post.language})._id;
-		if (!language_id) {
-			throw new Meteor.Error(400, "Missing valid language id.");
-		}
-		post.language_id = language_id;
-
-		post.contents = [];
-
-		var content_id = Content.insert(post);
+		var content_id = Content.insert(main);
 		if (!content_id) {
 			throw new Meteor.Error(400, "Content not added!");
 		}
@@ -96,22 +149,23 @@ Meteor.methods({
 			content_ids: category.content_ids
 		}});
 
-		// Check if a user can insert a post in Content.
-		// If not, it will throw an error.
-		// Commenting this out so people not will hate me
-		// Security.can(this.userId).insert(post).for(Content).throw(); 
+		content.metacontent = content_id;
+
+				// Language id
+		var language_id = LanguageTags.findOne({name: content.language})._id;
+		if (!language_id) {
+			throw new Meteor.Error(400, "Missing valid language id.");
+		}
+
+		var text_id = ContentText.insert(content);
+
+		Content.update({
+			_id: content_id
+		}, {
+			$push: {"contents": text_id}
+		});
 		
 		return content_id;
-	},
-
-	submit_content: function(content) {
-		check(content, Object);
-
-		if (!Meteor.userId()) {
-			throw new Meteor.Error(530, "You are not logged in!");
-		}
-		console.log(content);
-		ContentText.insert(content);
 	},
 
 
@@ -324,5 +378,20 @@ Meteor.methods({
 			throw new Meteor.Error(430, "You cannot remove admin from your self.");
 
 		Roles.removeUsersFromRoles(obj.user_id, obj.role);
+	},
+
+
+	set_preferred_language: function(lang) {
+		check(lang, String);
+
+		if (!Meteor.userId())
+			throw new Meteor.Error(530, "You are not logged in.");
+
+
+		Meteor.users.update({
+			_id: Meteor.userId()
+		},{
+			$set: {"profile.preferred_language": lang}
+		});
 	}
 });

@@ -26,6 +26,7 @@ callback-hook@1.0.6
 cfs:http-methods@0.0.31
 check@1.1.2
 coffeescript@1.0.15
+d4nyll:epic@1.2.0
 dandv:caret-position@2.1.1
 dburles:collection-helpers@1.0.4
 ddp@1.2.3

@@ -105,6 +105,25 @@ Template.createContent.events({
 	    // Prevent default browser form submit
 	    event.preventDefault();
 
+		
+
+    	Meteor.call("create_content", content, function(error, result){
+    		if (error) {
+    			console.log(error);
+    		} else {
+    			console.log("created");
+    			template.$("#createSuccess").show();
+    		}
+    		if (result) {
+    			console.log(result);
+    			Router.go("submit_content", {_id: result});
+    		}
+    	});
+
+	},
+	"click #content-submit": function(event, template) {
+		event.preventDefault();
+		// console.log(template.$("#epicarea0").val());
 		//check category
 		var cat_id = Router.current().params._id;
 
@@ -130,37 +149,43 @@ Template.createContent.events({
 	   	}
 
 		var tar = event.target;
-	 	var content = {
-	 		// Title
-	 		title: tar.title.value,
-	 		// Description
-	 		description: tar.description.value,
-	 		// Content
-	 	//	console.log($('#content').val());
-	 		// content: tar.content.value,
-			// Category
+	 	var main = {
 			category_id: cat_id
     	};
 
     	if (coms) {
-    		content.community = coms[0];
+    		main.community = coms[0];
     	}
 
-    	if (langs) {
-    		content.language = langs[0];
+    	if (!langs) {
+    		console.log("Need languages!!!");
+    		return;
     	}
+		content = {
+			title: template.$("#title").val(),
+			description: template.$("#description").val(),
+			// text: template.$("#epicarea0").val(),
+			text: "#Så bra da kis.\n###litt usikker på hvordan dette fungerer.\nMen men, sånn går det nå.\n### men det fungerer.\nsånn går no dagan da kis.",
+			language: langs[0],
+		}
 
-    	Meteor.call("create_content", content, function(error, result){
-    		if (error) {
-    			console.log(error);
-    		} else {
-    			console.log("created");
-    			template.$("#createSuccess").show();
-    		}
-    		if (result) {
-    			Router.go("submit_content", {_id: result});
-    		}
-    	});
+		if (!content.text) {
+			console.log("Ingen text funnet.");
+			for (var hei = 0; ; hei++) {
+				if (template.$("#epicarea" + String(hei)).val()){
+					console.log("Value: ", hei);
+					return;
+				}
+			}
+		}
 
+		Meteor.call("submit_content", main, content, function(error, result) {
+			if (result)
+				console.log(result);
+			if (error)
+				console.log(error);
+			else
+				Router.go("show_content", {_id: result});
+		});
 	}
 });

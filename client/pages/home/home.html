@@ -26,11 +26,12 @@
                     <!-- makes a list of all content. Not Tested -->
                     {{#each getContent}}
                         <div class="panel panel-info">
-                            <div class="panel-heading"><a href="{{pathFor 'content'}}/{{_id}}">{{title}}  ({{getCategory category_id}})</a> <p class="pull-right">Added {{timeSince timestamp}} ago</p></div>
+                            <div class="panel-heading"><a href="{{pathFor 'content'}}/{{_id}}">{{title}}  ({{getCategory metacontent}})</a> <p class="pull-right">Added {{timeSince timestamp}} ago</p></div>
                             <div class="panel-body">{{description}}
                                 <a class="pull-right" href="{{pathFor 'category'}}/{{category_id}}">
-                                    <img style="display: inline" src="images/category/{{getIcon category_id}}.png" width="75px" height="75px" alt="...">
+                                    <img style="display: inline" src="images/category/{{getIcon metacontent}}.png" width="75px" height="75px" alt="...">
                                 </a>
+                                {{timestamp}}
                             </div>
                         </div>
                     {{/each}}

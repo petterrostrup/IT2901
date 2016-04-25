@@ -28,12 +28,78 @@ Template.category.helpers({
 		return list;
 	},
 	get_content: function() {
+		console.log("Init get_content!");
 		var list = [];
+		var default_language = Session.get("current_language");
+		var db_language = LanguageTags.findOne({
+			short_form: default_language
+		});
 		var current = Category.findOne({_id: Router.current().params._id});
-		for (var content in current.content_ids){
-			list.push(Content.findOne({_id: current.content_ids[content]}))
+		var user_languages = Meteor.user().profile.languages;
+		for (var usr_lang in user_languages) {
+			user_languages[usr_lang] = LanguageTags.findOne({
+				_id: user_languages[usr_lang]
+			});
 		}
-		return list;
+		var hide_other_lang = Session.get("hide_other_languages");
+		var all_contents = [];
+		console.log("Hide: " + hide_other_lang);
+		for (var c in current.content_ids) {
+			var content = Content.findOne({
+				_id: current.content_ids[c]
+			});
+			if (content) {
+				var cont_lang = ContentText.find({metacontent: content._id}).fetch();
+				if (!cont_lang){
+					console.log("Found no contenttext for content.");
+					continue;
+				}
+				var found = false;
+				for (var a in cont_lang) {
+					if (cont_lang[a].language === db_language.name){
+						all_contents.push({
+							_id: content._id,
+							title: cont_lang[a].title
+						});
+						found = true;
+						break;
+					}
+				}
+				if (found) {
+					console.log("Found content for default language.");
+					continue;
+				}
+				for (var a in cont_lang) {
+					for (var langs in user_languages) {
+						if (cont_lang[a].language === user_languages[langs].name){
+							all_contents.push({
+								_id: content._id,
+								title: cont_lang[a].title
+							});
+							found = true;
+							console.log("Content found for user languages.");
+							break;
+						}
+					}
+					if (found)
+						break;
+				}
+				if (found)
+					continue;
+				else if (!hide_other_lang) {
+					all_contents.push({
+						_id: content._id,
+						title: cont_lang[0].title
+					});
+					console.log("Content not supported found.");
+				}
+				else{
+					console.log("Skipped hided content.");
+				}
+			}
+		}
+		console.log(all_contents);
+		return all_contents;
 	}
 });
 

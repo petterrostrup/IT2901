@@ -190,7 +190,6 @@ Meteor.startup(function(){
         }); 
     }
 
-
     if (!Tag.findOne() && Meteor.settings.DEBUG){
         console.log("Default tag totally made");
         Tag.insert({

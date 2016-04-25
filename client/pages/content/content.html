@@ -10,17 +10,22 @@
             {{/each}}
 
             <li>
-                <a href="#">{{get_information.title}}</a>
+                <a href="#">{{getContentText.title}}</a>
             </li>
 
         </ol>
 
-        <h1>{{get_information.title}}</h1>
+        {{#with getContentText}}
 
-        <p>{{get_information.description}}</p>
+            <h1>{{title}}</h1>
 
+            <p>{{description}}</p>
 
-        {{print_contentText getContentText}}
+            {{#markdown}}
+                {{{text}}}
+            {{/markdown}}
+
+        {{/with}}
 
         <div class="comment-section">
             {{> commentsBox id=get_information._id}}
