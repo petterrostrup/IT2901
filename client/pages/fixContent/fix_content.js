@@ -1,4 +1,10 @@
 
+Template.fix_content.rendered = function() {
+    if(!this._rendered) {
+     	var simplemde = new SimpleMDE();
+      	console.log('Template onLoad');
+    }
+}
 Template.fix_content.events({
 	"click #save_btn": function(event, template) {
 		event.preventDefault();
