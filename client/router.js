@@ -22,6 +22,12 @@ Router.route("/", {
 //   template:"submit_content"
 // })
 
+Router.route("/settings", {
+  name: "settings",
+  template: "settings"
+});
+
+
 // Routing for the edit profile
 Router.route("/editprofile", {
     name: "editProfile",

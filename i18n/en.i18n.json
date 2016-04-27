@@ -5,8 +5,7 @@
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
         "Login": "Login",
-        "Admin": "Admin",
-        "toggle_lang": "Only show your languages"
+        "Admin": "Admin"
     },
     "profile": {
         "Username": "Username",
@@ -61,6 +60,12 @@
     },
     "changeLanguage": {
         "ChangeLanguage": "Change Language"
+    },
+    "settings": {
+        "header": "Settings",
+        "toggle_lang": "Only show your content with your languages.",
+        "back": "Back"
+
     }
 }
 

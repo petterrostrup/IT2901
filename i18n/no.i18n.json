@@ -5,8 +5,7 @@
         "CreateContent": "Lag innhold",
         "LogOut": "Logg ut",
         "Login": "Logg inn",
-        "Admin": "Admin",
-        "toggle_lang": "Kun vis dine språk"
+        "Admin": "Admin"
     },
     "profile": {
         "Username": "Brukernavn",
@@ -61,6 +60,11 @@
     },
     "changeLanguage":{
         "ChangeLanguage": "Skift språk"
+    },
+    "settings": {
+        "header": "Innstillinger",
+        "toggle_lang": "Kun vis innhold som er støttet på dine språk.",
+        "back": "Tilbake"
     }
 }
 

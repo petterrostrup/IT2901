@@ -30,15 +30,6 @@
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
-                        <li>
-                            <label for="toggle-languages">{{_ "header.toggle_lang"}}</label>
-                            {{#if lang_check}}
-                                <input type="checkbox" name="toggle-languages" id="toggle_lang" checked/>
-
-                            {{else}}
-                                <input type="checkbox" name="toggle-languages" id="toggle_lang" />
-                            {{/if}}
-                        </li>
                         {{#if isInRole 'admin'}}
                         <li>
                             <a href="{{pathFor 'admin'}}" class="link">
