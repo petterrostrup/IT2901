@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="description">{{_ "createContent.Description"}}</label>
                             <div class="col-md-4">
-                            <input type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"/>
+                            <textarea type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"></textarea>
                             </div>
                         </div>
 
@@ -74,11 +74,13 @@
                 <script>
                     var simplemde = new SimpleMDE({
                         element: $("#MyID")[0],
-                        toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list","ordered-list","|","link","image","|","preview","guide"], 
+                        toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list","ordered-list","|","link","image","|","preview","guide"],
+                        spellChecker: false 
                     });
                 </script>
 
                 <textarea id="MyID"></textarea>
+
                 <div class="row">
                     <div class="col-md-8"></div>
                     <div class="col-md-2">                
