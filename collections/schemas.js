@@ -110,7 +110,7 @@ Schema.Content = new SimpleSchema({
   		optional: false
   	},
   	community_id: {
-  		type: String,
+  		type: [String],
   		//check if the value is id
   		regEx: SimpleSchema.RegEx.Id,
   		optional: false

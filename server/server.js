@@ -7,10 +7,69 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
       {name: regExp},
-      {description: regExp}
+      {description: regExp},
+      {title: regExp},
+      {community_id: regExp}
     ]};
+    // search by commu and lang
+    // var selectorTag = {$or: [
+    //   {name: regExp},
+    // ]};
+    // var result_community_id = CommunityTags.find(selectorTag, options).fetch()
+    // var com_id = result_community_id[0].name
+    // var regExpCom = buildRegExp(com_id)
+    // console.log(com_id)
+    // console.log(regExpCom)
+    // var selector = {$or: [
+    //   {name: regExp},
+    //   {description: regExp},
+    //   {community_id: regExpCom}
+    // ]};
 
+    
+    //concat two returned collections
     return Category.find(selector, options).fetch();
+  } else {
+    return Category.find({}, options).fetch();
+  }
+});
+
+    function buildRegExp(searchText) {
+  // this is a dumb implementation
+  var parts = searchText.trim().split(/[ \-\:]+/);
+  return new RegExp("(" + parts.join('|') + ")", "ig");
+}
+
+// content search
+SearchSource.defineSource('contentSearch', function(searchText, options) {
+    options = options || {};
+  var options = {sort: {isoScore: -1}, limit: 20};
+  
+  if(searchText) {
+    var regExp = buildRegExp(searchText);
+    var selector = {$or: [
+      {name: regExp},
+      {description: regExp},
+      {title: regExp},
+      {community_id: regExp}
+    ]};
+    // search by commu and lang
+    // var selectorTag = {$or: [
+    //   {name: regExp},
+    // ]};
+    // var result_community_id = CommunityTags.find(selectorTag, options).fetch()
+    // var com_id = result_community_id[0].name
+    // var regExpCom = buildRegExp(com_id)
+    // console.log(com_id)
+    // console.log(regExpCom)
+    // var selector = {$or: [
+    //   {name: regExp},
+    //   {description: regExp},
+    //   {community_id: regExpCom}
+    // ]};
+   
+    //concat two returned collections
+    return Content.find(selector, options).fetch();
   } else {
     return Category.find({}, options).fetch();
   }
@@ -200,6 +259,9 @@ Meteor.startup(function(){
         CommunityTags.insert({
             name: "StudentInTrondheim"
         }); 
+        CommunityTags.insert({
+            name: "StartUp"
+        })
     }
 
 

@@ -141,9 +141,10 @@ Template.createContent.events({
 			// Category
 			category_id: cat_id
     	};
+    	console.log(coms)
 
     	if (coms) {
-    		content.community = coms[0];
+    		content.community = coms;
     	}
 
     	if (langs) {

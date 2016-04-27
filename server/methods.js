@@ -65,10 +65,15 @@ Meteor.methods({
 
 		// Community id
 		if (!post.community){
+			post.community = [];
 			throw new Meteor.Error(400, "Missing community.");
 		}
 
-		var community_id = CommunityTags.findOne({name: post.community})._id;
+		var community_id = []
+		for (com in post.community) {
+			community_id.push(CommunityTags.findOne({name: post.community[com]})._id)
+		}
+		
 		if (!community_id) {
 			throw new Meteor.Error(400, "Missing valid community id.");
 		}
