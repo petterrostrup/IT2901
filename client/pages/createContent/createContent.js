@@ -152,8 +152,12 @@ Template.createContent.events({
 	 	var main = {
 			category_id: cat_id
     	};
+    	console.log(coms)
 
     	if (coms) {
+// <<<<<<< HEAD
+//     		content.community = coms;
+// =======
     		main.community = coms[0];
     	}
 

@@ -26,7 +26,6 @@ tap:i18n-db
 tap:i18n
 
 accounts-ui
-check
 xolvio:backdoor
 ongoworks:security
 flemay:less-autoprefixer
@@ -35,6 +34,11 @@ malkesh:trumbowyg
 standard-minifier-css
 standard-minifier-js
 arkham:comments-ui
+
+check
+ejson
+meteorhacks:search-source
+
 semantic:ui-css
 fortawesome:fontawesome
 d4nyll:epic

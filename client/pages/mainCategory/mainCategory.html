@@ -4,7 +4,13 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for content">
+                    <!-- Search function-->
+                    
+                        {{> searchBox }}             
+                        
+                        
+                    
+                    <!-- End of Search function-->
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
@@ -19,17 +25,104 @@
 
         <div class="col-lg-15">
             <div class="row">
-                {{#each all_categories}}
-                    <div class="col-cs-6 col-md-3 category">
-                        <h4 style="text-align: center">{{name}}</h4>
-                        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
-                            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
-                        </a>
-
-                    </div>
-                {{/each}}
+              <p>Categories</p>
+                {{> searchResult}}
+              
+            </div>
+        </div>
+        <div class="col-lg-15">
+            <div class="row">
+              <p>Contents</p>
+                {{> searchResultContent}}
+              
             </div>
         </div>
     </div>
 
 </template>
+
+<!-- Search function-->
+<template name="searchBox">
+  <input type="text" id="search-box" placeholder="search packages here"/>
+</template>
+
+<template name="searchResult">
+  <div id='search-result'>
+    <div id="search-meta">
+      {{#if isLoading}}
+        searching ...
+      {{/if}}
+    </div>
+    {{#each getPackages}}
+<!--     <div class="col-cs-6 col-md-3 category">
+        <div class="package">
+        <h4 class="name" >{{name}}</h4>
+        </div>
+        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
+            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
+        </a>
+    </div> -->
+    {{#if name}}
+        <div class="package col-cs-6 col-md-3 category">
+      <h4 class="name" style="text-align: center">
+        {{{name}}}
+        {{{title}}}
+        {{{description}}}
+        {{{community_id}}}
+      </h4>
+      <div class="icon">
+        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
+            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
+        </a>
+      </div>
+    </div>
+    {{/if}}
+    
+    {{/each}}
+  </div>
+</template>
+
+<template name="searchResultContent">
+
+  <div id='search-result'>
+    <div id="search-meta">
+      {{#if isLoading}}
+        searching ...
+      {{/if}}
+    </div>
+    {{#each getContents}}
+<!--     <div class="col-cs-6 col-md-3 category">
+        <div class="package">
+        <h4 class="name" >{{name}}</h4>
+        </div>
+        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
+            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
+        </a>
+    </div> -->
+    {{#if title}}
+        <div class="package col-cs-6 col-md-3 category">
+      <h4 class="name" style="text-align: center">
+        {{{name}}}
+        {{{title}}}
+        {{{description}}}
+        {{{community_id}}}
+      </h4>
+      <div class="icon">
+        <!-- test for link content-->
+        <a href="{{pathFor 'content'}}/{{metacontent}}" class="thumbnail">
+            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
+        </a>
+      </div>
+    </div>
+    {{/if}}
+    
+    {{/each}}
+  </div>
+</template>
+<!--
+  Search function
+  Edited file for search : search(all), router.js, header.html, server.js
+  Packages : meteor add meteorhacks:search-source, meteor add ejson
+-->
+
+<!-- End of Search function-->

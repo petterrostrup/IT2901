@@ -1,3 +1,5 @@
+
+
 Meteor.methods({
 
 	// Method for creating a new user in the system.
@@ -132,6 +134,17 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Missing valid category id.");
 		}
 
+		// Community id
+		// if (!post.community){
+		// 	post.community = [];
+		// 	throw new Meteor.Error(400, "Missing community.");
+		// }
+
+		// var community_id = []
+		// for (com in post.community) {
+		// 	community_id.push(CommunityTags.findOne({name: post.community[com]})._id)
+		// }
+		
 		var community_id = CommunityTags.findOne({name: main.community})._id;
 		if (!community_id) {
 			throw new Meteor.Error(400, "Missing valid community id.");
