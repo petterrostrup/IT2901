@@ -1,33 +1,38 @@
-<template name="submitContent">
+<template name="submit_content">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+	        <div class="col-xs-6">
+	        	<label>Hello worlds</label>
+	        </div>
+		    <div class="col-xs-6">
+		        <form role="form">
+		            <div class="form-group">
+		                <input type="submit" name="content-submit" id="content-submit" value="Submit">
+		            </div>
+		        </form>
+		    </div>
+		</div>
+        <div class="panel-body">
+        	<div id="editor" placeholder="Your text as placeholder" ></div>
+        </div>
+	</div>
 
-    <div class="wrapper">
-        <div id="editor" placeholder="Your text as placeholder" ></div>
-
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <form role="form">
-            <div class="form-group">
-                <input type="submit" name="content-submit" id="content-submit" value="Submit">
-            </div>
-        </form>
-    </div>
-
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#editor').trumbowyg({
-			autogrow: true,
-			btns: [
-		        ['formatting'],
-		        'btnGrp-semantic',
-		        ['superscript', 'subscript'],
-		        ['link'],
-		        ['insertImage'],
-		        'btnGrp-justify',
-		        'btnGrp-lists',
-		        ['horizontalRule'],
-		        ['removeformat'],
-		        ['fullscreen']
-	    		]});
-	});
-</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#editor').trumbowyg({
+				autogrow: true,
+				btns: [
+			        ['formatting'],
+			        'btnGrp-semantic',
+			        ['superscript', 'subscript'],
+			        ['link'],
+			        ['insertImage'],
+			        'btnGrp-justify',
+			        'btnGrp-lists',
+			        ['horizontalRule'],
+			        ['removeformat'],
+			        ['fullscreen']
+		    		]});
+		});
+	</script>
 </template>

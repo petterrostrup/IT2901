@@ -4,6 +4,12 @@
  .table {
  	overflow: auto;
  }
+ #new_subcategory{
+     padding-top: 30px;
+ }
+ #newSubCat{
+     margin-top: 15px;
+ }
 
 @media (max-width:500px) {
     .row{

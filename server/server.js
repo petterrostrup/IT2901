@@ -50,8 +50,8 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     var selector = {$or: [
       {name: regExp},
       {description: regExp},
-      {title: regExp},
-      {community_id: regExp}
+      {title: regExp}
+      // {community_id: regExp}
     ]};
     // search by commu and lang
     // var selectorTag = {$or: [
@@ -69,7 +69,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     // ]};
    
     //concat two returned collections
-    return Content.find(selector, options).fetch();
+    return ContentText.find(selector, options).fetch();
   } else {
     return Category.find({}, options).fetch();
   }
@@ -92,8 +92,20 @@ Meteor.publish("personalInfo", function() {
     }
 });
 
+
+// Publishes all user info to administrators. If the user are not admin, the user cannot access all user information
+Meteor.publish("allUsers", function(user) {
+    if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {
+        return Meteor.users.find({});
+    }
+});
+
 Meteor.publish("content", function(){
 	return Content.find({});
+});
+
+Meteor.publish("contentText", function() {
+    return ContentText.find({});
 });
 
 Meteor.publish("tags", function(tag_string) {
@@ -119,8 +131,8 @@ Meteor.publish("CommunityTags", function() {
 
 Meteor.startup(function(){
     
-    // add something in database for test
-    if (!Category.findOne() && Meteor.settings.DEBUG){
+    // If no category is found, it will create all the standard categories
+    if (!Category.findOne()){
         console.log("Default category created.");
         Category.insert({
             name: "By",
@@ -253,6 +265,7 @@ Meteor.startup(function(){
         }));
     }
 
+
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
         console.log("Default CommunityTags created.");
@@ -263,7 +276,6 @@ Meteor.startup(function(){
             name: "StartUp"
         })
     }
-
 
     if (!Tag.findOne() && Meteor.settings.DEBUG){
         console.log("Default tag totally made");
@@ -287,9 +299,8 @@ Meteor.startup(function(){
             username: defUser.username,
             email: defUser.email,
             profile:proflie,
-            roles: "creator",
+            roles: ["admin"],
             createdContents: []
-
         });
         Accounts.setPassword(userid, defUser.password);
     }

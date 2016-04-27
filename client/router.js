@@ -17,17 +17,17 @@ Router.route("/", {
   template:"home"
 });
 
-Router.route("/submitContent",{
-  name:"submitContent",
-  template:"submitContent"
-})
+// Router.route("/submit_content",{
+//   name:"submit_content",
+//   template:"submit_content"
+// })
 
 // Routing for the edit profile
 Router.route("/editprofile", {
     name: "editProfile",
     template: "editProfile"
 });
-
+  
 // Routing for the create content
 Router.route("/createContent", {
     name: "createContent",
@@ -66,13 +66,17 @@ Router.route("/content/:_id", function() {
     this.render("page_not_found");
 }, {"name": "show_content"});
 
-Router.route("/submitContent/:_id", function() {
+// Router.route("/fix_content/", function() {
+//   this.render("fix_content");
+// }, {name: "fix_content"}); 
+
+Router.route("/submit_content/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
   if (data)
-    this.render("submitContent");
+    this.render("fix_content");
   else
     this.render("page_not_found");
-});
+}, {name: "submit_content"});
 
 // Routing for creating content
 Router.route("/create_content", {
@@ -83,20 +87,18 @@ Router.route("/create_content", {
       Router.go("/");
     else
       this.next();
-    
   }
 });
 
-
-Router.route("/fill_content/:_id", function() {
-  var content_id = this.params._id;
-  var content = Content.findOne({_id: content_id});
-  if (!content) {
-    this.render("page_not_found");
-  }
-  else
-    this.render("submitContent");
-}, {"name": "fill_content"});
+// Router.route("/submit_content/:_id", function() {
+//   var content_id = this.params._id;
+//   var content = Content.findOne({_id: content_id});
+//   if (!content) {
+//     this.render("page_not_found");
+//   }
+//   else
+//     this.render("submitContent");
+// }, {"name": "submit_content"});
 
 // Routing for creating content for a specific category
 // The input is the category id
@@ -150,5 +152,17 @@ Router.route("/languages", {
     }else{
       Router.go("/");
     }
+  }
+});
+
+Router.route("/admin", {
+  name: "admin",
+  template: "admin",
+
+  onBeforeAction: function() {
+    if (Meteor.userId() && Roles.userIsInRole(Meteor.user(), ["admin"]))
+      this.next();
+    else
+      this.render("access_denied");
   }
 });

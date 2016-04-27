@@ -4,7 +4,9 @@
         "BrowseContent": "Browse Content",
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
-        "Login": "Login"
+        "Login": "Login",
+        "Admin": "Admin",
+        "toggle_lang": "Only show your languages"
     },
     "profile": {
         "Username": "Username",
@@ -31,6 +33,34 @@
     },
     "typeHere": {
         "TypeHere": "Type Here"
+    },
+    "admin": {
+        "menu": {
+            "add_language": "Add language",
+            "rm_language": "Remove language",
+            "show_users": "Show all users"
+        },
+        "add_language": {
+            "name": "Name",
+            "short_name": "Short name",
+            "english": "English name",
+            "lang_added": "The language was added."
+        },
+        "users": {
+            "username": "Username",
+            "email": "Email",
+            "roles": "Roles",
+            "delete": "Delete user",
+            "show": "Show user",
+            "back": "Back"
+        },
+        "delete_language": "Delete language",
+        "delete_language_msg": "The language was deleted",
+        "settings": "Settings",
+        "add": "Add language"
+    },
+    "changeLanguage": {
+        "ChangeLanguage": "Change Language"
     }
 }
 

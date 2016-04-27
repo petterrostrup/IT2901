@@ -1,0 +1,150 @@
+<template name="admin">
+	<div class="row">
+		<div class="alert alert-danger" id="regError" style="display: none;">
+			<div id="regErrorText"></div>
+		</div>
+		<div class="alert alert-info" id="regMsg" style="display: none;">
+			<div id="regMsgText"></div>
+		</div>
+		<div class="col-md-3">
+			<ul class="nav nav-pills nav-stacked" id="choose_action">
+				<li role="presentation" class="active menu-btn" id="add_language"><a href="">{{_ "admin.menu.add_language"}}</a></li>
+				<li role="presentation" class="menu-btn" id="remove_language"><a href="">{{_ "admin.menu.rm_language"}}</a></li>
+				<li role="presentation" class="menu-btn" id="list_users">
+					<a href="">{{_ "admin.menu.show_users"}}</a>
+				</li>
+			<!-- 	<li role="presentation" class="menu-btn" id="show_user">
+					<a href="">Show users</a>
+				</li> -->
+			  <!-- <li role="presentation"><a href="#">Profile</a></li>
+			  <li role="presentation"><a href="#">Messages</a></li> -->
+			</ul>	
+		</div>
+		<div class="col-md-8" id="content">
+			<div class="" id="add_language_content" style="display: visible;">
+				<form id="sub_add_lang">
+					<fieldset class="form-group">
+						<label for="lang_name">{{_ "admin.add_language.name"}}</label>
+						<input type="text" class="form-control" id="lang_name" placeholder="" required>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="eng_lang_name">{{_ "admin.add_language.english"}}</label>
+						<input type="text" class="form-control" id="eng_lang_name" placeholder="" required>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="short_lang_name">{{_ "admin.add_language.short_name"}}</label>
+						<input type="text" class="form-control" id="short_lang_name" placeholder="" required>
+					</fieldset>
+					<input type="submit" class="btn btn-default" value="{{_ 'admin.add'}}">
+				</form>
+			</div>
+			<div class="" id="remove_language_content" style="display: none;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>{{_ "admin.add_language.name"}}</th>
+							<th>{{_ "admin.add_language.english"}}</th>
+							<th>{{_ "admin.add_language.short_name"}}</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each get_languages}}
+						<tr>
+							<td>{{name}}</td>
+							<td>{{english_name}}</td>
+							<td>{{short_form}}</td>
+							<td>
+								<button class="btn btn-warning del_lang" id="{{_id}}">
+									{{_ "admin.delete_language"}}
+								</button>
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div id="list_users_content" style="display: none;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>{{_ "admin.users.username"}}</th>
+							<th>{{_ "admin.users.email"}}</th>
+							<th>{{_ "admin.users.roles"}}</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each get_users}}
+						<tr>
+							<td>{{username}}</td>
+							<td>{{email}}</td>
+							<td>{{roles}}</td>
+							<td>
+								<button class="btn btn-default btn-sm show_user" id={{_id}}>
+									{{_ "admin.users.show"}}
+								</button>
+							</td>
+							<td>
+								<button class="btn btn-warning btn-sm del_user" id="{{_id}}">{{_ "admin.users.delete"}}</button>
+							</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+			<div id="show_user_content" style="display: none;">
+				<a href="" id="users_back">{{_ "admin.users.back"}}</a>
+				<br>
+				{{> admin_user_page}}
+			</div>
+		</div>
+	</div>
+	<!-- <div class="container">
+		<div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{_ "admin.settings"}}
+			<span class="caret"></span></button>
+			<ul class="dropdown-menu">
+				<li><a href="#">{{_ "admin.edit_language"}}</a></li>
+
+			</ul>
+		</div>
+	</div> -->
+</template>
+
+<template name="admin_user_page">
+	<table class="table">
+		<tbody>
+			{{#with get_user_information}}
+			<tr>
+				<td>{{_ "admin.users.username"}}</td>
+				<td>{{username}}</td>
+			</tr>
+			<tr>
+				<td>{{_ "profile.FirstName"}}</td>
+				<td>{{profile.first_name}}</td>
+			</tr>
+			<tr>
+				<td>{{_ "profile.LastName"}}</td>
+				<td>{{profile.last_name}}</td>
+			</tr>
+			<tr>
+				<td>{{_ "profile.Email"}}</td>
+				<td>{{email}}</td>
+			</tr>
+			<tr>
+				<td>{{_ "admin.users.roles"}}</td>
+				<td>{{roles}}</td>
+				<td>
+					{{#if is_admin}}
+						<input type="button" class="btn btn-warning toggle_admin" id="remove_admin" value="Remove admin" />
+					{{else}}
+						<input type="button" class="btn btn-default toggle_admin" id="add_admin" value="Give admin" />
+					{{/if}}
+				</td>
+			</tr>
+			{{/with}}
+		</tbody>
+	</table>
+</template>

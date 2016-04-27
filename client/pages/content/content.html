@@ -10,27 +10,22 @@
             {{/each}}
 
             <li>
-                <a href="#">{{get_information.title}}</a>
+                <a href="#">{{getContentText.title}}</a>
             </li>
 
         </ol>
 
-        <h1>{{get_information.title}}</h1>
+        {{#with getContentText}}
 
-        <p>{{get_information.description}}</p>
+            <h1>{{title}}</h1>
 
+            <p>{{description}}</p>
 
-        <p>
-            {{#each getContentText get_information}}
-                <span> {{language}} </span>
-            {{/each}}
-        </p>
-        <!-- TODO: Add way to show content.
-        Find out way to store it in DB so that it is easy to show. -->
-        {{#each getContentText get_information}}
-            {{text}}
-        {{/each}}
+            {{#markdown}}
+                {{{text}}}
+            {{/markdown}}
 
+        {{/with}}
 
         <div class="comment-section">
             {{> commentsBox id=get_information._id}}
