@@ -5,7 +5,8 @@
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
         "Login": "Login",
-        "Admin": "Admin"
+        "Admin": "Admin",
+        "toggle_lang": "Only show your languages"
     },
     "profile": {
         "Username": "Username",

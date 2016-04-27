@@ -17,13 +17,42 @@ Template.content.helpers({
 	},
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
-		var foo = ContentText.find({metacontent: content._id}).fetch();
-		// Fortsett med å legge inn språk til content som følger
-		// språket til programmet.
-		for (var a in foo) {
-
+		var default_language = LanguageTags.findOne({
+			short_form: Session.get("current_language")
+		});
+		if (default_language) {
+			var text_default = ContentText.findOne({
+				metacontent: content._id,
+				language: default_language.name
+			});
+			if (text_default){
+				console.log("Found default language. Render with that.");
+				return text_default;
+			}
 		}
-		return foo[0];
+		if (Meteor.user()) {
+			var languages = Meteor.user().profile.languages;
+			for (var a in languages) {
+				var lang = LanguageTags.findOne({
+					_id: languages[a]
+				});
+				if (!lang)
+					continue;
+				var content_1 = ContentText.findOne({
+					metacontent: content._id,
+					language: lang.name
+				});
+				if (content_1){
+					console.log("Found content for user language.");
+					return content_1;
+				}
+			}
+		}
+		console.log("Did not find any cool stuff.");
+		var foo = ContentText.findOne({
+			metacontent: content._id,
+		});
+		return foo;
 	},
 
 	print_contentText:function(contentJson){

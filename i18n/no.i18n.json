@@ -5,7 +5,8 @@
         "CreateContent": "Lag innhold",
         "LogOut": "Logg ut",
         "Login": "Logg inn",
-        "Admin": "Admin"
+        "Admin": "Admin",
+        "toggle_lang": "Kun vis dine språk"
     },
     "profile": {
         "Username": "Brukernavn",

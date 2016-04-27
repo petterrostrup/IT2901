@@ -157,8 +157,14 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Missing valid language id.");
 		}
 
-		ContentText.insert(content);
+		var text_id = ContentText.insert(content);
 
+		Content.update({
+			_id: content_id
+		}, {
+			$push: {"contents": text_id}
+		});
+		
 		return content_id;
 	},
 
@@ -372,5 +378,20 @@ Meteor.methods({
 			throw new Meteor.Error(430, "You cannot remove admin from your self.");
 
 		Roles.removeUsersFromRoles(obj.user_id, obj.role);
+	},
+
+
+	set_preferred_language: function(lang) {
+		check(lang, String);
+
+		if (!Meteor.userId())
+			throw new Meteor.Error(530, "You are not logged in.");
+
+
+		Meteor.users.update({
+			_id: Meteor.userId()
+		},{
+			$set: {"profile.preferred_language": lang}
+		});
 	}
 });
