@@ -20,45 +20,48 @@
 
         <table class="table">
             <tr>
-                <td>Navn</td>
-                <td>{{data.name}}</td>
+                <td><h2>{{data.name}}</h2></td>
             </tr>
             <tr>
-                <td>Beskrivelse</td>
-                <td>{{data.description}}</td>
+                <td><p>{{data.description}}</p></td>
             </tr>
         </table>
         <table class="table">
             <tr>
-                <th>Content</th>
-                <th></th>
+                <th><h3>Title</h3></th>
+                <th><h3>Description</h3></th>
+                <th><h3>Created by</h3></th>
+                <th><h3>Date</h3></th>
+                <th><h3>Rating</h3></th>
             </tr>
             {{#each get_content}}
-                <tr>
+                <tr class="contentRow">
                     <td>
+
                         <a href="{{pathFor 'show_content' _id=_id}}">
-                            {{title}} 
+                            {{title}}
                         </a>
                     </td>
-                    <td></td>
                     <td>
-                        <a href="{{pathFor 'submit_content' _id=_id}}">
-                            {{title}} 
-                        </a>
+                        Description here
                     </td>
-                    <td></td>
+                    <td>
+                        Creator here
+                    </td>
+                    <td>
+                        Date here
+                    </td>
+                    <td>
+                        Rating
+                    </td>
                 </tr>
             {{/each}}
-            <tr>
-                <td>
-                    <form action="{{pathFor 'create_content'}}/{{data._id}}">
-                        <input type="submit" style="font-family: FontAwesome" value="&#xf067; Add Content" />
-                    </form>
-                </td>
-                <td></td>
-            </tr>
         </table>
-        <table class="table">
+
+        <form action="{{pathFor 'create_content'}}/{{data._id}}">
+            <input type="submit" style="font-family: FontAwesome" value="&#xf067; Add Content" />
+        </form>
+        <table style="margin-top: 25px" class="table">
             <tr><th>Subcategories</th><th></th></tr>
             {{#each get_children}}
                 <tr>

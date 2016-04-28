@@ -1,4 +1,7 @@
 @media (max-width:767px) {
+    .headerList{
+        overflow: hidden;
+    }
     .custom-navbar .navbar-right {
         float: right;
         padding-right: 15px;

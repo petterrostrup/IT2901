@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="title">{{_ "createContent.Title"}}</label>
                     <div class="col-md-4">
-                        <input id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="">
+                        <input id="title" tabindex=1 name="title"  type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="" autofocus="autofocus">
                     </div>
                 </div>
 
@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="description">{{_ "createContent.Description"}}</label>
                     <div class="col-md-4">
-                    <input type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"/>
+                    <input type="text" tabindex=2 required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"/>
                     </div>
                 </div>
 
@@ -32,8 +32,8 @@
                 <div class="form-group">
 
                     <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" title="How to choose groups" data-content="Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g." class="glyphicon glyphicon-info-sign"></a>
-                    <div class="col-md-4">
-                        {{> inputAutocomplete settings=settingsCom id="autocomplete-input-Com" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
+                    <div class="col-md-4" >
+                        {{> inputAutocomplete settings=settingsCom id="autocomplete-input-Com" tabindex=3 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
                     </div>
 
                 </div>
@@ -44,9 +44,9 @@
                 {{else}}
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" title="How to choose categories" data-content="Write a # before the categories you want your content under. #Mat #Økonomi f.eks" class="glyphicon glyphicon-info-sign"></a>
-                        <div class="col-md-4">
+                        <div class="col-md-4" >
 
-                            {{> inputAutocomplete settings=settingsCat id="autocomplete-input-Cat" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
+                            {{> inputAutocomplete settings=settingsCat id="autocomplete-input-Cat" tabindex=4 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
 
                         </div>
                     </div>
@@ -56,8 +56,8 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
 
-                    <div class="col-md-4">
-                        {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
+                    <div class="col-md-4" >
+                        {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" tabindex=5 class="form-control" placeholder=(_ 'typeHere.TypeHere') }}
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                     <div class="col-md-4">
 
-                        <input type="submit" name="content-submit" id="content-submit" style="font-family: FontAwesome;"  value="&#xf067; Add Content" >
+                        <input type="submit" tabindex=6 name="content-submit" id="content-submit" style="font-family: FontAwesome;"  value="&#xf067; Add Content" >
                     </div>
                 </div>
 
