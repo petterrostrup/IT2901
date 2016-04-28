@@ -1,3 +1,10 @@
+// Search
+Router.route("/search", {
+  name: "search",
+  template: "search"
+})
+// End of search
+
 /* Client-side router settings */
 Router.configure({
   layoutTemplate:"layout",
@@ -14,6 +21,16 @@ Router.route("/", {
 //   name:"submit_content",
 //   template:"submit_content"
 // })
+
+
+Router.route("/translateContent/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+  console.log(data);
+  if (data)
+    this.render("translateContent");
+  else
+    this.render("page_not_found");
+}, {name: "translateContent"});
 
 // Routing for the edit profile
 Router.route("/editprofile", {
