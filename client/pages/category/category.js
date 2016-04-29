@@ -140,7 +140,11 @@ Template.category.events({
 	},
     "submit #new_subcategory": function(event, template) {
     	event.preventDefault();
-    	var language = event.target.language.value
+    	var langs = $("#autocomplete-input-Lang").val().split(" ");
+	   	for (var lang in langs) {
+	   		langs[lang] = langs[lang].replace("#", "");
+	   	}
+    	console.log(langs)
     	var cat = {
     		name: event.target.name.value,
     		description: event.target.description.value,
@@ -148,7 +152,7 @@ Template.category.events({
 
     		parent_id: Router.current().params._id,
     	}
-    	Meteor.call("add_category", cat, language, function(error, result) {
+    	Meteor.call("add_category", cat, langs[0], function(error, result) {
     		if (error)
     			console.log(error);
     		if (result)
