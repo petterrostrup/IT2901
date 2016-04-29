@@ -5,6 +5,7 @@ Meteor.subscribe("categories");
 Meteor.subscribe("LanguageTags");
 Meteor.subscribe("CommunityTags");
 Meteor.subscribe("contentText");
+Meteor.subscribe("categoryText");
 
 
 var supportedLanguages = require("../i18n/supportedLanguages.json");

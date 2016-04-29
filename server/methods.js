@@ -183,13 +183,18 @@ Meteor.methods({
 
 
 	// Method for adding a new category
-	add_category: function(category) {
+	add_category: function(category, language) {
 
 		check(category, Object);
+		check(language, String);
 		console.log(category);
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
+
+
+		// below need to decide what to keep
+
 		// console.log(category.parent);
 		var parent = undefined;
 		if (category.parent_id) {
@@ -203,16 +208,46 @@ Meteor.methods({
 		// If the name of the category already exists, you are not allowed to create one.
 		if (Category.findOne({name: category.name}))
 			throw new Meteor.Error(422, "The category name already exists.");
-		category.children_id = [];
-		category.children = [];
-		category.content_ids = [];
-		var id = Category.insert(category);
+
+
+
+		// create category and send _id to metecategory
+		var cat = {
+			parent_id: parent._id,
+			children_id: [],
+			content_ids: [],
+			categories: []
+			//icon: , since its optional
+		}
+		var category_id = Category.insert(cat)
+		if (!category_id) {
+			throw new Meteor.Error(400, "Category not added!");
+		}
+
 		if (parent) {
-			parent.children_id.push(id);
+			parent.children_id.push(category_id);
 			Category.update({_id: parent._id}, {$set: {
 				children_id: parent.children_id
 			}});
 		}
+
+		// create categoryText
+		var categoryText = {
+			name: category.name,
+			description: category.description,
+			metacategory: category_id,
+			language: language
+		}
+
+		var categoryText_id = CategoryText.insert(categoryText)
+
+		cat.categories.push(categoryText_id)
+
+		Category.update({_id: cat._id}, {"$set": {
+			categories: cat.categories
+		}});
+
+		
 	},
 
 	// edit_profile with first_name, last_name, language, email

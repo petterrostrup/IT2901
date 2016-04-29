@@ -5,6 +5,24 @@ Template.registerHelper('last',
 );
 
 Template.category.helpers({
+	// Language Search
+	settingsLang: function() {
+	    return {
+	      position: Session.get("position"),
+	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
+	      rules: [
+	        {
+	          token: '#',
+	          collection: LanguageTags,  // Mongo.Collection object means client-side collection
+	          field: 'name',
+	          // set to true to search anywhere in the field, which cannot use an index.
+	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
+	          template: Template.clientCollectionPillCategory
+	        }
+	      ]
+	    }
+	},
+	// End of language search
 	data: function() {
 		var data = Category.findOne({_id: Router.current().params._id});
 		return data;
@@ -122,13 +140,15 @@ Template.category.events({
 	},
     "submit #new_subcategory": function(event, template) {
     	event.preventDefault();
+    	var language = event.target.language.value
     	var cat = {
     		name: event.target.name.value,
     		description: event.target.description.value,
-    		url_name: event.target.name.value,
+    		// remove url name in everything 
+
     		parent_id: Router.current().params._id,
     	}
-    	Meteor.call("add_category", cat, function(error, result) {
+    	Meteor.call("add_category", cat, language, function(error, result) {
     		if (error)
     			console.log(error);
     		if (result)

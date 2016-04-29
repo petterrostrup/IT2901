@@ -85,9 +85,29 @@
                     <td><input type="text" id="description"/></td>
                 </tr>
                 <tr>
+                    <!-- make it be able to search language like createContent -->
+                    <td>Language:</td>
+                    <td>{{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                    <td><input type="text" id="language"/></td>
+                </tr>
+                <tr>
                     <input type="submit" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; Add Subcategory" />
                 </tr>
             </table>
         </form>
     </div>
 </template>
+
+<!-- For language search -->
+<template name="serverCollectionPillCategory" id="{{_id}}">
+  {{name}}
+</template>
+
+<template name="clientCollectionPillCategory" id="{{_id}}">
+  {{name}}
+</template>
+
+<template name="serverNoMatchCategory">
+    <span class="text-danger">Nothing found on the server for <b>{{getFilter}}</b>!</span>
+</template>
+<!-- End of language search -->

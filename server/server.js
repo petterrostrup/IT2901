@@ -2,7 +2,8 @@
 SearchSource.defineSource('categorySearch', function(searchText, options) {
     options = options || {};
   var options = {sort: {isoScore: -1}, limit: 20};
-  
+  var arr = [];
+
   if(searchText) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
@@ -49,8 +50,8 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
       {name: regExp},
-      {description: regExp},
-      {title: regExp}
+      // {description: regExp},
+      // {title: regExp}
       // {community_id: regExp}
     ]};
     // search by commu and lang
@@ -67,11 +68,33 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     //   {description: regExp},
     //   {community_id: regExpCom}
     // ]};
-   
+
+    // test lookup
+//    console.log(ContentText.aggregate([
+//     {
+//       $lookup:
+//         {
+//           from: "Content",
+//           localField: "metacontent",
+//           foreignField: "_id",
+//           as: "content_info"
+//         }
+//    }
+// ]))
+    // end of test lookup
+
+    // test join collections
+    // var result = []
+    // var cate = Category.find(selector, options).fetch();
+    // for (var index in cate){
+    //     result.concat(Content.find({_id: cate[index]._id}).fetch())
+    // }
+    // console.log(result)
+    // end of test join collections
     //concat two returned collections
     return ContentText.find(selector, options).fetch();
   } else {
-    return Category.find({}, options).fetch();
+    return ContentText.find({}, options).fetch();
   }
 });
 
@@ -108,6 +131,10 @@ Meteor.publish("contentText", function() {
     return ContentText.find({});
 });
 
+Meteor.publish("categoryText", function() {
+    return CategoryText.find({});
+});
+
 Meteor.publish("tags", function(tag_string) {
     console.log(tag_string);
     return Tag.find({
@@ -129,119 +156,147 @@ Meteor.publish("CommunityTags", function() {
     return CommunityTags.find({});
 });
 
+var add_category = function(icon, catText) {
+    var mainCat = {
+        children_id: [],
+        content_ids: [],
+        categories: [],
+        icon: icon
+    }
+    var mainId = Category.insert(mainCat);
+    catText.metacategory = mainId
+    var childId = CategoryText.insert(catText);
+    Category.update({_id: mainId}, {
+        $push: {categories: childId}
+    });
+
+
+}
+
 Meteor.startup(function(){
     
     // If no category is found, it will create all the standard categories
     if (!Category.findOne()){
         console.log("Default category created.");
-        Category.insert({
-            name: "By",
-            children: [],
-            content_ids: [],
+        var id = Category.insert({
             children_id: [],
-            description: "Informasjon anngående byen",
+            content_ids: [],
             icon: "city2",
-            url_name: "city"
+            categories: []
         });
-        Category.insert({
-            name: "Samfunn",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående samfunnet",
-            icon: "community2",
-            url_name: "community"
+        var cat = {
+            name: "By",
+            description: "Informasjon anngående byen",
+            language: "Norsk",
+            metacategory: id
+        }
+        var content_text_id = CategoryText.insert(cat);
+
+        Category.update({
+            _id: id
+        }, {
+            $push: {categories: content_text_id}
         });
-        Category.insert({
-            name: "Økonomi",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående økonomi",
-            icon: "economy2",
-            url_name: "economy"
-        });
-        Category.insert({
-            name: "Utdanning",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående utdanning og skolering",
-            icon: "education2",
-            url_name: "education"
-        });
-        Category.insert({
-            name: "Food",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
-            icon: "food2",
-            url_name: "food"
-        });
-        Category.insert({
-            name: "Helse",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående helse og hvor man kan få hjelp",
-            icon: "health2",
-            url_name: "health"
-        });
-        Category.insert({
-            name: "Hjelp",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
-            icon: "help2",
-            url_name: "help"
-        });
-        Category.insert({
-            name: "Bolig",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Hvordan å få tak i bolig og annet relevant informasjon",
-            icon: "housing2",
-            url_name: "housing"
-        });
-        Category.insert({
-            name: "Jobb",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
-            icon: "jobs2",
-            url_name: "jobs"
-        });
-        Category.insert({
-            name: "Språk",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
-            icon: "language2",
-            url_name: "language"
-        });
-        Category.insert({
-            name: "Rettshjelp",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Rettshjelp, lover etc.",
-            icon: "legal2",
-            url_name: "legal"
-        });
-        Category.insert({
-            name: "Transport",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående transport",
-            icon: "transport2",
-            url_name: "transport"
-        });
+
+        // Category.insert({
+        //     name: "Samfunn",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående samfunnet",
+        //     icon: "community2",
+        //     url_name: "community"
+        // });
+        // Category.insert({
+        //     name: "Økonomi",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående økonomi",
+        //     icon: "economy2",
+        //     url_name: "economy"
+        // });
+        // Category.insert({
+        //     name: "Utdanning",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående utdanning og skolering",
+        //     icon: "education2",
+        //     url_name: "education"
+        // });
+        // Category.insert({
+        //     name: "Food",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
+        //     icon: "food2",
+        //     url_name: "food"
+        // });
+        // Category.insert({
+        //     name: "Helse",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående helse og hvor man kan få hjelp",
+        //     icon: "health2",
+        //     url_name: "health"
+        // });
+        // Category.insert({
+        //     name: "Hjelp",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
+        //     icon: "help2",
+        //     url_name: "help"
+        // });
+        // Category.insert({
+        //     name: "Bolig",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Hvordan å få tak i bolig og annet relevant informasjon",
+        //     icon: "housing2",
+        //     url_name: "housing"
+        // });
+        // Category.insert({
+        //     name: "Jobb",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
+        //     icon: "jobs2",
+        //     url_name: "jobs"
+        // });
+        // Category.insert({
+        //     name: "Språk",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
+        //     icon: "language2",
+        //     url_name: "language"
+        // });
+        // Category.insert({
+        //     name: "Rettshjelp",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Rettshjelp, lover etc.",
+        //     icon: "legal2",
+        //     url_name: "legal"
+        // });
+        // Category.insert({
+        //     name: "Transport",
+        //     children: [],
+        //     content_ids: [],
+        //     children_id: [],
+        //     description: "Informasjon anngående transport",
+        //     icon: "transport2",
+        //     url_name: "transport"
+        // });
     }
 
     var languageIds = [];

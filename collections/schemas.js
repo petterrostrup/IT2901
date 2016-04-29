@@ -141,16 +141,7 @@ Schema.Tag = new SimpleSchema({
 });
 
 Schema.Category = new SimpleSchema({
-	name: {
-		type: String,
-		label: "Name",
-		optional: false,
-		max: 60
-	},
-	url_name: {
-		type: String,
-		optional: false
-	},
+
 	parent_id: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
@@ -178,10 +169,6 @@ Schema.Category = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
-	description: {
-		type: String,
-		optional: false
-	},
 	icon: {
 		type: String,
 		optional: true
@@ -198,6 +185,34 @@ Schema.Category = new SimpleSchema({
 		    }
 	    }
   	},
+  	categories: {
+  		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+  	}
+});
+
+Schema.CategoryText = new SimpleSchema({
+	name: {
+		type: String,
+		label: "Name",
+		optional: false,
+		max: 60
+	}, 
+	description: {
+		type: String,
+		optional: false
+	},
+	metacategory: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+	},	
+	language: {
+		type: String,
+		optional: false,
+		max: 20
+	},
 });
 
 Schema.ContentText = new SimpleSchema({
@@ -262,3 +277,4 @@ Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
 LanguageTags.attachSchema(Schema.LanguageTags);
+CategoryText.attachSchema(Schema.CategoryText);

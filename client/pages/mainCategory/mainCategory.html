@@ -62,13 +62,12 @@
             <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
         </a>
     </div> -->
-    {{#if name}}
+    
         <div class="package col-cs-6 col-md-3 category">
       <h4 class="name" style="text-align: center">
-        {{{name}}}
-        {{{title}}}
-        {{{description}}}
-        {{{community_id}}}
+
+        {{{categories.name}}}
+
       </h4>
       <div class="icon">
         <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
@@ -76,7 +75,7 @@
         </a>
       </div>
     </div>
-    {{/if}}
+    
     
     {{/each}}
   </div>
