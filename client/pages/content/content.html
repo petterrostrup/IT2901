@@ -15,6 +15,17 @@
 
         </ol>
 
+
+        <div class="row">
+            <div class="btn-group" role="group" aria-label="...">
+                {{#each getContentText}}
+                    <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
+                {{/each}}       
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-default translate">Translate this content?</button>
+        </div>
         {{#with getContentText}}
 
             <h1>{{title}}</h1>

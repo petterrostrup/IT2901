@@ -4,8 +4,9 @@
         "BrowseContent": "Browse Content",
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
-        "Login": "Login",
-        "Admin": "Admin"
+        "Login": "Login  / Register",
+        "Admin": "Admin",
+        "toggle_lang": "Only show your languages"
     },
     "profile": {
         "Username": "Username",

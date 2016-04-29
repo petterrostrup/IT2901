@@ -2,7 +2,10 @@
     width: 200px;
     height: 200px;
 }
-
+.catHeader{
+    text-decoration: none;
+    color: grey;
+}
 
 .row{
     margin-top: 30px;
