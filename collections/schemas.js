@@ -201,6 +201,11 @@ Schema.Category = new SimpleSchema({
 });
 
 Schema.ContentText = new SimpleSchema({
+	createdById: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional:false
+	},
 	title: {
 		type: String,
 		optional: false,

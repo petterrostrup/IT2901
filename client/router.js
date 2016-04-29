@@ -28,6 +28,16 @@ Router.route("/settings", {
 });
 
 
+Router.route("/translateContent/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+  console.log(data);
+  if (data)
+    this.render("translateContent");
+  else
+    this.render("page_not_found");
+}, {name: "translateContent"});
+
+
 // Routing for the edit profile
 Router.route("/editprofile", {
     name: "editProfile",
