@@ -1,8 +1,11 @@
 
-Template.content.helpers({
-	get_information: function() {
-		return .;
+Template.content.get_content = function() {
+	return Session.get("content");
+}
 
+Template.content.helpers({
+	get_id: function() {
+		return Router.current().params._id;
 	},
 	get_parent_url: function() {
 		var list = [];
@@ -14,6 +17,10 @@ Template.content.helpers({
 		}
 		list.reverse();
 		return list;
+	},
+	get_supported_languages: function() {
+		var id = Router.current().params._id;
+		return ContentText.find({metacontent: id});
 	},
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
@@ -52,7 +59,8 @@ Template.content.helpers({
 		var foo = ContentText.findOne({
 			metacontent: content._id,
 		});
-		return foo;
+		Session.set("content", foo);
+		// return foo;
 	},
 	get_AllContentTextsForContent: function(){
 		return ContentText.find({metacontent: Router.current().params._id});
@@ -65,7 +73,11 @@ Template.content.events({
     },
     "click .langButton": function(event, template){
     	var id = event.target.id;
-    	// todo: change based on id. 
+    	// todo: change based on id.
+    	console.log(id);
+    	var text = ContentText.findOne({_id: id});
+    	console.log(text);
+    	Session.set("content", text.text);
     }
 });
 

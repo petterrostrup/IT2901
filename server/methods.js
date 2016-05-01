@@ -225,6 +225,7 @@ Meteor.methods({
 				$set: content
 			});
 		}
+		
 		return content.metacontent;
 	},
 

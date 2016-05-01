@@ -8,6 +8,14 @@
         "Admin": "Admin",
         "toggle_lang": "Kun vis dine språk"
     },
+    "mainContent": {
+        "create_content": "Opprett nytt innhold",
+        "title": "Tittel",
+        "description": "Beskrivelse",
+        "created": "Laget av",
+        "date": "Opprettet",
+        "rating": "Vurdering"
+    },
     "profile": {
         "Username": "Brukernavn",
         "FirstName": "Fornavn",
@@ -66,6 +74,9 @@
         "header": "Innstillinger",
         "toggle_lang": "Kun vis innhold som er støttet på dine språk.",
         "back": "Tilbake"
+    },
+    "content": {
+        "translate": "Oversett innhold"
     }
 }
 

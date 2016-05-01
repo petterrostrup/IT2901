@@ -8,6 +8,14 @@
         "Admin": "Admin",
         "toggle_lang": "Only show your languages"
     },
+    "mainContent": {
+        "create_content": "Create content",
+        "title": "Title",
+        "description": "Description",
+        "created": "Created by",
+        "date": "Created",
+        "rating": "Rating"
+    },
     "profile": {
         "Username": "Username",
         "FirstName": "First Name",
@@ -67,6 +75,9 @@
         "toggle_lang": "Only show your content with your languages.",
         "back": "Back"
 
+    },
+    "content": {
+        "translate": "Translate content"
     }
 }
 
