@@ -37,19 +37,18 @@
             {{#each get_content}}
                 <tr class="contentRow">
                     <td>
-
                         <a href="{{pathFor 'show_content' _id=_id}}">
                             {{title}}
                         </a>
                     </td>
                     <td>
-                        Description here
+                        {{description}}
                     </td>
                     <td>
-                        Creator here
+                        {{createdBy}}
                     </td>
                     <td>
-                        Date here
+                        {{timeSince time}} 
                     </td>
                     <td>
                         Rating

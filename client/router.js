@@ -30,7 +30,7 @@ Router.route("/settings", {
 
 Router.route("/translateContent/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
-  console.log(data);
+  // console.log(data);
   if (data)
     this.render("translateContent");
   else
@@ -65,6 +65,17 @@ Router.route("/category", {
 // Routing for a distinct category page.
 // Takes the category's id as input from the url
 Router.route("/category/:_id", function() {
+  // this.wait(Meteor.subscribe("usernames_category", this.params._id));
+  // if (this.ready()) {
+  //   var data = Category.findOne({_id: this.params._id});
+  //   if (data)
+  //     this.render("category");
+  //   else
+  //     this.render("page_not_found");
+  // } else {
+  //   this.render('loading');
+  // }
+
   var data = Category.findOne({_id: this.params._id});
   if (data)
     this.render("category");

@@ -9,6 +9,10 @@ Template.category.helpers({
 		var data = Category.findOne({_id: Router.current().params._id});
 		return data;
 	},
+	timeSince: function(time) {
+
+		return time.toISOString().slice(0,10);
+	},
 	get_parent_url: function() {
 		var list = [];
 		var current = Category.findOne({_id: Router.current().params._id});
@@ -48,6 +52,7 @@ Template.category.helpers({
 			var content = Content.findOne({
 				_id: current.content_ids[c]
 			});
+			console.log(content);
 			if (content) {
 				var cont_lang = ContentText.find({metacontent: content._id}).fetch();
 				if (!cont_lang){
@@ -59,7 +64,10 @@ Template.category.helpers({
 					if (cont_lang[a].language === db_language.name){
 						all_contents.push({
 							_id: content._id,
-							title: cont_lang[a].title
+							title: cont_lang[a].title,
+							description: cont_lang[a].description,
+							createdBy: content.createdByUsername,
+							time: content.timestamp
 						});
 						found = true;
 						break;
@@ -74,7 +82,10 @@ Template.category.helpers({
 						if (cont_lang[a].language === user_languages[langs].name){
 							all_contents.push({
 								_id: content._id,
-								title: cont_lang[a].title
+								title: cont_lang[a].title,
+								description: cont_lang[a].description,
+								createdBy: content.createdByUsername,
+								time: content.timestamp
 							});
 							found = true;
 							console.log("Content found for user languages.");
@@ -89,7 +100,10 @@ Template.category.helpers({
 				else if (!hide_other_lang) {
 					all_contents.push({
 						_id: content._id,
-						title: cont_lang[0].title
+						title: cont_lang[0].title,
+						description: cont_lang[0].description,
+						createdBy: content.createdByUsername,
+						time: content.timestamp
 					});
 					console.log("Content not supported found.");
 				}

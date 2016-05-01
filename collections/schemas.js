@@ -92,6 +92,10 @@ Schema.Content = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional:false
 	},
+	createdByUsername: {
+		type: String,
+		optional: false
+	},
 	timestamp: {
 	    type: Date,
 	    autoValue: function() {

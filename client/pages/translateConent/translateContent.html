@@ -42,27 +42,39 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
             <div class="col-md-4">
-
-                <input type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; Submit Translation" >
+                <ul class="list-inline">
+                    <li>
+                        <input type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; Submit Translation" >
+                    </li>
+                    <li>
+                        <a class="btn btn-default" href="{{pathFor 'show_content' _id=get_id}}">
+                            {{_ "createContent.cancel"}}
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 
     </div>
     <div class="col-md-6">
+        <label for="lang-btn-group">{{_ "createContent.translate_from"}}</label>
+        <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
+            {{#each get_supported_languages}}
+                <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
+            {{/each}}       
+        </div>
+
     	{{#with getContentText}}
 
-            <h1>{{title}}</h1>
+            <h1 id="title_prew">{{title}}</h1>
 
-            <p>{{language}}</p>
-
-            <p>{{description}}</p>
-
-
-            {{#markdown}}
-                {{{text}}}
-            {{/markdown}}
+            <p id="description_prew">{{description}}</p>
 
         {{/with}}
+
+        {{#markdown}}
+            {{get_content}}
+        {{/markdown}}
     </div>
 </div>
 

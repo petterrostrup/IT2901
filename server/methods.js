@@ -129,6 +129,7 @@ Meteor.methods({
 		// Adds the id of the user in the main
 		main.createdById = Meteor.userId();
 		content.createdById = Meteor.userId();
+		main.createdByUsername = Meteor.user().username;
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {

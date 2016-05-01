@@ -17,7 +17,7 @@
 
 
         <div class="row">
-            <div class="btn-group" role="group" aria-label="...">
+            <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
                 {{#each get_supported_languages}}
                     <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
                 {{/each}}       
@@ -38,10 +38,10 @@
         {{/with}}
 
         {{#markdown}}
-            {{{get_content}}}
+            {{get_content}}
         {{/markdown}}
         <div class="comment-section">
-            {{> commentsBox id=get_information._id}}
+            {{> commentsBox id=get_id}}
         </div>
     </div>
 </template>

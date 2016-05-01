@@ -14,7 +14,8 @@
         "description": "Description",
         "created": "Created by",
         "date": "Created",
-        "rating": "Rating"
+        "rating": "Rating",
+        "ago": "ago"
     },
     "profile": {
         "Username": "Username",
@@ -34,7 +35,9 @@
         "Content": "Content",
         "Community": "Community",
         "Category": "Category",
-        "Language": "Language"
+        "Language": "Language",
+        "cancel": "Cancel",
+        "translate_from": "Translate from"
     },
     "submit": {
         "Submit": "Submit"

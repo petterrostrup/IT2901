@@ -65,3 +65,7 @@ p.small.text-muted {
         width: 500px;
     }
 }
+
+.active-lang-btn {
+    background-color: yellow;
+}
