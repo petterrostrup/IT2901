@@ -19,7 +19,9 @@
             <div class="col-lg-6">
             </div>
             <div class="col-lg-2">
-                <button type="button" class="btn btn-default">Settings   <i class="fa fa-cogs" aria-hidden="true"></i></button>
+              <a href="{{pathFor 'settings'}}" class="btn btn-default">
+                <i class="fa fa-cogs" aria-hidden="true"></i> Settings
+              </a>
             </div>
         </div>
 
@@ -64,12 +66,9 @@
         </a>
     </div> -->
     {{#if name}}
-        <div class="package col-cs-6 col-md-3 category">
+    <div class="package col-cs-6 col-md-3 category">
       <h4 class="name" style="text-align: center">
         {{{name}}}
-        {{{title}}}
-        {{{description}}}
-        {{{community_id}}}
       </h4>
       <div class="icon">
         <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">

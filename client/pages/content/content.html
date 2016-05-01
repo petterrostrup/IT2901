@@ -15,20 +15,33 @@
 
         </ol>
 
+
+        <div class="row">
+            <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
+                {{#each get_supported_languages}}
+                    <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
+                {{/each}}       
+                <a href="{{pathFor 'translateContent' _id=get_id}}" class="btn btn-default">
+                    {{_ "content.translate"}}
+                </a>
+            </div>
+        </div>
+        <!-- <div class="row">
+            
+        </div> -->
         {{#with getContentText}}
 
-            <h1>{{title}}</h1>
+            <h1 id="title">{{title}}</h1>
 
-            <p>{{description}}</p>
-
-            {{#markdown}}
-                {{{text}}}
-            {{/markdown}}
+            <p id="description">{{description}}</p>
 
         {{/with}}
 
+        {{#markdown}}
+            {{get_content}}
+        {{/markdown}}
         <div class="comment-section">
-            {{> commentsBox id=get_information._id}}
+            {{> commentsBox id=get_id}}
         </div>
     </div>
 </template>

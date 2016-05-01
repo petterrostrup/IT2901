@@ -10,7 +10,10 @@ Template.profile.helpers({
         var contentTitle = [];
         var contentId = [];
         for (content in contents) {
-            contentTitle.push({title: contents[content].title, id: contents[content]._id});
+            var text = ContentText.findOne({
+                metacontent: contents[content]._id
+            });
+            contentTitle.push({title: text.title, id: contents[content]._id});
         }
         // for (content in contents) {
         //     contentId.push(contents[content]._id);

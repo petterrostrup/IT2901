@@ -1,9 +1,17 @@
 
 Template.translateContent.helpers({
+	get_id: function() {
+		return Router.current().params._id;
+	},
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
 		var foo = ContentText.find({metacontent: content._id}).fetch();
+		Session.set("trans_content", foo[0].text);
 		return foo[0];
+	},
+	get_supported_languages: function() {
+		var id = Router.current().params._id;
+		return ContentText.find({metacontent: id});
 	},
 	settingsLang: function() {
 	    return {
@@ -20,8 +28,10 @@ Template.translateContent.helpers({
 	        }
 	      ]
 	    }
+	},
+	get_content: function() {
+		return Session.get("trans_content");
 	}
-
 });
 
 Template.translateContent.events({
@@ -53,10 +63,11 @@ Template.translateContent.events({
 			description: template.$("#description").val(),
 			text: simplemde.value(),
 			language: langs[0],
+			metacontent: cont_id
 		}
 
 
-		Meteor.call("submit_content", cont, content, function(error, result) {
+		Meteor.call("transelate_content", content, function(error, result) {
 			if (result)
 				console.log(result);
 			if (error)
@@ -64,5 +75,21 @@ Template.translateContent.events({
 			else
 				Router.go("show_content", {_id: result});
 		});
-	}
+	},
+	"click .langButton": function(event, template){
+    	var id = event.target.id;
+    	// todo: change based on id.
+    	var text = ContentText.findOne({_id: id});
+    	Session.set("trans_content", text.text);
+    	template.$("#description_prew").text(text.description);
+    	template.$("#title_prew").text(text.title);
+    	var btns = template.$("#lang-btn-group").children();
+    	for (var a in btns) {
+    		if (btns[a].id) {
+	    		var b = "#" + btns[a].id;
+	    		template.$(b).removeClass("active-lang-btn");
+    		}
+    	}
+    	template.$(("#" + id)).addClass("active-lang-btn");
+    }
 })
