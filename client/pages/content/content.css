@@ -66,9 +66,9 @@ p.small.text-muted {
     }
 }
 
+
 .contentRating {
     display: inline-block;
-
 
 }
 
@@ -79,4 +79,8 @@ p.small.text-muted {
 .voteField {
     float: left;
     margin-left: 10px;
+}
+.active-lang-btn {
+    background-color: yellow;
+
 }
