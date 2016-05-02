@@ -1,6 +1,7 @@
 <template name="content">
 
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom: 50px">
+
         <ol class="breadcrumb">
 
             {{#each get_parent_url}}
@@ -14,6 +15,13 @@
             </li>
 
         </ol>
+
+
+
+
+
+        </div>
+
 
 
         <div class="row">
@@ -38,13 +46,22 @@
 
             <p id="description">{{description}}</p>
 
+
         {{/with}}
 
         {{#markdown}}
 {{get_content}}
         {{/markdown}}
-        <div class="comment-section">
-            {{> commentsBox id=get_id}}
-        </div>
+
+
+    <div class="contentRating">
+        <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
+        <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
+        <p class="voteField">{{getContentText.likesCounter}}</p>
+
     </div>
+    <div class="comment-section">
+        {{> commentsBox id=get_id}}
+    </div>
+
 </template>

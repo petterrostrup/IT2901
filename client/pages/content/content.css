@@ -66,6 +66,21 @@ p.small.text-muted {
     }
 }
 
+
+.contentRating {
+    display: inline-block;
+
+}
+
+.vote {
+    color: grey;
+}
+
+.voteField {
+    float: left;
+    margin-left: 10px;
+}
 .active-lang-btn {
     background-color: yellow;
+
 }

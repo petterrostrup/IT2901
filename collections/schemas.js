@@ -245,7 +245,15 @@ Schema.ContentText = new SimpleSchema({
 		    	this.unset();  // Prevent user from supplying their own value
 		    }
 	    }
-  	}
+  	},
+	upVote: {
+		type: [String],
+		optional: true
+	},
+	downVote: {
+		type: [String],
+		optional: true
+	}
 });
 
 Schema.LanguageTags = new SimpleSchema({

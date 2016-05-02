@@ -121,7 +121,7 @@ Meteor.methods({
 			title: String,
 			description: String,
 			language: String,
-			text: String,
+			text: String
 		});
 
 		main.tags = [];
@@ -130,6 +130,8 @@ Meteor.methods({
 		main.createdById = Meteor.userId();
 		content.createdById = Meteor.userId();
 		main.createdByUsername = Meteor.user().username;
+		content.upVote = [];
+		content.downVote = [];
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
@@ -199,6 +201,8 @@ Meteor.methods({
 		});
 
 		content.createdById = Meteor.userId();
+		content.upVote = [];
+		content.downVote = [];
 
 		var father = Content.findOne({_id: content.metacontent});
 		if (!father) 
@@ -455,5 +459,57 @@ Meteor.methods({
 		},{
 			$set: {"profile.preferred_language": lang}
 		});
+	},
+
+	vote: function(content_id, user_id, vote){
+		check(user_id, String);
+		check(content_id, String);
+		var upvoteArray = ContentText.findOne({_id: content_id}).upVote;
+		var downVoteArray = ContentText.findOne({_id: content_id}).downVote;
+		if(vote == 1){ //upvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {downVote: user_id}
+				});
+			if(typeof upvoteArray === 'undefined' || upvoteArray.indexOf(user_id) === -1){
+				ContentText.update(
+				content_id,
+				{
+					$push: {upVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {upVote: user_id}
+					});
+			}
+		}
+
+		else{//downvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {upVote: user_id}
+				});
+			if(typeof downVoteArray === 'undefined' || downVoteArray.indexOf(user_id) === -1){
+
+				ContentText.update(
+				content_id,
+				{
+					$push: {downVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {downVote: user_id}
+					});
+			}
+		}
 	}
+	
 });
