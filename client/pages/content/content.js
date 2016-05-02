@@ -34,6 +34,7 @@ Template.content.helpers({
 			if (text_default){
 				console.log("Found default language. Render with that.");
 				Session.set("content", text_default.text);
+				Session.set("content_language", default_language.name);
 				return text_default;
 			}
 		}
@@ -52,6 +53,7 @@ Template.content.helpers({
 				if (content_1){
 					console.log("Found content for user language.");
 					Session.set("content", content_1.text);
+					Session.set("content_language", lang.name);
 					return content_1;
 				}
 			}
@@ -61,6 +63,7 @@ Template.content.helpers({
 			metacontent: content._id,
 		});
 		Session.set("content", foo.text);
+		Session.set("content_language", foo.language);
 		return foo;
 	},
 	get_AllContentTextsForContent: function(){
@@ -74,11 +77,13 @@ Template.content.events({
     },
     "click .langButton": function(event, template){
     	var id = event.target.id;
+    	var name = event.target.name;
     	// todo: change based on id.
     	// console.log(id);
     	var text = ContentText.findOne({_id: id});
     	// console.log(text);
     	Session.set("content", text.text);
+    	Session.set("content_language", name);
     	template.$("#description").text(text.description);
     	template.$("#title").text(text.title);
     	var btns = template.$("#lang-btn-group").children();

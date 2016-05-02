@@ -235,7 +235,7 @@ Meteor.methods({
 	add_category: function(category) {
 
 		check(category, Object);
-		console.log(category);
+
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
