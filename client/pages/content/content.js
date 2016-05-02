@@ -103,7 +103,7 @@ var changeVoteColor = function(contentText){
 
 	console.log(contentText.upVote);
 	(function rendered() {
-		if(typeof contentText.upVote !== 'undefined' || typeof contentText.downVote !== 'undefined') {
+		if(contentText.upVote != undefined || contentText.downVote != undefined) {
 			console.log("heisann");
 		if (!$("#upVote").size() || !$("#downVote").size()) {
 			setTimeout(rendered, 100); // give everything some time to render
