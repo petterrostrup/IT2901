@@ -45,7 +45,7 @@ Template.navigation.rendered = function() {
 Template.navigation.events({
     'click #language': function(event) {
         event.preventDefault();
-        //if(!($('.changeLanguage').length)) {
+        if(!($('.changeLanguage').length)) {
             for(var key in supportedLanguages){
                 console.log(key);
                 console.log(supportedLanguages[key].language);
@@ -53,7 +53,7 @@ Template.navigation.events({
             }
 
 
-        //}
+        }
     }
 
 });
