@@ -1,13 +1,18 @@
 <template name="translateContent">
 <div class="row">
+
     <div class="col-md-6">
 
-
+    {{getContentText}}
     	<!-- Title input -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="title">{{_ "createContent.Title"}}</label>
             <div class="col-md-8">
-                <input id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="">
+                {{#if edit}}
+                    <input id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="" value="{{get_content.title}}">
+                {{else}}
+                    <input id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="">
+                {{/if}}
             </div>
         </div>
 
@@ -15,17 +20,26 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="description">{{_ "createContent.Description"}}</label>
             <div class="col-md-8">
-            <textarea type="text" required="true" id="description" class="form-control" placeholder="{{_ 'typeHere.TypeHere'}}"></textarea>
+            <textarea type="text" required="true" id="description" class="form-control" placeholder="{{_ 'typeHere.TypeHere'}}">{{#if edit}}{{get_content.description}}{{/if}}</textarea>
             </div>
         </div>
 	    <!-- Select Language -->
-	    <div class="form-group">
+        <div class="form-group">
+            {{#if edit}}
+                <label class="col-md-4 control-label" for="current_lang">
+                    {{_ "createContent.edit_lang"}}
+                </label>
+                <div class="col-md-7" id="current_lang">
+                    {{current_language}}
+                </div>
+            {{else}}
 	        <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
 
 	        <div class="col-md-7">
 	            {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
 	        </div>
-	    </div>
+            {{/if}}
+        </div>
 
 	    <br>
 
@@ -37,14 +51,19 @@
 		    });
 		</script>
 
-		<textarea id="MyID"></textarea>
+		<textarea id="MyID">{{#if edit}}{{get_content.text}}{{/if}}</textarea>
 
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <ul class="list-inline">
                     <li>
-                        <input type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; Submit Translation" >
+                    {{#if edit}}
+                        <input type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; {{_ 'content.save_changes'}}" >
+                    {{else}}
+                        <input type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; {{_ 'content.submit_translation'}}" >
+                    {{/if}}
+
                     </li>
                     <li>
                         <a class="btn btn-default" href="{{pathFor 'show_content' _id=get_id}}">
@@ -57,24 +76,33 @@
 
     </div>
     <div class="col-md-6">
+        {{#if edit}}
+        {{else}}
         <label for="lang-btn-group">{{_ "createContent.translate_from"}}</label>
         <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
             {{#each get_supported_languages}}
                 <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
             {{/each}}       
         </div>
+        {{/if}}
 
-    	{{#with getContentText}}
+        <br>
+        <label for="toggle_markdown">{{_ "createContent.toggle_markdown"}}</label>
 
-            <h1 id="title_prew">{{title}}</h1>
+        <input type="checkbox" id="toggle_markdown" />
+        
+        <h1 id="title_prew">{{get_content.title}}</h1>
 
-            <p id="description_prew">{{description}}</p>
+        <p id="description_prew">{{get_content.description}}</p>
 
-        {{/with}}
-
+        <div id="html_content">
         {{#markdown}}
-            {{get_content}}
+{{get_content.text}}
         {{/markdown}}
+        </div>
+        <div id="markdown_content" hidden>
+            <textarea rows="15" cols="50" readonly>{{get_content.text}}</textarea>
+        </div>
     </div>
 </div>
 

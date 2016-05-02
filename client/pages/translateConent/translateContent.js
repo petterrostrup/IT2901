@@ -6,8 +6,14 @@ Template.translateContent.helpers({
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
 		var foo = ContentText.find({metacontent: content._id}).fetch();
-		Session.set("trans_content", foo[0].text);
-		return foo[0];
+		var language = Session.get("content_language");
+		for (var a in foo) {
+			if (foo[a].language === language) {
+				Session.set("trans_content", foo[a]);
+				return;
+			}
+		}
+		Session.set("trans_content", foo[0]);
 	},
 	get_supported_languages: function() {
 		var id = Router.current().params._id;
@@ -31,10 +37,23 @@ Template.translateContent.helpers({
 	},
 	get_content: function() {
 		return Session.get("trans_content");
+	},
+	current_language: function() {
+		return Session.get("content_language");
 	}
 });
 
 Template.translateContent.events({
+	"click #toggle_markdown": function(event, template) {
+		var checked = event.target.checked;
+		if (checked) {
+			template.$("#html_content").hide();
+			template.$("#markdown_content").show();
+		} else {
+			template.$("#html_content").show();
+			template.$("#markdown_content").hide();
+		}
+	},
 	"click #content-submit": function(event, template) {
 		event.preventDefault();
 		// console.log(template.$("#epicarea0").val());
@@ -48,24 +67,29 @@ Template.translateContent.events({
 			console.log("Ingen text funnet.");
 			return;
 		}
+		if (Session.get("transelate_content")){
+			var langs = $("#autocomplete-input-Lang").val().split(" ");
+		   	for (var lang in langs) {
+		   		langs[lang] = langs[lang].replace("#", "");
+		   	}
 
-		var langs = $("#autocomplete-input-Lang").val().split(" ");
-	   	for (var lang in langs) {
-	   		langs[lang] = langs[lang].replace("#", "");
-	   	}
-
-	   	if (!langs){
-	   		console.log("Why no language?");
-	   		return;
-	   	}
+		   	if (!langs){
+		   		console.log("Why no language?");
+		   		return;
+		   	}
+		}
 		content = {
 			title: template.$("#title").val(),
 			description: template.$("#description").val(),
 			text: simplemde.value(),
-			language: langs[0],
-			metacontent: cont_id,
-			upVote: [],
-			downVote: []
+			metacontent: cont_id
+		}
+
+		if (Session.get("transelate_content")) {
+			content.language = langs[0];
+		}
+		else {
+			content.language = Session.get("content_language");
 		}
 
 
@@ -82,9 +106,7 @@ Template.translateContent.events({
     	var id = event.target.id;
     	// todo: change based on id.
     	var text = ContentText.findOne({_id: id});
-    	Session.set("trans_content", text.text);
-    	template.$("#description_prew").text(text.description);
-    	template.$("#title_prew").text(text.title);
+    	Session.set("trans_content", text);
     	var btns = template.$("#lang-btn-group").children();
     	for (var a in btns) {
     		if (btns[a].id) {
