@@ -5,20 +5,17 @@
 
 
                 <div class="panel panel-info">
-                    <div class="panel-heading">
+                    <div class="panel-heading custom-header">
                         <h3 class="panel-title headerText">{{ getUserInfo.username }} - {{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
                     </div>
                     <div class="panel-body">
                         <div class="alert alert-success" id="editSuccess" style="display: none" role="alert">Profile information is edited</div>
+                        <div class="alert alert-info"><strong>Info!</strong> All fields are freely editable now. Edit what you want and press the save button</div>
                         <div class="row">
                             <div class="col-md-3 col-lg-3 " align="center"></div>
                             <div class=" col-md-9 col-lg-9 ">
                                 <table class="table table-user-information">
                                     <tbody>
-                                    <!-- <tr>
-                                        <td>Username:</td>
-                                        <td>{{ getUserInfo.username}}</td>
-                                    </tr> -->
                                     <tr>
                                         <td>First Name:</td>
                                         <td><input id="first_name" class="editInput" type="text" name="first_name" value="{{ getUserProfile.first_name }}"></td>
@@ -31,16 +28,6 @@
                                         <td>Organization:</td>
                                         <td><input id="organization" class="editInput" type="text" name="organization" value="{{ getUserProfile.organization }}" readonly="readonly"></td>
                                     </tr> -->
-                                    <!-- <tr>
-                                        <td>Language:</td>
-                                        <td><input id="languages" class="editInput" type="text" name="language" value="{{ getUserProfile.languages }}"></td>
-                                    </tr> -->
-                                    <!-- <tr>
-                                        <td>Joined:</td>
-                                        <td>{{ getUserInfo.createdAt }}
-                                        {{ getUserInfo.createdAt.getMonth }}
-                                        {{ getUserInfo.createdAt.getFullYear }}</td>
-                                    </tr> -->
                                     <tr>
                                         <td>Email:</td>
                                         <td><input id="email" class="editInput" type="text" name="email" value="{{ getUserInfo.email }}"></td>
@@ -48,8 +35,7 @@
                                     <!-- <tr>
                                         <td>User Privileges:</td>
                                         <td> {{ getUserInfo.roles }}</td>
-                                    </tr> -->                                     
-
+                                    </tr> -->
                                     </tbody>
                                 </table>
                             </div>
