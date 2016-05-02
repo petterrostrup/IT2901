@@ -155,9 +155,6 @@ Template.createContent.events({
     	console.log(coms)
 
     	if (coms) {
-// <<<<<<< HEAD
-//     		content.community = coms;
-// =======
     		main.community = coms[0];
     	}
 
@@ -168,19 +165,15 @@ Template.createContent.events({
 		content = {
 			title: template.$("#title").val(),
 			description: template.$("#description").val(),
-			// text: template.$("#epicarea0").val(),
-			text: "#Så bra da kis.\n###litt usikker på hvordan dette fungerer.\nMen men, sånn går det nå.\n### men det fungerer.\nsånn går no dagan da kis.",
+			text: simplemde.value(),
 			language: langs[0],
+			upVote: [],
+			downVote: []
 		}
 
 		if (!content.text) {
 			console.log("Ingen text funnet.");
-			for (var hei = 0; ; hei++) {
-				if (template.$("#epicarea" + String(hei)).val()){
-					console.log("Value: ", hei);
-					return;
-				}
-			}
+			return;
 		}
 
 		Meteor.call("submit_content", main, content, function(error, result) {

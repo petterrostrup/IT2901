@@ -1,0 +1,10 @@
+#epiceditor {
+  border:0;
+  background:rgb(130,130,130);
+  font-family:monospace;
+  font-size:14px;
+  font-color:#000000;
+  line-height:1.35em;
+  margin:0;
+  padding:0;
+}

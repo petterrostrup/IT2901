@@ -122,12 +122,16 @@ Meteor.methods({
 			description: String,
 			language: String,
 			text: String,
+			upVote: Array,
+			downVote: Array
 		});
 
 		main.tags = [];
 		main.contents = [];
 		// Adds the id of the user in the main
 		main.createdById = Meteor.userId();
+		content.createdById = Meteor.userId();
+		main.createdByUsername = Meteor.user().username;
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
@@ -179,6 +183,53 @@ Meteor.methods({
 		});
 		
 		return content_id;
+	},
+
+
+	transelate_content: function(content) {
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+		console.log(content);
+		check(content, {
+			title: String,
+			description: String,
+			language: String,
+			text: String,
+			metacontent: String
+		});
+
+		content.createdById = Meteor.userId();
+
+		var father = Content.findOne({_id: content.metacontent});
+		if (!father) 
+			throw new Meteor.Error(404, "Content not found.");
+
+		var self = ContentText.findOne({
+			metacontent: content.metacontent,
+			language: content.language
+		});
+		if (!self) {
+			var language = LanguageTags.findOne({
+				name: content.language
+			});
+			if (!language) {
+				throw new Meteor.Error(404, "Language not found.");
+			}
+			var content_id = ContentText.insert(content);
+			Content.update({_id: content.metacontent}, {
+				$push: {contents: content_id}
+			});
+		} else {
+			ContentText.update({
+				_id: self._id
+			},{
+				$set: content
+			});
+		}
+		
+		return content.metacontent;
 	},
 
 
@@ -441,5 +492,57 @@ Meteor.methods({
 		},{
 			$set: {"profile.preferred_language": lang}
 		});
+	},
+
+	vote: function(content_id, user_id, vote){
+		check(user_id, String);
+		check(content_id, String);
+		var upvoteArray = ContentText.findOne({_id: content_id}).upVote;
+		var downVoteArray = ContentText.findOne({_id: content_id}).downVote;
+		if(vote == 1){ //upvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {downVote: user_id}
+				});
+			if(typeof upvoteArray === 'undefined' || upvoteArray.indexOf(user_id) === -1){
+				ContentText.update(
+				content_id,
+				{
+					$push: {upVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {upVote: user_id}
+					});
+			}
+		}
+
+		else{//downvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {upVote: user_id}
+				});
+			if(typeof downVoteArray === 'undefined' || downVoteArray.indexOf(user_id) === -1){
+
+				ContentText.update(
+				content_id,
+				{
+					$push: {downVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {downVote: user_id}
+					});
+			}
+		}
 	}
+	
 });

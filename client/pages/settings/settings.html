@@ -1,0 +1,20 @@
+<template name="settings">
+	<h2>{{_ "settings.header"}}</h2>
+	<a href="{{pathFor 'category'}}">
+		{{_ "settings.back"}}
+	</a>
+	<table class="table">
+		<tbody>
+			<tr>
+				<td>{{_ "settings.toggle_lang"}}</td>
+				<td>
+					{{#if lang_check}}
+                        <input type="checkbox" name="toggle-languages" id="toggle_lang" checked/>
+                    {{else}}
+                        <input type="checkbox" name="toggle-languages" id="toggle_lang" />
+                    {{/if}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</template>

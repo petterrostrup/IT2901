@@ -2,7 +2,7 @@
 
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-5">
                 <div class="input-group">
                     <!-- Search function-->
                     
@@ -11,23 +11,23 @@
                         
                     
                     <!-- End of Search function-->
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-5">
             </div>
             <div class="col-lg-2">
-                <button type="button" class="btn btn-default">Settings   <i class="fa fa-cogs" aria-hidden="true"></i></button>
+              <a href="{{pathFor 'settings'}}" class="btn btn-default">
+                <i class="fa fa-cogs" aria-hidden="true"></i> Settings
+              </a>
             </div>
         </div>
 
         <div class="col-lg-15">
             <div class="row">
+
               <p>Categories</p>
                 {{> searchResult}}
-              
+
             </div>
         </div>
         <div class="col-lg-15">
@@ -43,7 +43,14 @@
 
 <!-- Search function-->
 <template name="searchBox">
-  <input type="text" id="search-box" placeholder="search packages here"/>
+    <div class="row">
+        <div class="col-lg-1">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+        <div class="col-lg-10">
+            <input type="text" id="search-box" class="form-control" placeholder="Search for content here"/>
+        </div>
+    </div>
 </template>
 
 <template name="searchResult">
@@ -62,11 +69,11 @@
             <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
         </a>
     </div> -->
-    
-        <div class="package col-cs-6 col-md-3 category">
-      <h4 class="name" style="text-align: center">
 
-        {{{categories.name}}}
+    {{#if name}}
+    <div class="package col-cs-6 col-md-3 category">
+      <h4 class="name" style="text-align: center">
+        {{{name}}}
 
       </h4>
       <div class="icon">
@@ -75,7 +82,7 @@
         </a>
       </div>
     </div>
-    
+    {{/if}}
     
     {{/each}}
   </div>

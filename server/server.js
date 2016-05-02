@@ -116,6 +116,25 @@ Meteor.publish("personalInfo", function() {
 });
 
 
+// Meteor.publish("usernames_category", function(cat_id) {
+//     check(cat_id, String);
+//     var user_ids = [];
+//     var content = Content.find({category_id: cat_id}).fetch();
+//     for (var a in content) {
+//         user_ids.push(content[a].createdById);
+//     }
+//     var users = Meteor.users.find({
+//         _id: {$in: user_ids}
+//     },{
+//         username: 1,
+//         _id: 0,
+//         profile: 0
+//     });
+//     console.log(users.fetch());
+//     return users;
+// });
+
+
 // Publishes all user info to administrators. If the user are not admin, the user cannot access all user information
 Meteor.publish("allUsers", function(user) {
     if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {

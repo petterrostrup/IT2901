@@ -4,9 +4,18 @@
         "BrowseContent": "Browse Content",
         "CreateContent": "Create Content",
         "LogOut": "Log Out",
-        "Login": "Login",
+        "Login": "Login  / Register",
         "Admin": "Admin",
         "toggle_lang": "Only show your languages"
+    },
+    "mainContent": {
+        "create_content": "Create content",
+        "title": "Title",
+        "description": "Description",
+        "created": "Created by",
+        "date": "Created",
+        "rating": "Rating",
+        "ago": "ago"
     },
     "profile": {
         "Username": "Username",
@@ -26,7 +35,9 @@
         "Content": "Content",
         "Community": "Community",
         "Category": "Category",
-        "Language": "Language"
+        "Language": "Language",
+        "cancel": "Cancel",
+        "translate_from": "Translate from"
     },
     "submit": {
         "Submit": "Submit"
@@ -61,6 +72,15 @@
     },
     "changeLanguage": {
         "ChangeLanguage": "Change Language"
+    },
+    "settings": {
+        "header": "Settings",
+        "toggle_lang": "Only show your content with your languages.",
+        "back": "Back"
+
+    },
+    "content": {
+        "translate": "Translate content"
     }
 }
 

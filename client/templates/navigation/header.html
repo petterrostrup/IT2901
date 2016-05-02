@@ -13,13 +13,9 @@
 
                 </div>
 
-                <div class="pull-right">
-                        <ul class="nav navbar-nav">
-                            <li><a style="white-space: nowrap"  id="language" class="link" name="language" title="Languages" data-toggle="popover" data-placement="bottom" data-content=""><i class="fa fa-language fa-lg" aria-hidden="true"></i></a></li>
-                        </ul>
-                </div>
 
-                <div class="navbar-collapse collapse">
+
+                <div class="navbar-collapse collapse headerList">
                     <ul class="nav navbar-nav">
                         <li><a id="home" class="link" href="{{pathFor 'home'}}"><i class="fa fa-home" aria-hidden="true">  </i> {{_ "header.Home"}} </a></li>
                         <li><a id="category" class="link" href="{{pathFor 'category'}}"><i class="fa fa-files-o" aria-hidden="true">  </i> {{_ "header.BrowseContent"}}</a></li>
@@ -30,15 +26,7 @@
 
                     <ul class="nav navbar-nav pull-right">
                         {{#if currentUser}}
-                        <li>
-                            <label for="toggle-languages">{{_ "header.toggle_lang"}}</label>
-                            {{#if lang_check}}
-                                <input type="checkbox" name="toggle-languages" id="toggle_lang" checked/>
 
-                            {{else}}
-                                <input type="checkbox" name="toggle-languages" id="toggle_lang" />
-                            {{/if}}
-                        </li>
                         {{#if isInRole 'admin'}}
                         <li>
                             <a href="{{pathFor 'admin'}}" class="link">
@@ -53,6 +41,10 @@
                         {{else}}
                         <li><a id="login" class="link" href="{{pathFor 'login'}}"><i class="fa fa-sign-in" aria-hidden="true"> </i> {{_ "header.Login"}}</a></li>
                         {{/if}}
+
+                        <ul class="nav navbar-nav">
+                            <li><a style="white-space: nowrap"  id="language" class="link" name="language" title="Languages" data-toggle="popover" data-placement="bottom" data-content=""><i class="fa fa-language fa-lg" aria-hidden="true"></i></a></li>
+                        </ul>
 
 
                     </ul>
