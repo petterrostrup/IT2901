@@ -45,7 +45,7 @@ Template.navigation.rendered = function() {
 Template.navigation.events({
     'click #language': function(event) {
         event.preventDefault();
-        if(!($('.changeLanguage').length)) {
+        //if(!($('.changeLanguage').length)) {
             for(var key in supportedLanguages){
                 console.log(key);
                 console.log(supportedLanguages[key].language);
@@ -53,13 +53,24 @@ Template.navigation.events({
             }
 
 
-        }
+        //}
     }
 
 });
+
+function disablePopovers() {
+    $("a[rel=popover]").popover('hide');
+    $("a[rel=popover]").popover('disable');
+    // Remove the popover DIV from the DOM
+    $(".popover").remove();
+    $("#language").click();
+}
+
+
 Template.navigation.events({
     'click .changeLanguage': function (event) {
         event.preventDefault();
+        disablePopovers();
         var lang = (event.target).id;
         if(supportedLanguages[(event.target).id].flipped){
             $('#layoutContainer').addClass('reverseSite');
