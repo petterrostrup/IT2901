@@ -122,6 +122,8 @@ Meteor.methods({
 			description: String,
 			language: String,
 			text: String,
+			upVote: Array,
+			downVote: Array
 		});
 
 		main.tags = [];
@@ -406,5 +408,57 @@ Meteor.methods({
 		},{
 			$set: {"profile.preferred_language": lang}
 		});
+	},
+
+	vote: function(content_id, user_id, vote){
+		check(user_id, String);
+		check(content_id, String);
+		var upvoteArray = ContentText.findOne({_id: content_id}).upVote;
+		var downVoteArray = ContentText.findOne({_id: content_id}).downVote;
+		if(vote == 1){ //upvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {downVote: user_id}
+				});
+			if(typeof upvoteArray === 'undefined' || upvoteArray.indexOf(user_id) === -1){
+				ContentText.update(
+				content_id,
+				{
+					$push: {upVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {upVote: user_id}
+					});
+			}
+		}
+
+		else{//downvote
+			ContentText.update(
+				content_id,
+				{
+					$pull: {upVote: user_id}
+				});
+			if(typeof downVoteArray === 'undefined' || downVoteArray.indexOf(user_id) === -1){
+
+				ContentText.update(
+				content_id,
+				{
+					$push: {downVote: user_id}
+				});
+			}
+			else{
+				ContentText.update(
+					content_id,
+					{
+						$pull: {downVote: user_id}
+					});
+			}
+		}
 	}
+	
 });

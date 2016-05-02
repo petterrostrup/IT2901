@@ -155,9 +155,6 @@ Template.createContent.events({
     	console.log(coms)
 
     	if (coms) {
-// <<<<<<< HEAD
-//     		content.community = coms;
-// =======
     		main.community = coms[0];
     	}
 
@@ -170,6 +167,8 @@ Template.createContent.events({
 			description: template.$("#description").val(),
 			text: simplemde.value(),
 			language: langs[0],
+			upVote: [],
+			downVote: []
 		}
 
 		if (!content.text) {

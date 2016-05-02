@@ -1,4 +1,6 @@
 
+
+
 Template.content.helpers({
 	get_information: function() {
 		return Content.findOne({_id: Router.current().params._id});
@@ -16,7 +18,7 @@ Template.content.helpers({
 		return list;
 	},
 	getContentText: function() {
-		var content = Content.findOne({_id: Router.current().params._id});	
+		var content = Content.findOne({_id: Router.current().params._id});
 		var default_language = LanguageTags.findOne({
 			short_form: Session.get("current_language")
 		});
@@ -27,6 +29,13 @@ Template.content.helpers({
 			});
 			if (text_default){
 				console.log("Found default language. Render with that.");
+				console.log(text_default);
+				if(typeof text_default !== 'undefined'){
+					changeVoteColor(text_default);
+					var likesCounter = text_default.upVote.length - text_default.downVote.length;
+					text_default.likesCounter = likesCounter;
+				}
+
 				return text_default;
 			}
 		}
@@ -44,14 +53,26 @@ Template.content.helpers({
 				});
 				if (content_1){
 					console.log("Found content for user language.");
+					if(typeof content_1 !== 'undefined'){
+						changeVoteColor(content_1);
+						var likesCounter = content_1.upVote.length - content_1.downVote.length;
+						content_1.likesCounter = likesCounter;
+					}
 					return content_1;
 				}
 			}
 		}
 		console.log("Did not find any cool stuff.");
 		var foo = ContentText.findOne({
-			metacontent: content._id,
+			metacontent: content._id
 		});
+		//change color of voting buttons
+		if(typeof foo !== 'undefined'){
+			changeVoteColor(foo);
+			var likesCounter = foo.upVote.length - foo.downVote.length;
+			foo.likesCounter = likesCounter;
+		}
+
 		return foo;
 	},
 
@@ -65,10 +86,69 @@ Template.content.helpers({
 });
 
 
+var changeVoteColor = function(contentText){
+
+	console.log(contentText.upVote);
+	(function rendered() {
+		if(typeof contentText.upVote !== 'undefined' || typeof contentText.downVote !== 'undefined') {
+			console.log("heisann");
+		if (!$("#upVote").size() || !$("#downVote").size()) {
+			setTimeout(rendered, 100); // give everything some time to render
+		}
+		if (contentText.upVote.indexOf(Meteor.userId()) != -1) {
+			$('#upVote').css('color', 'black');
+			$('#downVote').css('color', 'gray');
+		}
+
+		else if (contentText.downVote.indexOf(Meteor.userId()) != -1) {
+			$('#downVote').css('color', 'black');
+			$('#upVote').css('color', 'gray');
+		}
+		else {
+			$('#downVote').css('color', 'gray');
+			$('#upVote').css('color', 'gray');
+		}
+		}
+	})();
+
+};
+
+
 Template.content.events({
     "scroll":function(event, template){
     }
 });
+
+Template.content.events({
+	'click .vote':function(event){
+		var content = Content.findOne({_id: Router.current().params._id});
+		var currentContentText = ContentText.findOne({
+			metacontent: content._id
+		});
+		console.log(event.target.id);
+		vote = 0;
+		if(event.target.id === 'upVote'){
+			vote = 1;
+
+		}
+		else{
+			vote = -1;
+
+		}
+
+		Meteor.call('vote', currentContentText._id, Meteor.userId(), vote , function(error, result){
+			if(error){
+				console.log(error);
+			}
+			else{
+				//Toggle like
+			}
+		});
+	}
+});
+
+
+
 
 Comments.ui.config({
 	template: 'semantic-ui'
