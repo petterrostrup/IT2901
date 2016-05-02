@@ -2,7 +2,7 @@
 
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-5">
                 <div class="input-group">
                     <!-- Search function-->
                     
@@ -11,12 +11,9 @@
                         
                     
                     <!-- End of Search function-->
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-5">
             </div>
             <div class="col-lg-2">
               <a href="{{pathFor 'settings'}}" class="btn btn-default">
@@ -46,7 +43,14 @@
 
 <!-- Search function-->
 <template name="searchBox">
-  <input type="text" id="search-box" placeholder="search packages here"/>
+    <div class="row">
+        <div class="col-lg-1">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+        <div class="col-lg-10">
+            <input type="text" id="search-box" class="form-control" placeholder="Search for content here"/>
+        </div>
+    </div>
 </template>
 
 <template name="searchResult">

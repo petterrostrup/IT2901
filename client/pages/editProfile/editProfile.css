@@ -1,5 +1,7 @@
-.headerText{
-    color: rgba(88, 88, 88, 0.78) !important;
+.panel-info > .custom-header {
+    background: #448b8a;
+    color: white;
+    text-decoration: none;
 }
 .user-row {
     margin-bottom: 14px;
