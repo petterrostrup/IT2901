@@ -63,7 +63,9 @@ Template.translateContent.events({
 			description: template.$("#description").val(),
 			text: simplemde.value(),
 			language: langs[0],
-			metacontent: cont_id
+			metacontent: cont_id,
+			upVote: [],
+			downVote: []
 		}
 
 

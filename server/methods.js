@@ -197,7 +197,9 @@ Meteor.methods({
 			description: String,
 			language: String,
 			text: String,
-			metacontent: String
+			metacontent: String,
+			upVote: Array,
+			downVote: Array
 		});
 
 		content.createdById = Meteor.userId();
