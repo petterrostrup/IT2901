@@ -1,7 +1,7 @@
 
 Template.content.helpers({
 	get_information: function() {
-		return Content.findOne({_id: Router.current().params._id});
+		return;
 
 	},
 	get_parent_url: function() {
@@ -54,19 +54,18 @@ Template.content.helpers({
 		});
 		return foo;
 	},
-
-	print_contentText:function(contentJson){
-		console.log(contentJson);
-		var temp = json2html(contentJson);
-		console.log(temp);
-		return temp;
+	get_AllContentTextsForContent: function(){
+		return ContentText.find({metacontent: Router.current().params._id});
 	}
-
 });
 
 
 Template.content.events({
     "scroll":function(event, template){
+    },
+    "click .langButton": function(event, template){
+    	var id = event.target.id;
+    	// todo: change based on id. 
     }
 });
 
