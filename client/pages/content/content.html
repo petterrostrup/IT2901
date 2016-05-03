@@ -1,6 +1,7 @@
 <template name="content">
 
-    <div class="wrapper">
+    <div class="wrapper" style="margin-bottom: 50px">
+
         <ol class="breadcrumb">
 
             {{#each get_parent_url}}
@@ -16,30 +17,51 @@
         </ol>
 
 
+
+
+
+        </div>
+
+
+
         <div class="row">
-            <div class="btn-group" role="group" aria-label="...">
-                {{#each getContentText}}
-                    <button id={{_id}} type="button" class="btn btn-default langButton">{{language}}</button>
+            <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
+                {{#each get_supported_languages}}
+                    <button id={{_id}} name="{{language}}" type="button" class="btn btn-default langButton">{{language}}</button>
                 {{/each}}       
+                <a href="{{pathFor 'translateContent' _id=get_id}}" class="btn btn-default">
+                    {{_ "content.translate"}}
+                </a>
+                <a href="{{pathFor 'editContent' _id=get_id}}" class="btn btn-default">
+                    {{_ "content.edit"}}
+                </a>
             </div>
         </div>
-        <div class="row">
-            <button class="btn btn-default translate">Translate this content?</button>
-        </div>
+        <!-- <div class="row">
+            
+        </div> -->
         {{#with getContentText}}
 
-            <h1>{{title}}</h1>
+            <h1 id="title">{{title}}</h1>
 
-            <p>{{description}}</p>
+            <p id="description">{{description}}</p>
 
-            {{#markdown}}
-                {{{text}}}
-            {{/markdown}}
 
         {{/with}}
 
-        <div class="comment-section">
-            {{> commentsBox id=get_information._id}}
-        </div>
+        {{#markdown}}
+{{get_content}}
+        {{/markdown}}
+
+
+    <div class="contentRating">
+        <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
+        <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
+        <p class="voteField">{{getContentText.likesCounter}}</p>
+
     </div>
+    <div class="comment-section">
+        {{> commentsBox id=get_id}}
+    </div>
+
 </template>

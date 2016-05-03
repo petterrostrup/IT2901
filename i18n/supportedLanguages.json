@@ -1,4 +1,14 @@
 {
-  "no": "Norsk",
-  "en": "English"
+  "no": {
+    "language": "Norsk",
+    "flipped": false
+  },
+  "en": {
+    "language": "English",
+    "flipped": false
+  },
+  "ar": {
+    "language": "Arabic",
+    "flipped": true
+  }
 }

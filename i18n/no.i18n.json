@@ -8,6 +8,15 @@
         "Admin": "Admin",
         "toggle_lang": "Kun vis dine språk"
     },
+    "mainContent": {
+        "create_content": "Opprett nytt innhold",
+        "title": "Tittel",
+        "description": "Beskrivelse",
+        "created": "Laget av",
+        "date": "Opprettet",
+        "rating": "Vurdering",
+        "ago": "siden"
+    },
     "profile": {
         "Username": "Brukernavn",
         "FirstName": "Fornavn",
@@ -26,7 +35,11 @@
         "Content": "Innhold",
         "Community": "Samfunn",
         "Category": "Kategori",
-        "Language": "Språk"
+        "Language": "Språk",
+        "cancel": "Avbryt",
+        "translate_from": "Oversett fra",
+        "edit_lang": "Språk",
+        "toggle_markdown": "Vis innhold i markdown"
     },
     "submit": {
         "Submit": "Send inn"
@@ -61,6 +74,17 @@
     },
     "changeLanguage":{
         "ChangeLanguage": "Skift språk"
+    },
+    "settings": {
+        "header": "Innstillinger",
+        "toggle_lang": "Bare vis innhold som er støttet på dine språk.",
+        "back": "Tilbake"
+    },
+    "content": {
+        "translate": "Oversett innhold",
+        "edit": "Rediger",
+        "save_changes": "Lagre endringer",
+        "submit_translation": "Lagre oversettingen"
     }
 }
 

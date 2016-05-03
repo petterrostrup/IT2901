@@ -22,15 +22,37 @@ Router.route("/", {
 //   template:"submit_content"
 // })
 
+Router.route("/settings", {
+  name: "settings",
+  template: "settings"
+});
+
 
 Router.route("/translateContent/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
-  console.log(data);
+  // console.log(data);
+  Session.set("transelate_content", true);
   if (data)
-    this.render("translateContent");
+    this.render("translateContent", {data: {
+      edit: false
+    }});
   else
     this.render("page_not_found");
 }, {name: "translateContent"});
+
+
+Router.route("/editContent/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+
+  Session.set("transelate_content", false);
+  if (data) {
+    this.render("translateContent", {data:{
+      edit: true
+    }});
+  }else
+    this.render("page_not_found");
+}, {name: "editContent"});
+
 
 // Routing for the edit profile
 Router.route("/editprofile", {
@@ -59,6 +81,17 @@ Router.route("/category", {
 // Routing for a distinct category page.
 // Takes the category's id as input from the url
 Router.route("/category/:_id", function() {
+  // this.wait(Meteor.subscribe("usernames_category", this.params._id));
+  // if (this.ready()) {
+  //   var data = Category.findOne({_id: this.params._id});
+  //   if (data)
+  //     this.render("category");
+  //   else
+  //     this.render("page_not_found");
+  // } else {
+  //   this.render('loading');
+  // }
+
   var data = Category.findOne({_id: this.params._id});
   if (data)
     this.render("category");

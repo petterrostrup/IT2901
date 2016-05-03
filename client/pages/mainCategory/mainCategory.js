@@ -32,14 +32,14 @@ Template.searchResult.helpers({
 });
 
 Template.searchResultContent.helpers({
-getContents: function() {
+  getContents: function() {
         // put if here for saperate two collections for two section search result, might need type for content or category
-    console.log(ContentSearch.getData({
-      transform: function(matchText, regExp) {
-        return matchText.replace(regExp, "<b>$&</b>")
-      },
-      sort: {isoScore: -1}
-    }))
+    // console.log(ContentSearch.getData({
+    //   transform: function(matchText, regExp) {
+    //     return matchText.replace(regExp, "<b>$&</b>")
+    //   },
+    //   sort: {isoScore: -1}
+    // }))
     return ContentSearch.getData({
       transform: function(matchText, regExp) {
         return matchText.replace(regExp, "<b>$&</b>")

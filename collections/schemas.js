@@ -92,6 +92,10 @@ Schema.Content = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional:false
 	},
+	createdByUsername: {
+		type: String,
+		optional: false
+	},
 	timestamp: {
 	    type: Date,
 	    autoValue: function() {
@@ -201,6 +205,11 @@ Schema.Category = new SimpleSchema({
 });
 
 Schema.ContentText = new SimpleSchema({
+	createdById: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional:false
+	},
 	title: {
 		type: String,
 		optional: false,
@@ -236,7 +245,15 @@ Schema.ContentText = new SimpleSchema({
 		    	this.unset();  // Prevent user from supplying their own value
 		    }
 	    }
-  	}
+  	},
+	upVote: {
+		type: [String],
+		optional: true
+	},
+	downVote: {
+		type: [String],
+		optional: true
+	}
 });
 
 Schema.LanguageTags = new SimpleSchema({
