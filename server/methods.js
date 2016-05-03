@@ -414,7 +414,7 @@ Meteor.methods({
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
 		var parent = undefined;
-		if (Groups.parent_id) {
+		if (group.parent_id) {
 			parent = Groups.findOne({_id: group.parent_id});
 			if (!parent)
 				throw new Meteor.Error(400, "Parent id not found.");
