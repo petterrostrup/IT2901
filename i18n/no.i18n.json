@@ -37,7 +37,9 @@
         "Category": "Kategori",
         "Language": "Språk",
         "cancel": "Avbryt",
-        "translate_from": "Oversett fra"
+        "translate_from": "Oversett fra",
+        "edit_lang": "Språk",
+        "toggle_markdown": "Vis innhold i markdown"
     },
     "submit": {
         "Submit": "Send inn"
@@ -79,7 +81,10 @@
         "back": "Tilbake"
     },
     "content": {
-        "translate": "Oversett innhold"
+        "translate": "Oversett innhold",
+        "edit": "Rediger",
+        "save_changes": "Lagre endringer",
+        "submit_translation": "Lagre oversettingen"
     }
 }
 

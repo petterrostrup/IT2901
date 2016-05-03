@@ -37,7 +37,9 @@
         "Category": "Category",
         "Language": "Language",
         "cancel": "Cancel",
-        "translate_from": "Translate from"
+        "translate_from": "Translate from",
+        "edit_lang": "Language",
+        "toggle_markdown": "Toggle markdown"
     },
     "submit": {
         "Submit": "Submit"
@@ -80,7 +82,10 @@
 
     },
     "content": {
-        "translate": "Translate content"
+        "translate": "Translate content",
+        "edit": "Edit content",
+        "save_changes": "Save changes",
+        "submit_translation": "Save translation"
     }
 }
 

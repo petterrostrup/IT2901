@@ -31,11 +31,27 @@ Router.route("/settings", {
 Router.route("/translateContent/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
   // console.log(data);
+  Session.set("transelate_content", true);
   if (data)
-    this.render("translateContent");
+    this.render("translateContent", {data: {
+      edit: false
+    }});
   else
     this.render("page_not_found");
 }, {name: "translateContent"});
+
+
+Router.route("/editContent/:_id", function() {
+  var data = Content.findOne({_id: this.params._id});
+
+  Session.set("transelate_content", false);
+  if (data) {
+    this.render("translateContent", {data:{
+      edit: true
+    }});
+  }else
+    this.render("page_not_found");
+}, {name: "editContent"});
 
 
 // Routing for the edit profile

@@ -1,3 +1,7 @@
+.layout {
+
+}
+
 .footer{
     position: relative;
     background-color: #F8F8F8;
@@ -9,6 +13,7 @@
 
 template,html, body{
     height: 100%;
+
 }
 
 
@@ -16,4 +21,9 @@ template,html, body{
     position: relative;
     overflow-y:visible;
     height:93%;
+
+}
+
+.reverseSite{
+    direction:rtl;
 }

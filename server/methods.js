@@ -121,9 +121,7 @@ Meteor.methods({
 			title: String,
 			description: String,
 			language: String,
-			text: String,
-			upVote: Array,
-			downVote: Array
+			text: String
 		});
 
 		main.tags = [];
@@ -132,6 +130,8 @@ Meteor.methods({
 		main.createdById = Meteor.userId();
 		content.createdById = Meteor.userId();
 		main.createdByUsername = Meteor.user().username;
+		content.upVote = [];
+		content.downVote = [];
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
@@ -201,6 +201,8 @@ Meteor.methods({
 		});
 
 		content.createdById = Meteor.userId();
+		content.upVote = [];
+		content.downVote = [];
 
 		var father = Content.findOne({_id: content.metacontent});
 		if (!father) 
@@ -237,7 +239,7 @@ Meteor.methods({
 	add_category: function(category) {
 
 		check(category, Object);
-		console.log(category);
+
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}

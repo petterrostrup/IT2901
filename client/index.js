@@ -8,8 +8,7 @@ Meteor.subscribe("contentText");
 
 
 var supportedLanguages = require("../i18n/supportedLanguages.json");
-// console.log(supportedLanguages);
-supportedLanguages = $.map(supportedLanguages, function(val, index) { console.log(val +" " + index); return val + " " + index });
+
 
 if (Meteor.isClient) {
     Meteor.startup(function () {
@@ -44,26 +43,43 @@ Template.navigation.rendered = function() {
 
 
 Template.navigation.events({
-    'click #language': function(event){
+    'click #language': function(event) {
         event.preventDefault();
-        if(!($('.changeLanguage').length)) { //Check if elements already exists.
-            for (var i = 0; i < supportedLanguages.length; i++) {
-                for (var j = 0; j < supportedLanguages[i].split(" ").length; j += 2) {
-                    var temp = supportedLanguages[i].split(" ");
-
-                    //var html = $("<li id=temp[0] class='link'>" + temp[0] + "</li>");
-                    //attribute += html;
-                    $('.popover-content').append("<li ><a class='link changeLanguage' id=" + temp[j + 1] + "   href=''>" + temp[j] + "</a></li>");
-                }
+        //if(!($('.changeLanguage').length)) {
+            for(var key in supportedLanguages){
+                console.log(key);
+                console.log(supportedLanguages[key].language);
+                $('.popover-content').append("<li ><a class='link changeLanguage' id=" + key + "   href=''>" + supportedLanguages[key].language + "</a></li>");
             }
-        }
 
+
+        //}
     }
+
 });
+
+function disablePopovers() {
+    $("a[rel=popover]").popover('hide');
+    $("a[rel=popover]").popover('disable');
+    // Remove the popover DIV from the DOM
+    $(".popover").remove();
+    $("#language").click();
+}
+
+
 Template.navigation.events({
     'click .changeLanguage': function (event) {
         event.preventDefault();
+        disablePopovers();
         var lang = (event.target).id;
+        if(supportedLanguages[(event.target).id].flipped){
+            $('#layoutContainer').addClass('reverseSite');
+        }
+        else{
+            $('#layoutContainer').removeClass('reverseSite');
+        }
+
+
         TAPi18n.setLanguage(lang)
             .done(function () {
                 Meteor.call("set_preferred_language", lang, function(error, result){
