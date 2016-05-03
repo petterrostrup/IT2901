@@ -406,5 +406,34 @@ Meteor.methods({
 		},{
 			$set: {"profile.preferred_language": lang}
 		});
+	},
+	add_group: function(group) {
+		check(group, Object);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+		var parent = undefined;
+		if (Groups.parent_id) {
+			parent = Groups.findOne({_id: group.parent_id});
+			if (!parent)
+				throw new Meteor.Error(400, "Parent id not found.");
+		}
+		else
+			throw new Meteor.Error(400, "Parent is required.");
+
+		// If the name of the group already exists, you are not allowed to create one.
+		if (Groups.findOne({name: group.name}))
+			throw new Meteor.Error(422, "The name already exists.");
+		group.children_id = [];
+		group.children = [];
+		group.content_ids = [];
+		var id = Category.insert(group);
+		if (parent) {
+			parent.children_id.push(id);
+			Category.update({_id: parent._id}, {$set: {
+				children_id: parent.children_id
+			}});
+		}
 	}
 });

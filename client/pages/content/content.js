@@ -1,7 +1,7 @@
 
 Template.content.helpers({
 	get_information: function() {
-		return .;
+		return;
 
 	},
 	get_parent_url: function() {

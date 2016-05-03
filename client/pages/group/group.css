@@ -1,0 +1,25 @@
+
+.btn{
+  border:0px solid transparent; 
+ }
+ .table {
+ 	overflow: auto;
+ }
+ #new_subcategory{
+     padding-top: 30px;
+ }
+ #newSubCat{
+     margin-top: 15px;
+ }
+
+.contentRow:nth-child(even) {background: #CCC}
+.contentRow:nth-child(odd) {background: #FFF}
+
+@media (max-width:500px) {
+    .row{
+        overflow: auto;
+    }
+    .wrapper{
+        width: 500px;
+    }
+}
