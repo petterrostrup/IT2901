@@ -52,7 +52,7 @@ Template.content.helpers({
 				console.log("Found default language. Render with that.");
 
 				console.log(text_default);
-				if(typeof text_default !== 'undefined'){
+				if( text_default !== undefined){
 					changeVoteColor(text_default);
 					var likesCounter = text_default.upVote.length - text_default.downVote.length;
 					text_default.likesCounter = likesCounter;
@@ -80,7 +80,7 @@ Template.content.helpers({
 				if (content_1){
 					console.log("Found content for user language.");
 
-					if(typeof content_1 !== 'undefined'){
+					if(content_1 !== undefined){
 						changeVoteColor(content_1);
 						var likesCounter = content_1.upVote.length - content_1.downVote.length;
 						content_1.likesCounter = likesCounter;
@@ -98,7 +98,7 @@ Template.content.helpers({
 		});
 
 		//change color of voting buttons
-		if(typeof foo !== 'undefined'){
+		if(foo !== undefined){
 			changeVoteColor(foo);
 			var likesCounter = foo.upVote.length - foo.downVote.length;
 			foo.likesCounter = likesCounter;

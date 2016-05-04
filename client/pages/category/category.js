@@ -121,6 +121,17 @@ Template.category.helpers({
 		}
 		console.log(all_contents);
 		return all_contents;
+	},
+	/*
+	Return content likes based on the contentId provided from category.html
+	 */
+	getContentLikes: function(_id) {
+		if (typeof _id !== undefined) {
+			var text = ContentText.findOne({
+				metacontent: _id
+			});
+			return text.upVote.length - text.downVote.length;
+		}
 	}
 });
 
@@ -146,14 +157,23 @@ Template.category.events({
     		name: event.target.name.value,
     		description: event.target.description.value,
     		url_name: event.target.name.value,
-    		parent_id: Router.current().params._id,
-    	}
+    		parent_id: Router.current().params._id
+
     	//Calls the method "add_category" in methods.js with this subcategory that it is trying to create
+
+    	};
+
     	Meteor.call("add_category", cat, function(error, result) {
     		if (error)
     			console.log(error);
     		if (result)
     			console.log(result);
     	});
-    }
+    },
+
+	"click .clickAble": function(event){
+		event.preventDefault();
+		Router.go("/content/" + event.target.parentElement.className.split(" ")[1]);
+
+	}
 });
