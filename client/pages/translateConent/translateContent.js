@@ -25,7 +25,7 @@ Template.translateContent.helpers({
 	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
 	      rules: [
 	        {
-	          token: '#',
+	          token: '',
 	          collection: LanguageTags,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.

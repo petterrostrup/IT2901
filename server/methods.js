@@ -6,7 +6,13 @@ Meteor.methods({
 	create_user: function(user, password) {
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
-		check(user, Object);
+		check(user, {
+			username: String,
+			email: String,
+			profile: {
+				preferred_language: String
+			}
+		});
 		check(password, String);
 
 		// Security.can().insert(user).for(Meteor.users).throw();

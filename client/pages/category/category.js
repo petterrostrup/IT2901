@@ -1,3 +1,4 @@
+
 Template.registerHelper('last',
     function(list, elem) {
         return _.last(list) === elem;
@@ -32,20 +33,72 @@ Template.category.helpers({
 		return time.toISOString().slice(0,10);
 	},
 	get_parent_url: function() {
-		var list = [];
-		var current = Category.findOne({_id: Router.current().params._id});
-		while (current) {
-			list.push({_id: current._id, name: current.name});
-			current = Category.findOne({_id: current.parent_id});
-		}
-		list.reverse();
-		return list;
+		return Methods.get_parent_url(Router.current().params._id);
 	},
 	get_children: function() {
 		var list = [];
 		var current = Category.findOne({_id: Router.current().params._id});
-		for (var child in current.children_id){
-			list.push(Category.findOne({_id: current.children_id[child]}));
+		if (!current){
+			console.log("ERROR");
+			return;
+		}
+		var lang = Session.get("current_language");
+		var db_lang = LanguageTags.findOne({
+			short_form: lang
+		});
+		var supported_langs;
+		if (Meteor.user()) {
+			supported_langs = [];
+			var user_languages = Meteor.user().profile.languages;
+			for (var a in user_languages) {
+				supported_langs.push(LanguageTags.findOne({
+					_id: user_languages[a]
+				}).name);
+			}
+		}
+
+		var children = Category.find({
+			parent_id: current._id
+		}).fetch();
+		for (var c in children) {
+			var child = children[c];
+			var texts = CategoryText.find({
+				metacategory: child._id
+			}).fetch();
+
+			var found = false;
+
+			for (var t in texts) {
+				var text = texts[t];
+				if (text.language === db_lang.name) {
+					found = true;
+					list.push({
+						_id: child._id,
+						name: text.name
+					});
+					break;
+				}
+			}
+			if (!found) {
+				if (supported_langs) {
+					for (var b in texts) {
+						var text = texts[b];
+						if (text.language in supported_langs) {
+							list.push({
+								_id: child._id,
+								name: text.name
+							});
+							break;
+						}
+					}
+				}
+				else {
+					list.push({
+						_id: child._id,
+						name: texts[0].name
+					});
+				}
+			}
 		}
 		return list;
 	},

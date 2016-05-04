@@ -1,4 +1,8 @@
+
 Template.home.helpers({
+	getUserLanguages: function() {
+		Session.set("home_languages", Methods.get_current_languages());
+	},
 	getContent: function() {
 		var default_language = Session.get("current_language");
 		default_language = LanguageTags.findOne({
@@ -46,7 +50,27 @@ Template.home.helpers({
 	getCategory: function(catId) {
 		var content = Content.findOne({_id: catId});
 		var cat = Category.findOne({_id: content.category_id});
-		return cat.name;
+		var texts = CategoryText.find({
+			metacategory: cat._id
+		}).fetch();
+		var languages = Session.get("home_languages");
+		for (var a in texts) {
+			var t = texts[a];
+			if (t.language === languages.main_lang){
+				return t.name;
+			}
+		}
+		if (languages.supported_langs) {
+			for (var a in texts) {
+				var t = texts[a];
+				if (t.language in languages.supported_langs) {
+					return t.name;
+				}
+			}
+		}
+		if (texts.length)
+			return texts[0].name;
+		return "Not found";
 	},
 
 	getIcon: function(catId) {

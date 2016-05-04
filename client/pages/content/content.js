@@ -7,15 +7,8 @@ Template.content.helpers({
 		return Router.current().params._id;
 	},
 	get_parent_url: function() {
-		var list = [];
 		var current = Content.findOne({_id: Router.current().params._id});
-		current = Category.findOne({_id: current.category_id});
-		while (current) {
-			list.push({_id: current._id, name: current.name});
-			current = Category.findOne({_id: current.parent_id});
-		}
-		list.reverse();
-		return list;
+		return Methods.get_parent_url(current.category_id);
 	},
 	get_supported_languages: function() {
 		var id = Router.current().params._id;
@@ -61,13 +54,9 @@ Template.content.helpers({
 				});
 				if (content_1){
 					console.log("Found content for user language.");
-
-					if(content_1){
-						console.log(content_1);
-						changeVoteColor(content_1);
-						var likesCounter = content_1.upVote.length - content_1.downVote.length;
-						content_1.likesCounter = likesCounter;
-					}
+					changeVoteColor(content_1);
+					var likesCounter = content_1.upVote.length - content_1.downVote.length;
+					content_1.likesCounter = likesCounter;
 
 					Session.set("content", content_1.text);
 					Session.set("content_language", lang.name);

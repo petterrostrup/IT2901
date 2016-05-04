@@ -433,6 +433,7 @@ Meteor.startup(function(){
         //     url_name: "transport"
         // });
     }
+    
 
     var languageIds = [];
     // add something in database for language test
@@ -454,7 +455,6 @@ Meteor.startup(function(){
             short_form: "es"
         }));
     }
-
 
     // add something in database for community test
     if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
@@ -494,7 +494,8 @@ Meteor.startup(function(){
             last_name: "Pong",
             organization: "CC AS",
             languages: languageIds,
-            home_adress: "Trondheim"
+            home_adress: "Trondheim",
+            preferred_language: "English"
         }
         userid = Meteor.users.insert({
             username: defUser.username,

@@ -85,6 +85,10 @@
         "edit": "Rediger",
         "save_changes": "Lagre endringer",
         "submit_translation": "Lagre oversettingen"
+    },
+    "home": {
+        "added": "Lagt til for",
+        "ago": "siden"
     }
 }
 

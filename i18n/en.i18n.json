@@ -86,6 +86,10 @@
         "edit": "Edit content",
         "save_changes": "Save changes",
         "submit_translation": "Save translation"
+    },
+    "home": {
+        "added": "Added",
+        "ago": "ago"
     }
 }
 
