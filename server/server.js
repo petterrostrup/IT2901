@@ -9,29 +9,41 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
     var selector = {$or: [
       {name: regExp},
       {description: regExp},
-      {title: regExp},
-      {community_id: regExp}
-    ]};
-    // search by commu and lang
-    // var selectorTag = {$or: [
-    //   {name: regExp},
-    // ]};
-    // var result_community_id = CommunityTags.find(selectorTag, options).fetch()
-    // var com_id = result_community_id[0].name
-    // var regExpCom = buildRegExp(com_id)
-    // console.log(com_id)
-    // console.log(regExpCom)
-    // var selector = {$or: [
-    //   {name: regExp},
-    //   {description: regExp},
-    //   {community_id: regExpCom}
-    // ]};
 
+    ]};
+
+    // try using lookup from mongodb
     
-    //concat two returned collections
-    return Category.find(selector, options).fetch();
+        var result = CategoryText.find(selector, { options,
+            transform: function(doc) {
+                doc.categoryObj = Category.find({
+                    categories: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch()
+    // end of try lookup
+    
+    return result
   } else {
-    return Category.find({}, options).fetch();
+// another transform
+//     , {
+//     transform: function(doc) {
+//         doc.categoryTextObj = CategoryText.find({
+//             _id: { $in: doc.categories}
+//         });
+//         return doc
+//     }
+// }
+    var result = CategoryText.find({}, {
+        transform: function(doc) {
+            doc.categoryObj = Category.find({
+                categories: { $in: [doc._id]}
+            }).fetch();
+            return doc
+        }
+    }).fetch()
+    return result;
   }
 });
 
@@ -49,10 +61,13 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
   if(searchText) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
-      {name: regExp},
-      // {description: regExp},
+      {title: regExp},
+      {description: regExp},
       // {title: regExp}
       // {community_id: regExp}
+    ]};
+    var selectorCatText = {$or: [
+      {name: regExp},
     ]};
     // search by commu and lang
     // var selectorTag = {$or: [
@@ -92,9 +107,86 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     // console.log(result)
     // end of test join collections
     //concat two returned collections
-    return ContentText.find(selector, options).fetch();
+
+        var catText = CategoryText.find(selectorCatText, { options,
+            transform: function(doc) {
+                doc.categoryObj = Category.find({
+                    categories: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch()
+        var con_id = []
+        for (var i in catText) {
+            for (var j in catText[i].categoryObj){
+                for (var k in catText[i].categoryObj[j].content_ids){
+                    con_id.push(catText[i].categoryObj[j].content_ids[k])
+                }
+            }
+        }
+        // got content_ids then use it to get content
+        var searchByCatResult = []
+        for (var i in con_id) {
+            var resultContent = ContentText.find({metacontent:con_id[i]}, { options,
+                transform: function(doc) {
+                    doc.contentObj = Content.find({
+                        contents: { $in: [doc._id]}
+                    }).fetch();
+                return doc
+                }
+                }).fetch()
+            searchByCatResult.push(resultContent)
+            console.log("in loop")
+            console.log(ContentText.find({metacontent:con_id[i]}, { options,
+                transform: function(doc) {
+                    doc.contentObj = Content.find({
+                        contents: { $in: [doc._id]}
+                    }).fetch();
+                return doc
+                }
+                }).fetch())
+            console.log("searchByCatResult")
+            console.log(searchByCatResult)
+        }
+        console.log("cat Re")
+        console.log(searchByCatResult)
+
+        var result = ContentText.find(selector, { options,
+        transform: function(doc) {
+            doc.contentObj = Content.find({
+                contents: { $in: [doc._id]}
+            }).fetch();
+        return doc
+        }
+        }).fetch()
+            console.log("content")
+            console.log(result.concat(searchByCatResult))
+        var finalResult = result.concat(searchByCatResult)
+        console.log("concat")
+        console.log(finalResult)
+
+        var finalFinal = []
+        for (var i in finalResult) {
+            for (var j in finalResult[i]){
+                finalFinal.push(finalResult[i][j])
+            }
+        }   
+        console.log("finalfinal")
+        console.log(finalFinal)
+    return finalFinal
   } else {
-    return ContentText.find({}, options).fetch();
+
+    var result = ContentText.find({}, {
+        transform: function(doc) {
+            doc.contentObj = Content.find({
+                contents: { $in: [doc._id]}
+            }).fetch();
+            return doc
+        }
+    }).fetch()
+    console.log("reslult")
+    console.log(result)
+    return result;
   }
 });
 
@@ -217,6 +309,25 @@ Meteor.startup(function(){
             $push: {categories: content_text_id}
         });
 
+        id = Category.insert({
+            children_id: [],
+            content_ids: [],
+            icon: "community2",
+            categories: []
+        });
+        cat = {
+            name: "Samfunn",
+            description: "Informasjon anngående samfunnet",
+            language: "Norsk",
+            metacategory: id
+        }
+        content_text_id = CategoryText.insert(cat);
+
+        Category.update({
+            _id: id
+        }, {
+            $push: {categories: content_text_id}
+        });
         // Category.insert({
         //     name: "Samfunn",
         //     children: [],

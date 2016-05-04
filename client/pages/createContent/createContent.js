@@ -13,7 +13,7 @@ Template.createContent.helpers({
 	      rules: [
 	        {
 	          token: '#',
-	          collection: Category,  // Mongo.Collection object means client-side collection
+	          collection: CategoryText,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
 	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
@@ -134,7 +134,8 @@ Template.createContent.events({
 		   		cats[cat] = cats[cat].replace("#", "");
 		   	}
 			cat_id = cats[0];
-			cat_id = Category.findOne({name: cat_id})._id;
+			cat_id = Category.findOne({categories: CategoryText.findOne({name: cat_id})._id})._id;
+			console.log(cat_id)
 		}
 		// check community
 	   	var coms = $("#autocomplete-input-Com").val().split(" ");
