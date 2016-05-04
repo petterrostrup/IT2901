@@ -5,14 +5,18 @@ Template.registerHelper('last',
 );
 
 Template.category.helpers({
+	//Returns the category you are currently in. 
 	data: function() {
 		var data = Category.findOne({_id: Router.current().params._id});
 		return data;
 	},
+	//
 	timeSince: function(time) {
 
 		return time.toISOString().slice(0,10);
 	},
+	//Finds the parent of this cateory, (if it has one), and the parent of that parent, and so on. 
+	//returns them all as a list where the first element is the oldest parent. 
 	get_parent_url: function() {
 		var list = [];
 		var current = Category.findOne({_id: Router.current().params._id});
@@ -23,6 +27,7 @@ Template.category.helpers({
 		list.reverse();
 		return list;
 	},
+	//Finds all the categories that has this category as their parent.
 	get_children: function() {
 		var list = [];
 		var current = Category.findOne({_id: Router.current().params._id});
@@ -31,6 +36,8 @@ Template.category.helpers({
 		}
 		return list;
 	},
+	//gets the content that is under this category. 
+	// Hides all content that is not in the language you are currently using
 	get_content: function() {
 		console.log("Init get_content!");
 		var list = [];
@@ -119,9 +126,7 @@ Template.category.helpers({
 
 
 Template.category.events({
-    "scroll":function(event, template){
-
-    },
+	//Listens to a click. When clicked it will show the "Create new sub category"-form
 	"click #subCatButton":function(event, template){
 		if (template.$("#new_subcategory").hasClass('active')){
 			template.$("#new_subcategory").removeClass('active');
@@ -134,6 +139,7 @@ Template.category.events({
 			template.$("#subCatButton").html("&#xf151; Cancel");
 		}
 	},
+	// Listens to click. When clicked it will create a new sub category 
     "submit #new_subcategory": function(event, template) {
     	event.preventDefault();
     	var cat = {
@@ -142,6 +148,7 @@ Template.category.events({
     		url_name: event.target.name.value,
     		parent_id: Router.current().params._id,
     	}
+    	//Calls the method "add_category" in methods.js with this subcategory that it is trying to create
     	Meteor.call("add_category", cat, function(error, result) {
     		if (error)
     			console.log(error);
