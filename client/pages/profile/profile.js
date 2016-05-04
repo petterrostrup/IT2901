@@ -1,9 +1,8 @@
-Template.profile.events({
-});
-
 Template.profile.helpers({
+
+    //Returns the contents that you have created. 
+    //All the contents link to that content. 
     
-    //Meteor.userId() get the current user's id that u r.
     getContents: function() {
         // you need fetch() to get the real data. without it, it just a reference to database.
         var contents = Content.find({createdById: Meteor.userId()}).fetch();
@@ -26,7 +25,7 @@ Template.profile.helpers({
 
         return contentTitle;
     },
-
+    //Returns the info about the current user that is stored by meteor. 
     getUserInfo: function() {
     	var user = Meteor.user();
     	user.createdAt = user.createdAt.toISOString().slice(0, 10);
@@ -37,7 +36,7 @@ Template.profile.helpers({
     		return null;
     	}
     },
-
+    // returns additional information about the user. 
     getUserProfile: function() {
     	var profile = Meteor.user().profile;
     	if (profile) {
@@ -47,7 +46,7 @@ Template.profile.helpers({
     		return null;
     	}
     },
-
+    // returns the languages that the user has said they want to be shown content for. 
     getUserLanguages: function() {
         var languages = Meteor.user().profile.languages;
         var langNames = [];

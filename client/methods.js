@@ -4,7 +4,6 @@ Methods = {
 		var list = [];
 		var current = Category.findOne({_id: start_id});
 		var lang = Session.get("current_language");
-		console.log(lang);
 		var db_lang = LanguageTags.findOne({
 			short_form: lang
 		});
@@ -26,7 +25,6 @@ Methods = {
 			var found = false;
 			for (var a in cat_text) {
 				var text = cat_text[a];
-				console.log(text);
 				if (text.language === db_lang.name){
 					list.push({_id: current._id, name: text.name});
 					found = true;
@@ -65,6 +63,12 @@ Methods = {
 				supported_langs.push(LanguageTags.findOne({
 					_id: user_languages[a]
 				}).name);
+			}
+		}
+		if (!db_lang) {
+			return {
+				main_lang: "English",
+				supported_langs: supported_langs
 			}
 		}
 		return {

@@ -5,10 +5,13 @@ Template.registerHelper('last',
 );
 
 Template.group.helpers({
+	//Finds the current group based on the url. 
 	data: function() {
 		var data = Groups.findOne({_id: Router.current().params._id});
 		return data;
 	},
+	//Finds all the parents of the current group
+	// returns them as a list where the first element of the list is the last parent.
 	get_parent_url: function() {
 		var list = [];
 		var current = Groups.findOne({_id: Router.current().params._id});
@@ -19,6 +22,8 @@ Template.group.helpers({
 		list.reverse();
 		return list;
 	},
+	//Gets all the children of the current group
+	//returns them as a list. 
 	get_children: function() {
 		var list = [];
 		var current = Groups.findOne({_id: Router.current().params._id});
@@ -27,6 +32,8 @@ Template.group.helpers({
 		}
 		return list;
 	},
+	//Finds all the content that is under this group. 
+	//Only finds content that is based on your language. 
 	get_content: function() {
 		console.log("Init get_content!");
 		var list = [];
@@ -101,6 +108,7 @@ Template.group.helpers({
 		console.log(all_contents);
 		return all_contents;
 	},
+	//Returns all the members of the group
 	get_members: function(id){
 		var data = Groups.findOne({_id: Router.current().params._id});
 		return data.members;
@@ -109,6 +117,7 @@ Template.group.helpers({
 
 
 Template.group.events({
+	// makes a new subGroup of the current group
     "submit #new_subGroup": function(event, template) {
     	event.preventDefault();
     	var group = {

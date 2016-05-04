@@ -14,7 +14,7 @@ Meteor.methods({
 			}
 		});
 		check(password, String);
-		
+
 		// Security.can().insert(user).for(Meteor.users).throw();
 
 		// Checks if the username chosen is taken
@@ -308,7 +308,7 @@ Meteor.methods({
 			categories: cat.categories
 		}});
 
-		
+		return category_id;		
 	},
 
 	// edit_profile with first_name, last_name, language, email
@@ -533,18 +533,25 @@ Meteor.methods({
 		}
 	},
 
-	vote: function(content_id, user_id, vote){
-		check(user_id, String);
+	vote: function(content_id, vote){
+
+		if (!Meteor.userId())
+			throw new Meteor.Error(530, "You are not logged in.");
+
 		check(content_id, String);
+
+		var user_id = Meteor.userId();
+
 		var upvoteArray = ContentText.findOne({_id: content_id}).upVote;
 		var downVoteArray = ContentText.findOne({_id: content_id}).downVote;
+
 		if(vote == 1){ //upvote
 			ContentText.update(
 				content_id,
 				{
 					$pull: {downVote: user_id}
 				});
-			if(typeof upvoteArray === 'undefined' || upvoteArray.indexOf(user_id) === -1){
+			if(upvoteArray.indexOf(user_id) === -1){
 				ContentText.update(
 				content_id,
 				{
@@ -556,7 +563,7 @@ Meteor.methods({
 					content_id,
 					{
 						$pull: {upVote: user_id}
-					});
+				});
 			}
 		}
 
@@ -566,7 +573,7 @@ Meteor.methods({
 				{
 					$pull: {upVote: user_id}
 				});
-			if(typeof downVoteArray === 'undefined' || downVoteArray.indexOf(user_id) === -1){
+			if(downVoteArray.indexOf(user_id) === -1){
 
 				ContentText.update(
 				content_id,
@@ -582,6 +589,10 @@ Meteor.methods({
 					});
 			}
 		}
+		var content = ContentText.findOne({
+			_id: content_id
+		});
+
+		return content.upVote.length - content.downVote.length;
 	}
-	
 });

@@ -49,6 +49,11 @@ Router.route("/settings", {
   template: "settings"
 });
 
+Router.route("/activity", {
+  name: "activity",
+  template: "activity"
+});
+
 
 Router.route("/translateContent/:_id", function() {
   if (!Meteor.user()) {
@@ -145,7 +150,7 @@ Router.route("/category/:_id", function() {
   }
   else
     this.render("page_not_found");
-});
+}, {name: "show_category"});
 
 Router.route("/group/:_id", function() {
   var data = Groups.findOne({_id: this.params._id});

@@ -13,7 +13,7 @@ Template.category.helpers({
 	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
 	      rules: [
 	        {
-	          token: '#',
+	          token: '',
 	          collection: LanguageTags,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
@@ -24,17 +24,26 @@ Template.category.helpers({
 	    }
 	},
 	// End of language search
+
+	//Returns the category you are currently in. 
 	data: function() {
-		var data = Category.findOne({_id: Router.current().params._id});
+		// var data = Category.findOne({_id: Router.current().params._id});
+		var data = CategoryText.findOne({
+			metacategory: Router.current().params._id
+		});
 		return data;
 	},
+	//
 	timeSince: function(time) {
 
 		return time.toISOString().slice(0,10);
 	},
+	//Finds the parent of this cateory, (if it has one), and the parent of that parent, and so on. 
+	//returns them all as a list where the first element is the oldest parent. 
 	get_parent_url: function() {
 		return Methods.get_parent_url(Router.current().params._id);
 	},
+	//Finds all the categories that has this category as their parent.
 	get_children: function() {
 		return Session.get("content_children_list");
 	},
@@ -105,8 +114,10 @@ Template.category.helpers({
 		}
 		Session.set("content_children_list", list);
 	},
+	//gets the content that is under this category. 
+	// Hides all content that is not in the language you are currently using
 	get_content: function() {
-		console.log("Init get_content!");
+		// console.log("Init get_content!");
 		var list = [];
 		var default_language = Session.get("current_language");
 		var db_language = LanguageTags.findOne({
@@ -124,16 +135,16 @@ Template.category.helpers({
 		}
 		var hide_other_lang = Session.get("hide_other_languages");
 		var all_contents = [];
-		console.log("Hide: " + hide_other_lang);
+		// console.log("Hide: " + hide_other_lang);
 		for (var c in current.content_ids) {
 			var content = Content.findOne({
 				_id: current.content_ids[c]
 			});
-			console.log(content);
+			// console.log(content);
 			if (content) {
 				var cont_lang = ContentText.find({metacontent: content._id}).fetch();
 				if (!cont_lang){
-					console.log("Found no contenttext for content.");
+					// console.log("Found no contenttext for content.");
 					continue;
 				}
 				var found = false;
@@ -144,14 +155,15 @@ Template.category.helpers({
 							title: cont_lang[a].title,
 							description: cont_lang[a].description,
 							createdBy: content.createdByUsername,
-							time: content.timestamp
+							time: content.timestamp,
+							rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length
 						});
 						found = true;
 						break;
 					}
 				}
 				if (found) {
-					console.log("Found content for default language.");
+					// console.log("Found content for default language.");
 					continue;
 				}
 				for (var a in cont_lang) {
@@ -162,10 +174,11 @@ Template.category.helpers({
 								title: cont_lang[a].title,
 								description: cont_lang[a].description,
 								createdBy: content.createdByUsername,
-								time: content.timestamp
+								time: content.timestamp,
+								rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length
 							});
 							found = true;
-							console.log("Content found for user languages.");
+							// console.log("Content found for user languages.");
 							break;
 						}
 					}
@@ -180,25 +193,36 @@ Template.category.helpers({
 						title: cont_lang[0].title,
 						description: cont_lang[0].description,
 						createdBy: content.createdByUsername,
-						time: content.timestamp
+						time: content.timestamp,
+						rating: cont_lang[0].upVote.length - cont_lang[0].downVote.length
 					});
-					console.log("Content not supported found.");
+					// console.log("Content not supported found.");
 				}
 				else{
-					console.log("Skipped hided content.");
+					// console.log("Skipped hided content.");
 				}
 			}
 		}
-		console.log(all_contents);
+		// console.log(all_contents);
 		return all_contents;
+	},
+	/*
+	Return content likes based on the contentId provided from category.html
+	 */
+	getContentLikes: function(id) {
+		// console.log("Dette er noe annet.");
+		if (id) {
+			var text = ContentText.findOne({
+				metacontent: id
+			});
+			return text.upVote.length - text.downVote.length;
+		}
 	}
 });
 
 
 Template.category.events({
-    "scroll":function(event, template){
-
-    },
+	//Listens to a click. When clicked it will show the "Create new sub category"-form
 	"click #subCatButton":function(event, template){
 		if (template.$("#new_subcategory").hasClass('active')){
 			template.$("#new_subcategory").removeClass('active');
@@ -211,25 +235,40 @@ Template.category.events({
 			template.$("#subCatButton").html("&#xf151; Cancel");
 		}
 	},
+	// Listens to click. When clicked it will create a new sub category 
     "submit #new_subcategory": function(event, template) {
     	event.preventDefault();
     	var langs = $("#autocomplete-input-Lang").val().split(" ");
 	   	for (var lang in langs) {
 	   		langs[lang] = langs[lang].replace("#", "");
 	   	}
-    	console.log(langs)
+    	// console.log(langs)
     	var cat = {
     		name: event.target.name.value,
     		description: event.target.description.value,
-    		// remove url name in everything 
-
     		parent_id: Router.current().params._id,
     	}
     	Meteor.call("add_category", cat, langs[0], function(error, result) {
     		if (error)
     			console.log(error);
-    		if (result)
-    			console.log(result);
+    		else{
+    			// console.log(event.target.name);
+    			event.target.name.value = "";
+    			event.target.description.value = "";
+    			template.$("#autocomplete-input-Lang").val("");
+    			template.$("#new_subcategory").removeClass('active');
+				template.$("#new_subcategory").hide();
+				template.$("#subCatButton").html("&#xf150; Create Subcategory");
+    		}
+    		if (result) {
+    			Router.go("show_category", {_id: result});
+    		}
     	});
-    }
+    },
+
+	"click .clickAble": function(event){
+		// event.preventDefault();
+		Router.go("show_content", {_id: event.target.parentElement.className.split(" ")[1]});
+
+	}
 });

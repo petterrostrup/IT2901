@@ -75,10 +75,6 @@
       <h4 class="name" style="text-align: center">
         
         {{{name}}}
-        {{{description}}}
-        
-          
-        
 
       </h4>
       <div class="icon">
@@ -120,19 +116,18 @@
 
         <div class="package col-cs-6 col-md-3 category">
       <h4 class="name" style="text-align: center">
-
+        <a href="{{pathFor 'content'}}/{{metacontent}}" class="thumbnail">
         {{{title}}}
-        {{{description}}}
-        {{#each contentObj}}
+        </a>
+        <!-- {{#each contentObj}}
           {{_id}}
-        {{/each}}
+        {{/each}} -->
 
       </h4>
       <div class="icon">
         <!-- test for link content-->
-        <a href="{{pathFor 'content'}}/{{metacontent}}" class="thumbnail">
-            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
-        </a>
+        
+            <!-- <img class="category-icon" src="/images/category/{{icon}}.png" alt="..."> -->
       </div>
     </div>
 
