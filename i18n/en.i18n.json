@@ -86,6 +86,13 @@
         "edit": "Edit content",
         "save_changes": "Save changes",
         "submit_translation": "Save translation"
+    },
+    "home": {
+        "added": "Added",
+        "ago": "ago"
+    },
+    "error": {
+        "empty_category": "This category does not have any content yet. If you log in you can add new content to this category."
     }
 }
 

@@ -69,18 +69,28 @@
             <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
         </a>
     </div> -->
-    {{#if name}}
+
+
     <div class="package col-cs-6 col-md-3 category">
       <h4 class="name" style="text-align: center">
+        
         {{{name}}}
+
       </h4>
       <div class="icon">
+        <!-- ****************************
+        **************************** -->
+        <!-- check where _id should come from cat or catText -->
+        <!-- ****************************
+        **************************** -->
+        {{#each categoryObj}}
         <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
             <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
         </a>
+        {{/each}}
       </div>
     </div>
-    {{/if}}
+
     
     {{/each}}
   </div>
@@ -103,22 +113,24 @@
             <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
         </a>
     </div> -->
-    {{#if title}}
+
         <div class="package col-cs-6 col-md-3 category">
       <h4 class="name" style="text-align: center">
-        {{{name}}}
+        <a href="{{pathFor 'content'}}/{{metacontent}}" class="thumbnail">
         {{{title}}}
-        {{{description}}}
-        {{{community_id}}}
+        </a>
+        <!-- {{#each contentObj}}
+          {{_id}}
+        {{/each}} -->
+
       </h4>
       <div class="icon">
         <!-- test for link content-->
-        <a href="{{pathFor 'content'}}/{{metacontent}}" class="thumbnail">
-            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
-        </a>
+        
+            <!-- <img class="category-icon" src="/images/category/{{icon}}.png" alt="..."> -->
       </div>
     </div>
-    {{/if}}
+
     
     {{/each}}
   </div>

@@ -56,6 +56,10 @@ Router.route("/activity", {
 
 
 Router.route("/translateContent/:_id", function() {
+  if (!Meteor.user()) {
+    this.render("access_denied");
+    return;
+  }
   var data = Content.findOne({_id: this.params._id});
   // console.log(data);
   Session.set("transelate_content", true);
@@ -69,6 +73,10 @@ Router.route("/translateContent/:_id", function() {
 
 
 Router.route("/editContent/:_id", function() {
+  if (!Meteor.user()) {
+    this.render("access_denied");
+    return;
+  }
   var data = Content.findOne({_id: this.params._id});
 
   Session.set("transelate_content", false);
@@ -84,13 +92,25 @@ Router.route("/editContent/:_id", function() {
 // Routing for the edit profile
 Router.route("/editprofile", {
     name: "editProfile",
-    template: "editProfile"
+    template: "editProfile",
+    onBeforeAction: function() {
+    if (!Meteor.userId())
+      Router.go("/");
+    else
+      this.next();
+  }
 });
   
 // Routing for the create content
 Router.route("/createContent", {
     name: "createContent",
-    template: "createContent"
+    template: "createContent",
+    onBeforeAction: function() {
+    if (!Meteor.userId())
+      Router.go("/");
+    else
+      this.next();
+  }
 });
 
 // Routing for the home page
@@ -119,12 +139,18 @@ Router.route("/category/:_id", function() {
   //   this.render('loading');
   // }
 
+
   var data = Category.findOne({_id: this.params._id});
-  if (data)
-    this.render("category");
+  if (data){
+    if (!data.content_ids.length && !data.children_id.length && !Meteor.user()){
+      this.render("category_empty", {data: data});
+    }
+    else
+      this.render("category");
+  }
   else
     this.render("page_not_found");
-});
+}, {name: "show_category"});
 
 Router.route("/group/:_id", function() {
   var data = Groups.findOne({_id: this.params._id});
@@ -149,6 +175,10 @@ Router.route("/content/:_id", function() {
 // }, {name: "fix_content"}); 
 
 Router.route("/submit_content/:_id", function() {
+  if (!Meteor.user()) {
+    this.render("access_denied");
+    return;
+  }
   var data = Content.findOne({_id: this.params._id});
   if (data)
     this.render("fix_content");

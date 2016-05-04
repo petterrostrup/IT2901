@@ -39,13 +39,25 @@ Template.login.events({
         event.target.password2.focus();
         return;
       }
+
+      var lang = Session.get("current_language");
+      var db_lang = LanguageTags.findOne({
+        short_form: lang
+      });
+
+      if (!db_lang){
+        console.log("Found no language in login.js");
+        return;
+      }
+
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
-            home_adress: template.find("#home_adress").value,
+          home_adress: template.find("#home_adress").value,
+          preferred_language: db_lang.name
         },
         roles: "Standard",
       }

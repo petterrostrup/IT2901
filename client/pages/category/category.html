@@ -1,6 +1,7 @@
-<template name="category">
+<template name="category" xmlns="http://www.w3.org/1999/html">
     <div class="wrapper">
         <ol class="breadcrumb">
+            {{load_children}}
             {{#each get_parent_url}}
                 <li class="">
                     <a class="" href="{{pathFor 'category'}}/{{_id}}"> {{name}} </a>
@@ -18,49 +19,114 @@
             {{/if}}
         </ol>
 
+    <!--     {{#with data}}
         <table class="table">
             <tr>
-                <td><h2>{{data.name}}</h2></td>
+                <td><h2>{{name}}</h2></td>
             </tr>
             <tr>
-                <td><p>{{data.description}}</p></td>
+                <td><p>{{description}}</p></td>
             </tr>
         </table>
-        <table class="table">
-            <tr>
-                <th><h3>{{_ "mainContent.title"}}</h3></th>
-                <th><h3>{{_ "mainContent.description"}}</h3></th>
-                <th><h3>{{_ "mainContent.created"}}</h3></th>
-                <th><h3>{{_ "mainContent.date"}}</h3></th>
-                <th><h3>{{_ "mainContent.rating"}}</h3></th>
-            </tr>
-            {{#each get_content}}
-                <tr class="contentRow">
-                    <td>
-                        <a href="{{pathFor 'show_content' _id=_id}}">
-                            {{title}}
-                        </a>
-                    </td>
-                    <td>
-                        {{description}}
-                    </td>
-                    <td>
-                        {{createdBy}}
-                    </td>
-                    <td>
-                        {{timeSince time}} 
-                    </td>
-                    <td>
-                        Rating
-                    </td>
-                </tr>
-            {{/each}}
-        </table>
+        {{/with}} -->
 
+        <!-- {{#if currentUser}}
         <a href="{{pathFor 'create_content'}}/{{data._id}}" style="font-family: FontAwesome" class="btn btn-default">
             &#xf067; {{_ "mainContent.create_content"}}
         </a>
+        {{/if}} -->
 
+        {{#if currentUser}}
+        <div style="display: inline-block" class="col-lg-12">
+            <div  class="pull-right" style="display: inline-block;">
+                <a href="{{pathFor 'create_content'}}/{{data._id}}" style="font-family: FontAwesome" class="btn btn-default">
+                    &#xf067; {{_ "mainContent.create_content"}}
+                </a>
+                <!-- TODO -->
+                <button id="subCatButton" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; Create Subcategory</button>
+                <form id="new_subcategory" style="display: none">
+                    <table>
+                        <tr>
+                            <th>Ny sub kategori</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Navn:</td>
+                            <td><input type="text" id="name"/></td>
+                        </tr>
+                        <tr>
+                            <td>Beskrivelse:</td>
+                            <td><input type="text" id="description"/></td>
+                        </tr>
+                        <tr>
+                            <!-- make it be able to search language like createContent -->
+                            <td>Language:</td>
+                            <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                        </tr>
+                        <tr>
+                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; Add Subcategory" />
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        {{/if}}
+
+        <div class="sidebar nav navbar" >
+            <table style="margin-top: 25px" class="table">
+                <tr><th>Subcategories</th><th></th></tr>
+                {{#each get_children}}
+                <tr>
+                    <td>
+                        <a href="{{pathFor 'category'}}/{{_id}}">{{name}}</a>
+                    </td>
+                    <td></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+
+        {{#with data}}
+        <table style="float: left; display: inline-block">
+            <tr>
+                <td><h2>{{name}}</h2></td>
+            </tr>
+            <tr>
+                <td><p>{{description}}</p></td>
+            </tr>
+        </table>
+        {{/with}}
+        <table class="table table-striped table-hover" style="margin-top: 10%">
+            <thead>
+            <tr>
+                <th class="tableHeader">{{_ "mainContent.title"}}</th>
+                <th class="tableHeader">{{_ "mainContent.description"}}</th>
+                <th class="tableHeader">{{_ "mainContent.created"}}</th>
+                <th class="tableHeader">{{_ "mainContent.date"}}</th>
+                <th class="tableHeader">{{_ "mainContent.rating"}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each get_content}}
+                <tr class="clickAble {{_id}}">
+                    <td>
+                        <!-- <a href="{{pathFor 'show_content' _id=_id}}">{{title}} </a> -->
+                        {{title}}
+                    </td>
+                    <td>{{description}}</td>
+                    <td>{{createdBy}}
+                    </td>
+                    <td>
+                        {{timeSince time}}
+                    </td>
+                    <td>
+                        {{rating}}
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{#if get_children}}
         <table style="margin-top: 25px" class="table">
             <tr><th>Subcategories</th><th></th></tr>
             {{#each get_children}}
@@ -72,25 +138,20 @@
                 </tr>
             {{/each}}
         </table>
-        <button id="subCatButton" style="font-family: FontAwesome;">&#xf150; Create Subcategory</button>
-        <form id="new_subcategory" style="display: none">
-            <table>
-                <tr>
-                    <th>Ny sub kategori</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Navn:</td>
-                    <td><input type="text" id="name"/></td>
-                </tr>
-                <tr>
-                    <td>Beskrivelse:</td>
-                    <td><input type="text" id="description"/></td>
-                </tr>
-                <tr>
-                    <input type="submit" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; Add Subcategory" />
-                </tr>
-            </table>
-        </form>
+        {{/if}}
     </div>
 </template>
+
+<!-- For language search -->
+<template name="serverCollectionPillCategory" id="{{_id}}">
+  {{name}}
+</template>
+
+<template name="clientCollectionPillCategory" id="{{_id}}">
+  {{name}}
+</template>
+
+<template name="serverNoMatchCategory">
+    <span class="text-danger">Nothing found on the server for <b>{{getFilter}}</b>!</span>
+</template>
+<!-- End of language search -->

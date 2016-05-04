@@ -36,7 +36,7 @@
 	        <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
 
 	        <div class="col-md-7">
-	            {{> inputAutocomplete settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
+	            {{> inputAutocomplete settings=settingsLang autocomplete="off" id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}
 	        </div>
             {{/if}}
         </div>
