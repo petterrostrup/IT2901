@@ -267,6 +267,7 @@ Meteor.publish("CommunityTags", function() {
     return CommunityTags.find({});
 });
 
+
 var add_category = function(icon, catText) {
     var mainCat = {
         children_id: [],
@@ -283,6 +284,10 @@ var add_category = function(icon, catText) {
 
 
 }
+
+Meteor.publish("groups", function() {
+    return Groups.find({});
+});
 
 Meteor.startup(function(){
     
@@ -459,6 +464,17 @@ Meteor.startup(function(){
         }); 
         CommunityTags.insert({
             name: "StartUp"
+        })
+    }
+
+    if (!Groups.findOne() && Meteor.settings.DEBUG){
+        console.log("Default Group totally made")
+        Groups.insert({
+            name: "Trondheim party people",
+            description: "party party party",
+            members: [],
+            children_id: [],
+            content_ids: []
         })
     }
 

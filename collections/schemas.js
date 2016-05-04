@@ -269,6 +269,48 @@ Schema.LanguageTags = new SimpleSchema({
 	}
 });
 
+Schema.Groups = new SimpleSchema({
+	name: {
+		type: String,
+		optional: false
+	},
+	description: {
+		type: String,
+		optional: false
+	},
+	members: {
+		type: [String],
+		optional: false
+	},
+	parent_id: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: true
+	},
+	children_id: {
+		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+	},
+	content_ids: {
+		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+	},
+	timestamp: {
+	    type: Date,
+	    autoValue: function() {
+		    if (this.isInsert) {
+		        return new Date();
+		    } else if (this.isUpsert) {
+		        return {$setOnInsert: new Date()};
+		    } else {
+		    	this.unset();  // Prevent user from supplying their own value
+		    }
+	    }
+  	}
+});
+
 
 
 Meteor.users.attachSchema(Schema.User);
@@ -278,3 +320,4 @@ Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
 LanguageTags.attachSchema(Schema.LanguageTags);
 CategoryText.attachSchema(Schema.CategoryText);
+Groups.attachSchema(Schema.Groups);

@@ -121,9 +121,7 @@ Meteor.methods({
 			title: String,
 			description: String,
 			language: String,
-			text: String,
-			upVote: Array,
-			downVote: Array
+			text: String
 		});
 
 		main.tags = [];
@@ -132,6 +130,8 @@ Meteor.methods({
 		main.createdById = Meteor.userId();
 		content.createdById = Meteor.userId();
 		main.createdByUsername = Meteor.user().username;
+		content.upVote = [];
+		content.downVote = [];
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
@@ -201,6 +201,8 @@ Meteor.methods({
 		});
 
 		content.createdById = Meteor.userId();
+		content.upVote = [];
+		content.downVote = [];
 
 		var father = Content.findOne({_id: content.metacontent});
 		if (!father) 
@@ -237,8 +239,10 @@ Meteor.methods({
 	add_category: function(category, language) {
 
 		check(category, Object);
+
 		check(language, String);
 		console.log(category);
+
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
@@ -492,6 +496,35 @@ Meteor.methods({
 		},{
 			$set: {"profile.preferred_language": lang}
 		});
+	},
+	add_group: function(group) {
+		check(group, Object);
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+		var parent = undefined;
+		if (group.parent_id) {
+			parent = Groups.findOne({_id: group.parent_id});
+			if (!parent)
+				throw new Meteor.Error(400, "Parent id not found.");
+		}
+		else
+			throw new Meteor.Error(400, "Parent is required.");
+
+		// If the name of the group already exists, you are not allowed to create one.
+		if (Groups.findOne({name: group.name}))
+			throw new Meteor.Error(422, "The name already exists.");
+		group.children_id = [];
+		group.children = [];
+		group.content_ids = [];
+		var id = Category.insert(group);
+		if (parent) {
+			parent.children_id.push(id);
+			Category.update({_id: parent._id}, {$set: {
+				children_id: parent.children_id
+			}});
+		}
 	},
 
 	vote: function(content_id, user_id, vote){
