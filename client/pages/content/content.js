@@ -1,11 +1,21 @@
-
 Template.content.helpers({
+
+	/*	Gets the current content for the user. 
+	* 	The content stored in session is markdown
+	*/
 	get_content: function() {
 		return Session.get("content");
 	},
+	/* 	Gets the id from the url	
+	*/
 	get_id: function() {
 		return Router.current().params._id;
 	},
+	/*	Gets the parent for this content
+		Gets the parent for the parent and so on
+		Returns the whole "family" as a list where the 
+		first parent is the first element in the list. 
+	*/
 	get_parent_url: function() {
 		var list = [];
 		var current = Content.findOne({_id: Router.current().params._id});
@@ -17,15 +27,22 @@ Template.content.helpers({
 		list.reverse();
 		return list;
 	},
+	/*	Returns all the different texts that is under this content
+		All texts are in different languages, therefore it will only return 
+		texts that are of the supportet languages. 
+	*/
 	get_supported_languages: function() {
 		var id = Router.current().params._id;
 		return ContentText.find({metacontent: id});
 	},
+	/*	Gets the contenttext of your current language. 
+	*/
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});
 		var default_language = LanguageTags.findOne({
 			short_form: Session.get("current_language")
 		});
+		//Checks if the there is a content with the lanugage the user is using currently. 
 		if (default_language) {
 			var text_default = ContentText.findOne({
 				metacontent: content._id,
@@ -47,6 +64,7 @@ Template.content.helpers({
 				return text_default;
 			}
 		}
+		//Checks if the user is logged on, and tries to find contet from the users preffered languages
 		if (Meteor.user()) {
 			var languages = Meteor.user().profile.languages;
 			for (var a in languages) {
@@ -91,6 +109,7 @@ Template.content.helpers({
 		Session.set("content_language", foo.language);
 		return foo;
 	},
+	//Finds all texts fro the content you are currently looking at. 
 	get_AllContentTextsForContent: function(){
 		return ContentText.find({metacontent: Router.current().params._id});
 	}
@@ -126,12 +145,10 @@ var changeVoteColor = function(contentText){
 
 
 Template.content.events({
-    "scroll":function(event, template){
-    },
+	//changes the language for the content. 
     "click .langButton": function(event, template){
     	var id = event.target.id;
     	var name = event.target.name;
-    	// todo: change based on id.
     	// console.log(id);
     	var text = ContentText.findOne({_id: id});
     	// console.log(text);
@@ -148,10 +165,8 @@ Template.content.events({
     		}
     	}
     	template.$(("#" + id)).addClass("active-lang-btn");
-    }
-});
-
-Template.content.events({
+    },
+    //Voting logic. Checks if you upVote or downVote content. 
 	'click .vote':function(event){
 		var content = Content.findOne({_id: Router.current().params._id});
 		var currentContentText = ContentText.findOne({
@@ -167,7 +182,7 @@ Template.content.events({
 			vote = -1;
 
 		}
-
+		//Call a function in methods.js.
 		Meteor.call('vote', currentContentText._id, Meteor.userId(), vote , function(error, result){
 			if(error){
 				console.log(error);

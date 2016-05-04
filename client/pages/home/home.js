@@ -1,4 +1,8 @@
 Template.home.helpers({
+
+	//Gets all the content from the database
+	//Limits it to 10. 
+	//finds the most recent content created. 
 	getContent: function() {
 		var default_language = Session.get("current_language");
 		default_language = LanguageTags.findOne({
@@ -42,19 +46,20 @@ Template.home.helpers({
 		// 	user_langs.push(default_language);
 		// var content = [];
 	},
-
+	// returns the category of the content we are checking. 
+	// gets catId as an argument
 	getCategory: function(catId) {
 		var content = Content.findOne({_id: catId});
 		var cat = Category.findOne({_id: content.category_id});
 		return cat.name;
 	},
-
+	//Gets the icon for the category based on the catId
 	getIcon: function(catId) {
 		var content = Content.findOne({_id: catId});
 		var cat = Category.findOne({_id: content.category_id});
 		return cat.icon;
 	},
-
+	//returns the time difference between the creation of a content and now. 
 	timeSince: function(time) {
 
 		then = new Date(time);
