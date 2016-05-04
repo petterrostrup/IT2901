@@ -90,6 +90,9 @@
     "home": {
         "added": "Added",
         "ago": "ago"
+    },
+    "error": {
+        "empty_category": "This category does not have any content yet. If you log in you can add new content to this category."
     }
 }
 

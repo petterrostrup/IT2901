@@ -89,6 +89,9 @@
     "home": {
         "added": "Lagt til for",
         "ago": "siden"
+    },
+    "error": {
+        "empty_category": "Denne kategorien har ikke noe innhold enda! Hvis du logger deg inn kan du lage nytt innhold til denne kategorien."
     }
 }
 

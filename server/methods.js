@@ -14,7 +14,7 @@ Meteor.methods({
 			}
 		});
 		check(password, String);
-
+		
 		// Security.can().insert(user).for(Meteor.users).throw();
 
 		// Checks if the username chosen is taken

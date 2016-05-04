@@ -21,13 +21,15 @@
             <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
                 {{#each get_supported_languages}}
                     <button id={{_id}} name="{{language}}" type="button" class="btn btn-default langButton">{{language}}</button>
-                {{/each}}       
+                {{/each}}
+                {{#if currentUser}}    
                 <a href="{{pathFor 'translateContent' _id=get_id}}" class="btn btn-default">
                     {{_ "content.translate"}}
                 </a>
                 <a href="{{pathFor 'editContent' _id=get_id}}" class="btn btn-default">
                     {{_ "content.edit"}}
                 </a>
+                {{/if}}
             </div>
         </div>
         <!-- <div class="row">

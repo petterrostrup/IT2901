@@ -36,6 +36,9 @@ Template.category.helpers({
 		return Methods.get_parent_url(Router.current().params._id);
 	},
 	get_children: function() {
+		return Session.get("content_children_list");
+	},
+	load_children: function() {
 		var list = [];
 		var current = Category.findOne({_id: Router.current().params._id});
 		if (!current){
@@ -83,7 +86,7 @@ Template.category.helpers({
 				if (supported_langs) {
 					for (var b in texts) {
 						var text = texts[b];
-						if (text.language in supported_langs) {
+						if (supported_langs.indexOf(text.language) > -1) {
 							list.push({
 								_id: child._id,
 								name: text.name
@@ -100,7 +103,7 @@ Template.category.helpers({
 				}
 			}
 		}
-		return list;
+		Session.set("content_children_list", list);
 	},
 	get_content: function() {
 		console.log("Init get_content!");
@@ -110,11 +113,14 @@ Template.category.helpers({
 			short_form: default_language
 		});
 		var current = Category.findOne({_id: Router.current().params._id});
-		var user_languages = Meteor.user().profile.languages;
-		for (var usr_lang in user_languages) {
-			user_languages[usr_lang] = LanguageTags.findOne({
-				_id: user_languages[usr_lang]
-			});
+		var user_languages = [];
+		if (Meteor.user()) {
+			var user_languages = Meteor.user().profile.languages;
+			for (var usr_lang in user_languages) {
+				user_languages[usr_lang] = LanguageTags.findOne({
+					_id: user_languages[usr_lang]
+				});
+			}
 		}
 		var hide_other_lang = Session.get("hide_other_languages");
 		var all_contents = [];

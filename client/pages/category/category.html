@@ -1,6 +1,7 @@
 <template name="category">
     <div class="wrapper">
         <ol class="breadcrumb">
+            {{load_children}}
             {{#each get_parent_url}}
                 <li class="">
                     <a class="" href="{{pathFor 'category'}}/{{_id}}"> {{name}} </a>
@@ -57,10 +58,13 @@
             {{/each}}
         </table>
 
+        {{#if currentUser}}
         <a href="{{pathFor 'create_content'}}/{{data._id}}" style="font-family: FontAwesome" class="btn btn-default">
             &#xf067; {{_ "mainContent.create_content"}}
         </a>
+        {{/if}}
 
+        {{#if get_children}}
         <table style="margin-top: 25px" class="table">
             <tr><th>Subcategories</th><th></th></tr>
             {{#each get_children}}
@@ -72,6 +76,9 @@
                 </tr>
             {{/each}}
         </table>
+        {{/if}}
+
+        {{#if currentUser}}
         <button id="subCatButton" style="font-family: FontAwesome;">&#xf150; Create Subcategory</button>
         <form id="new_subcategory" style="display: none">
             <table>
@@ -98,6 +105,7 @@
                 </tr>
             </table>
         </form>
+        {{/if}}
     </div>
 </template>
 

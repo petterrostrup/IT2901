@@ -294,144 +294,61 @@ Meteor.startup(function(){
     // If no category is found, it will create all the standard categories
     if (!Category.findOne()){
         console.log("Default category created.");
-        var id = Category.insert({
-            children_id: [],
-            content_ids: [],
-            icon: "city2",
-            categories: []
-        });
-        var cat = {
-            name: "By",
-            description: "Informasjon anngående byen",
-            language: "Norsk",
-            metacategory: id
-        }
-        var content_text_id = CategoryText.insert(cat);
-
-        Category.update({
-            _id: id
-        }, {
-            $push: {categories: content_text_id}
-        });
-
-        id = Category.insert({
-            children_id: [],
-            content_ids: [],
-            icon: "community2",
-            categories: []
-        });
-        cat = {
+        add_category("community2", {
             name: "Samfunn",
             description: "Informasjon anngående samfunnet",
-            language: "Norsk",
-            metacategory: id
-        }
-        content_text_id = CategoryText.insert(cat);
-
-        Category.update({
-            _id: id
-        }, {
-            $push: {categories: content_text_id}
+            language: "Norsk"
         });
-        // Category.insert({
-        //     name: "Samfunn",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående samfunnet",
-        //     icon: "community2",
-        //     url_name: "community"
-        // });
-        // Category.insert({
-        //     name: "Økonomi",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående økonomi",
-        //     icon: "economy2",
-        //     url_name: "economy"
-        // });
-        // Category.insert({
-        //     name: "Utdanning",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående utdanning og skolering",
-        //     icon: "education2",
-        //     url_name: "education"
-        // });
-        // Category.insert({
-        //     name: "Food",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
-        //     icon: "food2",
-        //     url_name: "food"
-        // });
-        // Category.insert({
-        //     name: "Helse",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående helse og hvor man kan få hjelp",
-        //     icon: "health2",
-        //     url_name: "health"
-        // });
-        // Category.insert({
-        //     name: "Hjelp",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
-        //     icon: "help2",
-        //     url_name: "help"
-        // });
-        // Category.insert({
-        //     name: "Bolig",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Hvordan å få tak i bolig og annet relevant informasjon",
-        //     icon: "housing2",
-        //     url_name: "housing"
-        // });
-        // Category.insert({
-        //     name: "Jobb",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
-        //     icon: "jobs2",
-        //     url_name: "jobs"
-        // });
-        // Category.insert({
-        //     name: "Språk",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
-        //     icon: "language2",
-        //     url_name: "language"
-        // });
-        // Category.insert({
-        //     name: "Rettshjelp",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Rettshjelp, lover etc.",
-        //     icon: "legal2",
-        //     url_name: "legal"
-        // });
-        // Category.insert({
-        //     name: "Transport",
-        //     children: [],
-        //     content_ids: [],
-        //     children_id: [],
-        //     description: "Informasjon anngående transport",
-        //     icon: "transport2",
-        //     url_name: "transport"
-        // });
+        add_category("economy2", {
+            name: "Økonomi",
+            description: "Informasjon anngående økonomi",
+            language: "Norsk"
+        });
+        add_category("education2", {
+            name: "Utdanning",
+            description: "Informasjon anngående utdanning og skolering",
+            language: "Norsk"
+        });
+        add_category("food2", {
+            name: "Mat",
+            description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
+            language: "Norsk"
+        });
+        add_category("health2", {
+            name: "Helse",
+            description: "Informasjon anngående helse og hvor man kan få hjelp",
+            language: "Norsk"
+        });
+        add_category("help2", {
+            name: "Hjelp",
+            description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
+            language: "Norsk"
+        });
+        add_category("housing2", {
+            name: "Bolig",
+            description: "Hvordan å få tak i bolig og annet relevant informasjon",
+            language: "Norsk"
+        });
+        add_category("jobs2", {
+            name: "Jobb",
+            description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
+            language: "Norsk"
+        });
+        add_category("language2", {
+            name: "Språk",
+            description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
+            language: "Norsk"
+        });
+        add_category("legal2", {
+            name: "Rettshjelp",
+            description: "Rettshjelp, lover etc.",
+            language: "Norsk"
+        });
+        add_category("transport2", {
+            name: "Transport",
+            description: "Informasjon anngående transport",
+            language: "Norsk"
+        });
     }
     
 
