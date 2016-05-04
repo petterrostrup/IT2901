@@ -1,6 +1,4 @@
 
-
-
 Template.content.helpers({
 	get_content: function() {
 		return Session.get("content");

@@ -121,6 +121,14 @@ Router.route("/category/:_id", function() {
     this.render("page_not_found");
 });
 
+Router.route("/group/:_id", function() {
+  var data = Groups.findOne({_id: this.params._id});
+  if (data)
+    this.render("group");
+  else
+    this.render("page_not_found");
+});
+
 // Routing for a distinct content page.
 // Takes the content's id as input from the url
 Router.route("/content/:_id", function() {

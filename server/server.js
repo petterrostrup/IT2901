@@ -148,6 +148,10 @@ Meteor.publish("CommunityTags", function() {
     return CommunityTags.find({});
 });
 
+Meteor.publish("groups", function() {
+    return Groups.find({});
+});
+
 Meteor.startup(function(){
     
     // If no category is found, it will create all the standard categories
@@ -293,6 +297,17 @@ Meteor.startup(function(){
         }); 
         CommunityTags.insert({
             name: "StartUp"
+        })
+    }
+
+    if (!Groups.findOne() && Meteor.settings.DEBUG){
+        console.log("Default Group totally made")
+        Groups.insert({
+            name: "Trondheim party people",
+            description: "party party party",
+            members: [],
+            children_id: [],
+            content_ids: []
         })
     }
 
