@@ -49,6 +49,11 @@ Router.route("/settings", {
   template: "settings"
 });
 
+Router.route("/activity", {
+  name: "activity",
+  template: "activity"
+});
+
 
 Router.route("/translateContent/:_id", function() {
   var data = Content.findOne({_id: this.params._id});
