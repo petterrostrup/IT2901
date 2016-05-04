@@ -1,3 +1,22 @@
+var IR_BeforeHooks = {
+  somethingForAnyRoute: function() {
+    $('body,html').scrollTop(0);
+
+    $("a[rel=popover]").popover('hide');
+    $("a[rel=popover]").popover('disable');
+    // Remove the popover DIV from the DOM
+    $(".popover").remove();
+
+    $(".navbar-collapse").collapse('hide');
+
+    this.next();
+  }
+// add more before hooks here
+}
+
+// (Global) Before hooks for any route
+Router.onBeforeAction(IR_BeforeHooks.somethingForAnyRoute);
+
 // Search
 Router.route("/search", {
   name: "search",
@@ -8,8 +27,11 @@ Router.route("/search", {
 /* Client-side router settings */
 Router.configure({
   layoutTemplate:"layout",
-  notFoundTemplate:"page_not_found"
+  notFoundTemplate:"page_not_found",
+  loadingTemplate: 'loading'
 });
+
+
 
 // Routing for the home page
 Router.route("/", {
