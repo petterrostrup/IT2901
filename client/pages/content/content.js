@@ -62,7 +62,8 @@ Template.content.helpers({
 				if (content_1){
 					console.log("Found content for user language.");
 
-					if(typeof content_1 !== 'undefined'){
+					if(content_1){
+						console.log(content_1);
 						changeVoteColor(content_1);
 						var likesCounter = content_1.upVote.length - content_1.downVote.length;
 						content_1.likesCounter = likesCounter;
@@ -80,7 +81,7 @@ Template.content.helpers({
 		});
 
 		//change color of voting buttons
-		if(typeof foo !== 'undefined'){
+		if(foo){
 			changeVoteColor(foo);
 			var likesCounter = foo.upVote.length - foo.downVote.length;
 			foo.likesCounter = likesCounter;

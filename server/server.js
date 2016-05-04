@@ -136,34 +136,34 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }
                 }).fetch()
             searchByCatResult.push(resultContent)
-            console.log("in loop")
-            console.log(ContentText.find({metacontent:con_id[i]}, { options,
+            // console.log("in loop")
+            ContentText.find({metacontent:con_id[i]}, { options,
                 transform: function(doc) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
                 return doc
                 }
-                }).fetch())
-            console.log("searchByCatResult")
-            console.log(searchByCatResult)
+                }).fetch();
+            // console.log("searchByCatResult")
+            // console.log(searchByCatResult)
         }
-        console.log("cat Re")
-        console.log(searchByCatResult)
+        // console.log("cat Re")
+        // console.log(searchByCatResult)
 
         var result = ContentText.find(selector, { options,
         transform: function(doc) {
             doc.contentObj = Content.find({
                 contents: { $in: [doc._id]}
             }).fetch();
-        return doc
+        return doc;
         }
-        }).fetch()
-            console.log("content")
-            console.log(result.concat(searchByCatResult))
+        }).fetch();
+            // console.log("content")
+            // console.log(result.concat(searchByCatResult))
         var finalResult = result.concat(searchByCatResult)
-        console.log("concat")
-        console.log(finalResult)
+        // console.log("concat")
+        // console.log(finalResult)
 
         var finalFinal = []
         for (var i in finalResult) {
@@ -171,8 +171,8 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 finalFinal.push(finalResult[i][j])
             }
         }   
-        console.log("finalfinal")
-        console.log(finalFinal)
+        // console.log("finalfinal")
+        // console.log(finalFinal)
     return finalFinal
   } else {
 
@@ -184,8 +184,8 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
             return doc
         }
     }).fetch()
-    console.log("reslult")
-    console.log(result)
+    // console.log("reslult")
+    // console.log(result)
     return result;
   }
 });

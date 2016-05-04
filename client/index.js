@@ -49,8 +49,8 @@ Template.navigation.events({
         event.preventDefault();
         //if(!($('.changeLanguage').length)) {
             for(var key in supportedLanguages){
-                console.log(key);
-                console.log(supportedLanguages[key].language);
+                // console.log(key);
+                // console.log(supportedLanguages[key].language);
                 $('.popover-content').append("<li ><a class='link changeLanguage' id=" + key + "   href=''>" + supportedLanguages[key].language + "</a></li>");
             }
 
