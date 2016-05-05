@@ -54,7 +54,7 @@ Template.category.helpers({
 			console.log("ERROR");
 			return;
 		}
-		var lang = Session.get("current_language");
+		var lang = TAPi18next.lng();
 		var db_lang = LanguageTags.findOne({
 			short_form: lang
 		});
@@ -63,9 +63,15 @@ Template.category.helpers({
 			supported_langs = [];
 			var user_languages = Meteor.user().profile.languages;
 			for (var a in user_languages) {
-				supported_langs.push(LanguageTags.findOne({
+				var l = LanguageTags.findOne({
 					_id: user_languages[a]
-				}).name);
+				});
+				if (l){
+					supported_langs.push(l.name);
+				}
+				// supported_langs.push(LanguageTags.findOne({
+				// 	_id: user_languages[a]
+				// }).name);
 			}
 		}
 
@@ -119,7 +125,7 @@ Template.category.helpers({
 	get_content: function() {
 		// console.log("Init get_content!");
 		var list = [];
-		var default_language = Session.get("current_language");
+		var default_language = TAPi18next.lng();
 		var db_language = LanguageTags.findOne({
 			short_form: default_language
 		});
@@ -185,7 +191,7 @@ Template.category.helpers({
 					if (found)
 						break;
 				}
-				if (found)
+				if (found || !cont_lang.length)
 					continue;
 				else if (!hide_other_lang) {
 					all_contents.push({

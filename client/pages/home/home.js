@@ -8,7 +8,7 @@ Template.home.helpers({
 	//Limits it to 10. 
 	//finds the most recent content created. 
 	getContent: function() {
-		var default_language = Session.get("current_language");
+		var default_language = TAPi18next.lng();
 		default_language = LanguageTags.findOne({
 			short_form: default_language
 		});
