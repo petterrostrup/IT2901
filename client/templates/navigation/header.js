@@ -63,7 +63,6 @@ Template.navigation.events({
                     }
                 });
                 Session.set("showLoadingIndicator", false);
-                Session.set("current_language", lang);
             })
             .fail(function (error_message) {
                 // Handle the situation

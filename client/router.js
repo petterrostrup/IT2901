@@ -146,7 +146,7 @@ Router.route("/category/:_id", function() {
       this.render("category_empty", {data: data});
     }
     else
-      this.render("category");
+      this.render("category", {data: data});
   }
   else
     this.render("page_not_found");

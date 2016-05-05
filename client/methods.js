@@ -3,7 +3,8 @@ Methods = {
 	get_parent_url: function(start_id) {
 		var list = [];
 		var current = Category.findOne({_id: start_id});
-		var lang = Session.get("current_language");
+		// var lang = Session.get("current_language");
+		var lang = TAPi18next.lng();
 		var db_lang = LanguageTags.findOne({
 			short_form: lang
 		});
@@ -12,9 +13,12 @@ Methods = {
 			supported_langs = [];
 			var user_languages = Meteor.user().profile.languages;
 			for (var a in user_languages) {
-				supported_langs.push(LanguageTags.findOne({
+				var l = LanguageTags.findOne({
 					_id: user_languages[a]
-				}).name);
+				});
+				if (l){
+					supported_langs.push(l.name);
+				}
 			}
 		}
 
@@ -41,7 +45,7 @@ Methods = {
 				}
 			}
 
-			if (!found) {
+			if (!found && cat_text && cat_text[0]) {
 				list.push({_id: current._id, name: cat_text[0].name});
 			}
 			current = Category.findOne({_id: current.parent_id});
@@ -51,7 +55,7 @@ Methods = {
 	},
 
 	get_current_languages: function() {
-		var lang = Session.get("current_language");
+		var lang = TAPi18next.lng();
 		var db_lang = LanguageTags.findOne({
 			short_form: lang
 		});
