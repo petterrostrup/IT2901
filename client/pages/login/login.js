@@ -40,7 +40,7 @@ Template.login.events({
         return;
       }
 
-      var lang = Session.get("current_language");
+      var lang = TAPi18next.lng();
       var db_lang = LanguageTags.findOne({
         short_form: lang
       });
@@ -58,8 +58,7 @@ Template.login.events({
           last_name: template.find("#lastname").value,
           home_adress: template.find("#home_adress").value,
           preferred_language: db_lang.name
-        },
-        roles: "Standard",
+        }
       }
 
       // Calls the method "add_user" in the server. 

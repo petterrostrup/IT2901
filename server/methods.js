@@ -10,6 +10,9 @@ Meteor.methods({
 			username: String,
 			email: String,
 			profile: {
+				first_name: String,
+				last_name: String,
+				home_adress: String,
 				preferred_language: String
 			}
 		});
