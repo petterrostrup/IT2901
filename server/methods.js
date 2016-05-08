@@ -247,6 +247,58 @@ Meteor.methods({
 	},
 
 
+	translate_category: function(cat_text) {
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		check(cat_text, {
+			name: String,
+			description: String,
+			metacategory: String,
+			language: String
+		});
+
+		var category_father = Category.findOne({
+			_id: cat_text.metacategory
+		});
+
+		if (!category_father) {
+			throw new Meteor.Error(404, "Could not find category.");
+		}
+
+		var language = LanguageTags.findOne({
+			name: cat_text.language
+		});
+
+		if (!language) {
+			throw new Meteor.Error(404, "Could not find language.");
+		}
+
+		var check_cat = CategoryText.findOne({
+			language: language.name
+		});
+
+		if (check_cat) {
+			CategoryText.update({
+				_id: check_cat._id
+			}, cat_text);
+		}
+		else {
+			var id = CategoryText.insert(cat_text);
+			if (!id) {
+				throw new Meteor.Error(500, "Category not created.");
+			}
+			Category.update({
+				_id: cat_text.metacategory
+			}, {
+				$push: {categories: id}
+			});
+		}
+	},
+
+
 	// Method for adding a new category
 	add_category: function(category, language) {
 

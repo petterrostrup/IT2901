@@ -37,6 +37,9 @@
         {{/if}} -->
 
         {{#if currentUser}}
+        <div class="alert alert-danger" id="logError" style="display: none;">
+            <div id="logErrorText"></div>
+        </div>
         <div style="display: inline-block" class="col-lg-12">
             <div  class="pull-right" style="display: inline-block;">
                 <a href="{{pathFor 'create_content'}}/{{_id}}" style="font-family: FontAwesome" class="btn btn-default">
@@ -112,7 +115,7 @@
             </table>
         </div>
 
-        {{#with data}}
+        {{#with load_category}}
         <table style="float: left; display: inline-block">
             <tr>
                 <td><h2>{{name}}</h2></td>

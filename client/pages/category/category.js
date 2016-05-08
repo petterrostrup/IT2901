@@ -26,13 +26,26 @@ Template.category.helpers({
 	// End of language search
 
 	//Returns the category you are currently in. 
-	data: function() {
+	load_category: function() {
 		// var data = Category.findOne({_id: Router.current().params._id});
-		var data = CategoryText.findOne({
-			metacategory: Router.current().params._id
+		// var language = Methods.get_current_language();
+		// console.log("LOLASKIS");
+		var lang = TAPi18next.lng();
+		var language = LanguageTags.findOne({
+			short_form: lang
 		});
+		var data = CategoryText.findOne({
+			metacategory: Router.current().params._id,
+			language: language.name
+		});
+		if (!data) {
+			data = CategoryText.findOne({
+				metacategory: Router.current().params._id
+			});
+		}
 		return data;
 	},
+
 	//
 	timeSince: function(time) {
 
@@ -300,7 +313,21 @@ Template.category.events({
     		metacategory: Router.current().params._id
     	}
     	Meteor.call("translate_category", text, function(error, result) {
-
+    		if (error) {
+    			console.log(error);
+    			template.$("#logErrorText").text(error);
+          		template.$("#logError").show();
+          		setTimeout(function() {
+          			template.$("#logError").hide();
+          		}, 5000);
+    		}
+    		else {
+    			template.$("#logErrorText").text("Category translated.");
+          		template.$("#logError").show();
+          		setTimeout(function() {
+          			template.$("#logError").hide();
+          		}, 5000);
+    		}
     	});
     },
 

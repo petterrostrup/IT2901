@@ -1,5 +1,11 @@
 
 Methods = {
+	get_current_language: function() {
+		return LanguageTags.findOne({
+			short_form: TAPi18next.lng()
+		});
+	},
+
 	get_parent_url: function(start_id) {
 		var list = [];
 		var current = Category.findOne({_id: start_id});

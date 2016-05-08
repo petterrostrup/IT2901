@@ -1,30 +1,34 @@
     // Search
 SearchSource.defineSource('categorySearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  var arr = [];
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {name: regExp},
-      {description: regExp},
+    var options = {sort: {isoScore: -1}, limit: 20};
+    var arr = [];
+    var language = "English";
+    if (Meteor.userId()) {
+        language = Meteor.user().profile.preferred_language;
+    }
 
-    ]};
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {name: regExp},
+          {description: regExp},
+        ]};
 
     // try using lookup from mongodb
     
-    var result = CategoryText.find(selector, { options,
-        transform: function(doc) {
-            doc.categoryObj = Category.find({
-                categories: { $in: [doc._id]}
-            }).fetch();
-        return doc
-        }
-    }).fetch();
+        var result = CategoryText.find(selector, { options,
+            transform: function(doc) {
+                doc.categoryObj = Category.find({
+                    categories: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch();
     // end of try lookup
     
-    return result
-  } else {
+        return result
+    } else {
 // another transform
 //     , {
 //     transform: function(doc) {
@@ -34,24 +38,50 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 //         return doc
 //     }
 // }
-    var result = CategoryText.find({}, {
-        transform: function(doc) {
-            var hei = Category.findOne({
-                parent_id: {$exists:false},
-                _id: doc.metacategory
-                // categories: { $in: [doc._id]}
-            });
-            if (!hei)
-                return {};
-            doc.categoryObj = Category.find({
-                categories: { $in: [doc._id]}
+        var list = [];
+        var categories = Category.find({}).fetch();
+        for (var a in categories) {
+            var cat = categories[a];
+            if (cat.parent_id)
+                continue;
+            var texts = CategoryText.find({
+                metacategory: cat._id
             }).fetch();
-            return doc
+            var found = false;
+            for (var t in texts) {
+                if (texts[t].language === language) {
+                    found = true;
+                    texts[t].categoryObj = [cat];
+                    list.push(texts[t]);
+                    break;
+                }
+            }
+            if (!found) {
+                var chosen = texts[0];
+                chosen.categoryObj = [cat];
+                list.push(chosen);
+            }
         }
-    }).fetch();
-    // console.log(result);
-    return result;
-  }
+        return list;
+
+        // var result = CategoryText.find({}, {
+        //     transform: function(doc) {
+        //         var hei = Category.findOne({
+        //             parent_id: {$exists:false},
+        //             _id: doc.metacategory
+        //             // categories: { $in: [doc._id]}
+        //         });
+        //         if (!hei)
+        //             return {};
+        //         doc.categoryObj = Category.find({
+        //             categories: { $in: [doc._id]}
+        //         }).fetch();
+        //         return doc
+        //     }
+        // }).fetch();
+        // // console.log(result);
+        // return result;
+    }
 });
 
 function buildRegExp(searchText) {
@@ -63,19 +93,19 @@ function buildRegExp(searchText) {
 // content search
 SearchSource.defineSource('contentSearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {title: regExp},
-      {description: regExp},
-      // {title: regExp}
-      // {community_id: regExp}
-    ]};
-    var selectorCatText = {$or: [
-      {name: regExp},
-    ]};
+    var options = {sort: {isoScore: -1}, limit: 20};
+    // console.log("SEARHC: " + searchText);
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {title: regExp},
+          {description: regExp},
+          // {title: regExp}
+          // {community_id: regExp}
+        ]};
+        var selectorCatText = {$or: [
+          {name: regExp},
+        ]};
     // search by commu and lang
     // var selectorTag = {$or: [
     //   {name: regExp},
@@ -122,12 +152,12 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }).fetch();
             return doc
             }
-        }).fetch()
+        }).fetch();
         var con_id = []
         for (var i in catText) {
             for (var j in catText[i].categoryObj){
                 for (var k in catText[i].categoryObj[j].content_ids){
-                    con_id.push(catText[i].categoryObj[j].content_ids[k])
+                    con_id.push(catText[i].categoryObj[j].content_ids[k]);
                 }
             }
         }
@@ -141,8 +171,8 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                     }).fetch();
                 return doc
                 }
-                }).fetch()
-            searchByCatResult.push(resultContent)
+            }).fetch();
+            searchByCatResult.push(resultContent);
             // console.log("in loop")
             ContentText.find({metacontent:con_id[i]}, { options,
                 transform: function(doc) {
@@ -151,7 +181,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                     }).fetch();
                 return doc
                 }
-                }).fetch();
+            }).fetch();
             // console.log("searchByCatResult")
             // console.log(searchByCatResult)
         }
@@ -159,29 +189,30 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         // console.log(searchByCatResult)
 
         var result = ContentText.find(selector, { options,
-        transform: function(doc) {
-            doc.contentObj = Content.find({
-                contents: { $in: [doc._id]}
-            }).fetch();
-        return doc;
-        }
+            transform: function(doc) {
+                doc.contentObj = Content.find({
+                    contents: { $in: [doc._id]}
+                }).fetch();
+                return doc;
+            }
         }).fetch();
             // console.log("content")
             // console.log(result.concat(searchByCatResult))
-        var finalResult = result.concat(searchByCatResult)
+        var finalResult = result.concat(searchByCatResult);
         // console.log("concat")
         // console.log(finalResult)
 
-        var finalFinal = []
+        var finalFinal = [];
         for (var i in finalResult) {
             for (var j in finalResult[i]){
                 finalFinal.push(finalResult[i][j])
             }
         }   
         // console.log("finalfinal")
-        // console.log(finalFinal)
-    return finalFinal
-  } else {
+        // console.log(finalFinal);
+        return finalFinal
+    } else {
+        return [];
 
     var result = ContentText.find({}, {
         transform: function(doc) {
