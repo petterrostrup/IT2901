@@ -25,16 +25,13 @@
         <div class="col-lg-15">
             <div class="row">
 
-              <p>Categories</p>
                 {{> searchResult}}
 
             </div>
         </div>
         <div class="col-lg-15">
             <div class="row">
-              <p>Contents</p>
                 {{> searchResultContent}}
-              
             </div>
         </div>
     </div>
@@ -61,14 +58,8 @@
       {{/if}}
     </div>
     {{#each getPackages}}
-<!--     <div class="col-cs-6 col-md-3 category">
-        <div class="package">
-        <h4 class="name" >{{name}}</h4>
-        </div>
-        <a href="{{pathFor 'category'}}/{{_id}}" class="thumbnail">
-            <img class="category-icon" src="/images/category/{{icon}}.png" alt="...">
-        </a>
-    </div> -->
+
+      {{#if name}}
 
 
     <div class="package col-cs-6 col-md-3 category">
@@ -90,7 +81,7 @@
         {{/each}}
       </div>
     </div>
-
+    {{/if}}
     
     {{/each}}
   </div>

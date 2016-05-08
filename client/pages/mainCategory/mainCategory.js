@@ -5,16 +5,15 @@ var options = {
 };
 var fields = ['name', 'title', 'description', "_id", "icon"];
 
-
 PackageSearch = new SearchSource('categorySearch', fields, options);
 ContentSearch = new SearchSource('contentSearch', fields, options);
 
 Template.searchResult.helpers({
-    all_categories: function() {
-        var categories = Category.find({});
+  all_categories: function() {
+      var categories = Category.find({});
 
-        return categories;
-    },
+      return categories;
+  },
   getPackages: function() {
   	// put if here for saperate two collections for two section search result, might need type for content or category
     return PackageSearch.getData({

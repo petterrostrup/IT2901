@@ -40,36 +40,26 @@ Template.login.events({
         return;
       }
 
-      var lang = TAPi18next.lng();
-      var db_lang = LanguageTags.findOne({
-        short_form: lang
-      });
-
-      if (!db_lang){
-        console.log("Found no language in login.js");
-        return;
-      }
-
       var user = {
         username: template.find("#username2").value,
         email: template.find("#email").value,
         profile: {
           first_name: template.find("#firstname").value,
           last_name: template.find("#lastname").value,
-          home_adress: template.find("#home_adress").value,
-          preferred_language: db_lang.name
+          // home_adress: template.find("#home_adress").value,
+          preferred_language: TAPi18next.lng()
         }
       }
 
       // Calls the method "add_user" in the server. 
       Meteor.call("create_user", user, passVar, function(error, result) {
         if (error){
-          console.log(error);
+          // console.log(error);
           template.$("#regErrorText").text(error.reason);
           template.$("#regError").show();
         } else {
           template.$("#logSuccess").show();
-          console.log("User added.");
+          // console.log("User added.");
 
           // Switches from the registration page to login page
           template.$("#login-form").delay(100).fadeIn(100);
@@ -113,8 +103,18 @@ Template.login.events({
           template.$("#logError").show();
           // this does not work
           event.target.password1.value = "";
-        } else
-          console.log("Du har logget inn!!");
+        } else{
+          Session.set("showLoadingIndicator", true);
+
+          TAPi18n.setLanguage(Meteor.user().profile.preferred_language)
+              .done(function () {
+                  Session.set("showLoadingIndicator", false);
+              })
+              .fail(function (error_message) {
+                  // Handle the situation
+                  console.log(error_message);
+              });
+        }
       });
     }
   }
