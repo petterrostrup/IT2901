@@ -3,7 +3,6 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
     options = options || {};
   var options = {sort: {isoScore: -1}, limit: 20};
   var arr = [];
-
   if(searchText) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
@@ -14,14 +13,14 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 
     // try using lookup from mongodb
     
-        var result = CategoryText.find(selector, { options,
-            transform: function(doc) {
-                doc.categoryObj = Category.find({
-                    categories: { $in: [doc._id]}
-                }).fetch();
-            return doc
-            }
-        }).fetch()
+    var result = CategoryText.find(selector, { options,
+        transform: function(doc) {
+            doc.categoryObj = Category.find({
+                categories: { $in: [doc._id]}
+            }).fetch();
+        return doc
+        }
+    }).fetch();
     // end of try lookup
     
     return result
@@ -37,17 +36,25 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 // }
     var result = CategoryText.find({}, {
         transform: function(doc) {
+            var hei = Category.findOne({
+                parent_id: {$exists:false},
+                _id: doc.metacategory
+                // categories: { $in: [doc._id]}
+            });
+            if (!hei)
+                return {};
             doc.categoryObj = Category.find({
                 categories: { $in: [doc._id]}
             }).fetch();
             return doc
         }
-    }).fetch()
+    }).fetch();
+    // console.log(result);
     return result;
   }
 });
 
-    function buildRegExp(searchText) {
+function buildRegExp(searchText) {
   // this is a dumb implementation
   var parts = searchText.trim().split(/[ \-\:]+/);
   return new RegExp("(" + parts.join('|') + ")", "ig");
@@ -349,12 +356,17 @@ Meteor.startup(function(){
             description: "Informasjon anngående transport",
             language: "Norsk"
         });
+        add_category("city2", {
+            name: "By",
+            description: "Informasjon anngående byen",
+            language: "Norsk"
+        });
     }
     
 
     var languageIds = [];
     // add something in database for language test
-    if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
+    if (!LanguageTags.findOne()){
         console.log("Default LanguageTags created.");
         languageIds.push(LanguageTags.insert({
             name: "Norsk",
@@ -374,7 +386,7 @@ Meteor.startup(function(){
     }
 
     // add something in database for community test
-    if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
+    if (!CommunityTags.findOne()){
         console.log("Default CommunityTags created.");
         CommunityTags.insert({
             name: "StudentInTrondheim"
@@ -384,8 +396,8 @@ Meteor.startup(function(){
         })
     }
 
-    if (!Groups.findOne() && Meteor.settings.DEBUG){
-        console.log("Default Group totally made")
+    if (!Groups.findOne()){
+        console.log("Default Group made.")
         Groups.insert({
             name: "Trondheim party people",
             description: "party party party",
@@ -395,13 +407,6 @@ Meteor.startup(function(){
         })
     }
 
-    if (!Tag.findOne() && Meteor.settings.DEBUG){
-        console.log("Default tag totally made");
-        Tag.insert({
-            name: "Kult",
-            taggedContent: []
-        });
-    }
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");
 

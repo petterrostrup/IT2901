@@ -233,12 +233,24 @@ Template.category.events({
 		if (template.$("#new_subcategory").hasClass('active')){
 			template.$("#new_subcategory").removeClass('active');
 			template.$("#new_subcategory").hide();
-			template.$("#subCatButton").html("&#xf150; Create Subcategory");
+			// template.$("#subCatButton").html("&#xf150; Create Subcategory");
 		}
 		else{
 			template.$("#new_subcategory").addClass('active');
 			template.$("#new_subcategory").show();
-			template.$("#subCatButton").html("&#xf151; Cancel");
+			// template.$("#subCatButton").html("&#xf151; Cancel");
+		}
+	},
+	"click #transbtn": function(event, template) {
+		if (template.$("#translate_category").hasClass('active')){
+			template.$("#translate_category").removeClass('active');
+			template.$("#translate_category").hide();
+			// template.$("#transbtn").html("&#xf150; Create Subcategory");
+		}
+		else{
+			template.$("#translate_category").addClass('active');
+			template.$("#translate_category").show();
+			// template.$("#transbtn").html("&#xf151; Cancel");
 		}
 	},
 	// Listens to click. When clicked it will create a new sub category 
@@ -269,6 +281,26 @@ Template.category.events({
     		if (result) {
     			Router.go("show_category", {_id: result});
     		}
+    	});
+    },
+
+    "submit #translate_category": function(event, template) {
+    	event.preventDefault();
+    	var name = event.target.name_trans.value;
+    	var desc = event.target.desc_trans.value;
+    	var langs = $("#autocomplete-input-Lang-trans").val().split(" ");
+	   	for (var lang in langs) {
+	   		langs[lang] = langs[lang].replace("#", "");
+	   	}
+    	var language = langs[0];
+    	var text = {
+    		name: name,
+    		description: desc,
+    		language: language,
+    		metacategory: Router.current().params._id
+    	}
+    	Meteor.call("translate_category", text, function(error, result) {
+
     	});
     },
 

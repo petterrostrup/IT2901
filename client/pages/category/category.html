@@ -43,28 +43,54 @@
                     &#xf067; {{_ "mainContent.create_content"}}
                 </a>
                 <!-- TODO -->
-                <button id="subCatButton" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; Create Subcategory</button>
-                <form id="new_subcategory" style="display: none">
+                <button id="transbtn" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.translate"}}</button>
+                <form id="translate_category" style="display: none">
                     <table>
                         <tr>
-                            <th>Ny sub kategori</th>
+                            <th>{{_ "category.translate"}}</th>
                             <th></th>
                         </tr>
                         <tr>
-                            <td>Navn:</td>
+                            <td>{{_ "category.name"}}:</td>
+                            <td><input type="text" id="name_trans"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{_ "category.description"}}:</td>
+                            <td><input type="text" id="desc_trans"/></td>
+                        </tr>
+                        <tr>
+                            <!-- make it be able to search language like createContent -->
+                            <td>{{_ "category.language"}}:</td>
+                            <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang-trans" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                        </tr>
+                        <tr>
+                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.translate'}}" />
+                        </tr>
+                    </table>
+                </form>
+
+                <button id="subCatButton" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.new_sub"}}</button>
+                <form id="new_subcategory" style="display: none">
+                    <table>
+                        <tr>
+                            <th>{{_ "category.new_sub_text"}}</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>{{_ "category.name"}}:</td>
                             <td><input type="text" id="name"/></td>
                         </tr>
                         <tr>
-                            <td>Beskrivelse:</td>
+                            <td>{{_ "category.description"}}:</td>
                             <td><input type="text" id="description"/></td>
                         </tr>
                         <tr>
                             <!-- make it be able to search language like createContent -->
-                            <td>Language:</td>
+                            <td>{{_ "category.language"}}:</td>
                             <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
                         </tr>
                         <tr>
-                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; Add Subcategory" />
+                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.new_sub'}}" />
                         </tr>
                     </table>
                 </form>

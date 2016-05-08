@@ -55,13 +55,15 @@ Template.navigation.events({
 
         TAPi18n.setLanguage(lang)
             .done(function () {
-                Meteor.call("set_preferred_language", lang, function(error, result){
-                    if (error) {
-                        console.log(error);
-                    }else {
-                        console.log("Preferred language changed.");
-                    }
-                });
+                if (Meteor.userId()) {
+                    Meteor.call("set_preferred_language", lang, function(error, result){
+                        if (error) {
+                            console.log(error);
+                        }else {
+                            console.log("Preferred language changed.");
+                        }
+                    });
+                }
                 Session.set("showLoadingIndicator", false);
             })
             .fail(function (error_message) {
