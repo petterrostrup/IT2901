@@ -106,7 +106,10 @@
         "translate": "Translate content",
         "edit": "Edit content",
         "save_changes": "Save changes",
-        "submit_translation": "Save translation"
+        "submit_translation": "Save translation",
+        "groups": "Groups",
+        "created_by": "Created by",
+        "delete": "Delete"
     },
     "home": {
         "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others",
@@ -149,6 +152,16 @@
     "activity": {
         "title": "Your activity",
         "back": "Back"
+    },
+    "group": {
+        "leave": "Leave group",
+        "join": "Join group",
+        "content": "Content linked with group",
+        "members": "Members of this group",
+        "add_group": "Add group",
+        "group_added": "Group added",
+        "your_groups": "Your groups",
+        "content_text": "Add new or existing group"
     }
 
 }

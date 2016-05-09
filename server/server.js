@@ -301,11 +301,6 @@ Meteor.publish("LanguageTags", function() {
     return LanguageTags.find({});
 });
 
-Meteor.publish("CommunityTags", function() {
-    return CommunityTags.find({});
-});
-
-
 var add_category = function(icon, catText) {
     var mainCat = {
         children_id: [],
@@ -417,28 +412,18 @@ Meteor.startup(function(){
     }
 
     // add something in database for community test
-    if (!CommunityTags.findOne()){
-        console.log("Default CommunityTags created.");
-        CommunityTags.insert({
-            name: "StudentInTrondheim"
-        }); 
-        CommunityTags.insert({
-            name: "StartUp"
-        })
-    }
 
     if (!Groups.findOne()){
         console.log("Default Group made.")
         Groups.insert({
-            name: "Trondheim party people",
-            description: "party party party",
+            name: "StudentInTrondheim",
+            // description: "party party party",
             members: [],
-            children_id: [],
             content_ids: []
-        })
+        });
     }
 
-    if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
+    if(!Meteor.users.findOne()){
         console.log("Create default user");
 
         var defUser = Meteor.settings.defaultUser;
@@ -447,8 +432,8 @@ Meteor.startup(function(){
             last_name: "Pong",
             organization: "CC AS",
             languages: languageIds,
-            home_adress: "Trondheim",
-            preferred_language: "en"
+            preferred_language: "en",
+            groups: []
         }
         userid = Meteor.users.insert({
             username: defUser.username,

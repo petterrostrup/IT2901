@@ -1,7 +1,6 @@
 <template name="content">
 
     <div class="wrapper" style="margin-bottom: 50px">
-
         <ol class="breadcrumb">
             {{load_content}}
             {{#each get_parent_url}}
@@ -17,6 +16,14 @@
         </ol>
 
         </div>
+        <div class="alert alert-success" id="logSuccess" style="display: none;">
+            <div>
+                {{_ "group.group_added"}}
+            </div>
+        </div>
+        <div class="alert alert-danger" id="logError" style="display: none;">
+            <strong>Ooops!</strong> <div id="logErrorText"></div>
+        </div>
 
         <div class="row">
             <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
@@ -30,6 +37,17 @@
                 <a href="{{pathFor 'editContent' _id=get_id}}" class="btn btn-default">
                     {{_ "content.edit"}}
                 </a>
+                {{#if isOwner}}
+                    <button class="btn btn-danger" id="del_content">
+                        {{_ "content.delete"}}
+                    </button>
+                {{/if}}
+                <button class="btn btn-default" id="open_groups" type="button" data-toggle="button">
+                    {{_ "group.add_group"}}
+                </button>
+                <div id="new_groups" style="display: none;">
+                    {{> inputAutocomplete autocomplete="off" settings=settingsCom id="autocomplete-input-Com" tabindex=5 class="form-control" placeholder=(_ 'group.content_text')}}
+                </div>
                 {{/if}}
             </div>
         </div>
@@ -48,13 +66,36 @@
         {{#markdown}}
 {{get_content.text}}
         {{/markdown}}
-
-
-    <div class="contentRating">
-        <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
-        <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
-        <p class="voteField">{{get_content.likesCounter}}</p>
+    <hr/>
+    <div>
+        {{_ "content.created_by"}} {{get_created_info}} 
+        {{timeSince get_content.timestamp}}
     </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="contentRating">
+                <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
+                <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
+                <p class="voteField">{{get_content.likesCounter}}</p>
+            </div>
+        </div>
+        {{#if get_content.groups}}
+        <div class="col-md-10">
+            <ul class="list-inline">
+                <li>
+                    {{_ "content.groups"}}:
+                </li>
+                {{#each get_content.groups}}
+                <li>
+                    <a href="{{pathFor 'group_page' _id=_id}}">{{name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/if}}
+    </div>
+    <hr/>
     <div class="comment-section">
         {{> commentsBox id=get_id}}
     </div>

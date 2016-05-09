@@ -1,0 +1,11 @@
+.groups {
+    position: absolute;
+    width: 700px;
+    top: 50%;
+    left: 50%;
+    margin: -15% 0 0 -350px;
+    border-left: solid lightgrey 1px;
+
+    border-bottom: solid lightgrey 1px;
+
+}

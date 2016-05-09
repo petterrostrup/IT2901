@@ -1,4 +1,11 @@
 
+var log_text = function(text, user) {
+	if (user) {
+		console.log(new Date().toLocaleString() + "@" + user.username + "\t\t" + text);
+	} else {
+		console.log(new Date().toLocaleString() + " (no user)" + "\t\t" + text);
+	}
+}
 
 Meteor.methods({
 
@@ -7,7 +14,7 @@ Meteor.methods({
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
 
-		console.log(user);
+		// console.log(user);
 		check(user, {
 			username: String,
 			email: String,
@@ -23,22 +30,18 @@ Meteor.methods({
 
 		// Checks if the username chosen is taken
 		if (!!Meteor.users.findOne({username: user.username})){
-			if (Meteor.settings.DEBUG)
-				console.log(user.username + " was taken.");
 			throw new Meteor.Error(400, "Username is taken");
 		}
 
 		// Checks if the email chosen is taken.
 		if (!!Meteor.users.findOne({email: user.email})){
-			if (Meteor.settings.DEBUG)
-				console.log(user.email + " was taken.");
 			throw new Meteor.Error(400, "Email was taken.");
 		}
 
 		user.createdContents = [];
 		user.roles = ["standard", "creator"];
 		user.profile.languages = [];
-
+		user.profile.groups = [];
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
 
@@ -46,76 +49,10 @@ Meteor.methods({
 			// Sets the password to the user Id
 			Accounts.setPassword(userId, password);
 			if (Meteor.settings.DEBUG) {
-				console.log("The user " + user.username + " was added.");
+				log_text("The user " + user.username + " was added.");
 			}
 		}
 	},
-
-	// Method for insert new content to the database.
-	// create_content: function(post) {
-
-	// 	// Simple check that the input are valid
-	// 	check(post, Object);
-
-	// 	// If you are not logged in, you are not allowed to create content
-	// 	if (!Meteor.userId()) {
-	// 		throw new Meteor.Error(530, "You are not logged in.");
-	// 	}
-	// 	post.tags = [];
-	// 	// Adds the id of the user in the post
-	// 	post.createdById = Meteor.userId();
-
-	// 	// Category id
-	// 	if (!post.category_id){
-	// 		throw new Meteor.Error(400, "Missing category id.");
-	// 	}
-
-	// 	var category = Category.findOne({_id: post.category_id});
-	// 	if (!category) {
-	// 		throw new Meteor.Error(400, "Missing valid category id.");
-	// 	}
-
-	// 	// Community id
-	// 	if (!post.community){
-	// 		throw new Meteor.Error(400, "Missing community.");
-	// 	}
-
-	// 	var community_id = CommunityTags.findOne({name: post.community})._id;
-	// 	if (!community_id) {
-	// 		throw new Meteor.Error(400, "Missing valid community id.");
-	// 	}
-	// 	post.community_id = community_id;
-
-	// 	// Language id
-	// 	// if (!post.language){
-	// 	// 	throw new Meteor.Error(400, "Missing language.");
-	// 	// }
-
-	// 	// var language_id = LanguageTags.findOne({name: post.language})._id;
-	// 	// if (!language_id) {
-	// 	// 	throw new Meteor.Error(400, "Missing valid language id.");
-	// 	// }
-	// 	// post.language_id = language_id;
-
-	// 	post.contents = [];
-
-	// 	var content_id = Content.insert(post);
-	// 	if (!content_id) {
-	// 		throw new Meteor.Error(400, "Content not added!");
-	// 	}
-	// 	category.content_ids.push(content_id);
-
-	// 	Category.update({_id: category._id}, {"$set": {
-	// 		content_ids: category.content_ids
-	// 	}});
-
-	// 	// Check if a user can insert a post in Content.
-	// 	// If not, it will throw an error.
-	// 	// Commenting this out so people not will hate me
-	// 	// Security.can(this.userId).insert(post).for(Content).throw(); 
-		
-	// 	return content_id;
-	// },
 
 	submit_content: function(main, content) {
 
@@ -124,7 +61,7 @@ Meteor.methods({
 		}
 		check(main, {
 			category_id: String,
-			community: Array
+			groups: Array
 		});
 
 		check(content, {
@@ -133,6 +70,8 @@ Meteor.methods({
 			language: String,
 			text: String
 		});
+
+		// console.log(main);
 
 		main.tags = [];
 		main.contents = [];
@@ -163,15 +102,26 @@ Meteor.methods({
 		if (!language_id) {
 			throw new Meteor.Error(400, "Missing valid language.");
 		}
-
-		main.community_id = [];
-		if (main.community.length){
-			for (var a in main.community) {
-				var community_id = CommunityTags.findOne({name: main.community[a]});
-				if (community_id){
-					main.community_id.push(community_id._id);
+		var groups = [];
+		// main.groups = [];
+		if (main.groups.length){
+			for (var a in main.groups) {
+				if (!main.groups[a])
+					continue;
+				var group = Groups.findOne({name: main.groups[a]});
+				if (!group){
+					group = Groups.insert({
+						name: main.groups[a],
+						members: [],
+						content_ids: []
+					});
+					group = {
+						name: main.groups[a],
+						_id: group
+					}
 				}
-				
+				// main.groups.push(group.name);
+				groups.push(group);
 			}
 		}
 		// if (!community_id) {
@@ -181,6 +131,15 @@ Meteor.methods({
 		var content_id = Content.insert(main);
 		if (!content_id) {
 			throw new Meteor.Error(400, "Content not added!");
+		}
+		if (groups.length) {
+			for (var g in groups) {
+				if (!groups[g])
+					continue;
+				var hade = Groups.update({_id: groups[g]._id}, {
+					$push: {content_ids: content_id}
+				});
+			}
 		}
 		category.content_ids.push(content_id);
 
@@ -197,6 +156,14 @@ Meteor.methods({
 		}, {
 			$push: {"contents": text_id}
 		});
+
+		Meteor.users.update({_id: Meteor.userId()}, {
+			$push: {"createdContents": text_id}
+		});
+
+		if (Meteor.settings.DEBUG){
+			log_text("New content submited with id='" + content_id + "'", Meteor.user());
+		}
 		
 		return content_id;
 	},
@@ -246,6 +213,10 @@ Meteor.methods({
 			},{
 				$set: content
 			});
+		}
+
+		if (Meteor.settings.DEBUG){
+			log_text("Content translated with id='" + content_id + "'", Meteor.user());
 		}
 		
 		return content.metacontent;
@@ -301,6 +272,9 @@ Meteor.methods({
 			}, {
 				$push: {categories: id}
 			});
+		}
+		if (Meteor.settings.DEBUG){
+			log_text("Category translated with id='" + category_father._id + "'", Meteor.user());
 		}
 	},
 
@@ -372,6 +346,10 @@ Meteor.methods({
 			categories: cat.categories
 		}});
 
+		if (Meteor.settings.DEBUG){
+			log_text("New category added with id='" + category_id + "'", Meteor.user());
+		}
+
 		return category_id;		
 	},
 
@@ -389,8 +367,13 @@ Meteor.methods({
 		userInfo.languages = Meteor.user().profile.languages;
 		userInfo.organization = "Company AS";
 		userInfo.preferred_language = Meteor.user().profile.preferred_language;
+		userInfo.groups = Meteor.user().profile.groups;
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
+
+		if (Meteor.settings.DEBUG){
+			log_text("Updated profile", Meteor.user());
+		}
 	},
 
 	tag_content: function(content, tagID) {
@@ -426,6 +409,9 @@ Meteor.methods({
 		if (index > -1) {
 			languages.splice(index, 1);
 			Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+			if (Meteor.settings.DEBUG){
+			log_text("Removed language from profile", Meteor.user());
+		}
 		}else {
 			throw new Meteor.Error(400, "Language not found.");
 		}
@@ -448,6 +434,9 @@ Meteor.methods({
 		}
 		languages.push(languageId);
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+		if (Meteor.settings.DEBUG){
+			log_text("Added language to profile", Meteor.user());
+		}
 	},
 
 
@@ -476,6 +465,10 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Language already exist.");
 
 		LanguageTags.insert(language);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The language " + language.english_name + " was added to the system", Meteor.user());
+		}
 	},
 
 
@@ -491,6 +484,10 @@ Meteor.methods({
 		var is_deleted = LanguageTags.remove({_id: lang_id});
 		if (!is_deleted)
 			throw new Meteor.Error(404, "Language does not exist");
+
+		if (Meteor.settings.DEBUG){
+			log_text("Language deleted", Meteor.user());
+		}
 	},
 
 
@@ -531,6 +528,10 @@ Meteor.methods({
 
 		Roles.addUsersToRoles(obj.user_id, obj.role);
 
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " got " + obj.role + " priveliges.", Meteor.user());
+		}
+
 	},
 
 
@@ -555,6 +556,10 @@ Meteor.methods({
 			throw new Meteor.Error(430, "You cannot remove admin from your self.");
 
 		Roles.removeUsersFromRoles(obj.user_id, obj.role);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " was removed from " + obj.role, Meteor.user());
+		}
 	},
 
 
@@ -571,34 +576,113 @@ Meteor.methods({
 			$set: {"profile.preferred_language": lang}
 		});
 	},
-	add_group: function(group) {
-		check(group, Object);
+
+	add_group_content: function(obj) {
+		check(obj, {
+			content_id: String,
+			name: String 
+		});
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
-		var parent = undefined;
-		if (group.parent_id) {
-			parent = Groups.findOne({_id: group.parent_id});
-			if (!parent)
-				throw new Meteor.Error(400, "Parent id not found.");
-		}
-		else
-			throw new Meteor.Error(400, "Parent is required.");
 
-		// If the name of the group already exists, you are not allowed to create one.
-		if (Groups.findOne({name: group.name}))
-			throw new Meteor.Error(422, "The name already exists.");
-		group.children_id = [];
-		group.children = [];
-		group.content_ids = [];
-		var id = Category.insert(group);
-		if (parent) {
-			parent.children_id.push(id);
-			Category.update({_id: parent._id}, {$set: {
-				children_id: parent.children_id
-			}});
+		var content = Content.findOne({_id: obj.content_id});
+		if (!content) {
+			throw new Meteor.Error(404, "Did not find content.");
 		}
+
+		var group = Groups.findOne({name: obj.name});
+		if (!group) {
+			throw new Meteor.Error(404, "Did not find group.");
+		}
+
+		if (group.content_ids.indexOf(content._id) > -1) {
+			throw new Meteor.Error(400, "Content already in group.");
+		}
+
+		Content.update({_id: obj.content_id}, {
+			$push: {groups: obj.name}
+		});
+
+		Groups.update({_id: group._id}, {
+			$push: {content_ids: content._id}
+		});
+	},
+
+	delete_content: function(content_id) {
+
+		check(content_id, String);
+
+		var user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		var content = Content.findOne({
+			_id: content_id
+		});
+		if (!content) {
+			throw new Meteor.Error(404, "Did not find content.");
+		}
+
+		if (content.createdById !== user._id) {
+			throw new Meteor.Error(400, "You cannot delete this content.");
+		}
+
+		Meteor.users.update({_id: user._id}, {
+			$pull: {createdContents: content._id}
+		});
+
+		Category.update({_id: content.category_id}, {
+			$pull: {content_ids: content._id}
+		});
+
+		ContentText.remove({
+			metacontent: content._id
+		}, {
+			justOne: false
+		});
+
+		for (var a in content.groups) {
+			var name = content.groups[a];
+			Groups.update({
+				name: name
+			}, {
+				$pull: {content_ids: content._id}
+			});
+		}
+
+		Content.remove({_id: content._id});
+	},
+
+	add_group: function(group) {
+		check(group, {
+			name: String
+			// description: String
+		});
+
+		if (group.name.trim().split(" ").length > 1) {
+			throw new Meteor.Error(400, "String cannot contain whitespace.");
+		}
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+
+		if (Groups.findOne({name: group.name})) {
+			throw new Meteor.Error(400, "Group already exists");
+		}
+
+		group.members = [];
+		group.content_ids = [];
+		var id = Groups.insert(group);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The group " + group.name + " was added.", Meteor.user());
+		}
+
+		return id;
 	},
 
 	vote: function(content_id, vote){
@@ -662,5 +746,54 @@ Meteor.methods({
 		});
 
 		return content.upVote.length - content.downVote.length;
+	},
+
+	toggle_group: function(obj){
+
+		check(obj, {
+			group_id: String,
+			join: Boolean
+		});
+		var join = obj.join;
+		var group_id = obj.group_id;
+
+		if (!Meteor.userId()){
+			throw new Meteor.Error(530, "You are not logged in")
+		}
+
+		var group = Groups.findOne({
+			_id: group_id
+		});
+
+		if (!group) {
+			throw new Meteor.Error(404, "Group not found.");
+		}
+
+		if (join) {
+			if (group.members.indexOf(Meteor.user().username) > -1) {
+				throw new Meteor.Error(400, "Already in group.");
+			}
+			Groups.update({
+				_id: group_id
+			}, {
+				$push: {members: Meteor.user().username}
+			});
+			Meteor.users.update({
+				_id: Meteor.userId()
+			}, {
+				$push: {"profile.groups": group_id}
+			});
+		} else {
+			Groups.update({
+				_id: group_id
+			}, {
+				$pull: {members: Meteor.user().username}
+			});
+			Meteor.users.update({
+				_id: Meteor.userId()
+			}, {
+				$pull: {"profile.groups": group_id}
+			});
+		}
 	}
 });

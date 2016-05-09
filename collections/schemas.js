@@ -30,6 +30,12 @@ Schema.UserProfile = new SimpleSchema({
     	type: String,
     	label: "Preferred language",
     	optional: false
+    },
+    groups: {
+    	type: [String],
+    	label: "Groups",
+    	optional: false,
+    	regEx: SimpleSchema.RegEx.Id
     }
 });
 
@@ -108,14 +114,9 @@ Schema.Content = new SimpleSchema({
   		regEx: SimpleSchema.RegEx.Id,
   		optional: false
   	},
-  	community_id: {
+  	groups: {
   		type: [String],
   		//check if the value is id
-  		regEx: SimpleSchema.RegEx.Id,
-  		optional: false
-  	},
-  	tags: {
-  		type: [Schema.Tags],
   		optional: false
   	},
   	contents: {
@@ -124,19 +125,6 @@ Schema.Content = new SimpleSchema({
 		optional: false
   	}
 
-});
-
-Schema.Tag = new SimpleSchema({
-	name: {
-		type: String,
-		optional: false,
-		max: 20
-	},
-	taggedContent: {
-		type:[String],
-  		regEx: SimpleSchema.RegEx.Id,
-  		optional: true
-	}
 });
 
 Schema.Category = new SimpleSchema({
@@ -281,22 +269,12 @@ Schema.Groups = new SimpleSchema({
 		type: String,
 		optional: false
 	},
-	description: {
-		type: String,
-		optional: false
-	},
+	// description: {
+	// 	type: String,
+	// 	optional: false
+	// },
 	members: {
 		type: [String],
-		optional: false
-	},
-	parent_id: {
-		type: String,
-		regEx: SimpleSchema.RegEx.Id,
-		optional: true
-	},
-	children_id: {
-		type: [String],
-		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
 	content_ids: {

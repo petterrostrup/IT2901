@@ -1,5 +1,42 @@
 
 Template.content.helpers({
+	get_created_info: function() {
+		var content = Content.findOne({
+			_id: Router.current().params._id
+		});
+		return content.createdByUsername;
+	},
+
+	isOwner: function() {
+		var user = Meteor.user();
+		if (!user)
+			return false;
+		var content = Content.findOne({
+			_id: Router.current().params._id
+		});
+		return user.username === content.createdByUsername;
+	},
+
+	timeSince: function(time) {
+		return time.toISOString().slice(0,10);
+	},
+
+	settingsCom: function() {
+	    return {
+	      position: Session.get("position"),
+	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
+	      rules: [
+	        {
+	          token: '',
+	          collection: Groups,  // Mongo.Collection object means client-side collection
+	          field: 'name',
+	          // set to true to search anywhere in the field, which cannot use an index.
+	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
+	          template: Template.clientCollectionPill
+	        }
+	      ]
+	    }
+	},
 
 	/*	Gets the current content for the user. 
 	* 	The content stored in session is markdown
@@ -36,6 +73,13 @@ Template.content.helpers({
 		var default_language = LanguageTags.findOne({
 			short_form: Session.get("current_language")
 		});
+		var groups = [];
+		for (var a in content.groups) {
+			var group = Groups.findOne({name: content.groups[a]});
+			if (group) {
+				groups.push(group);
+			}
+		}
 		//Checks if the there is a content with the lanugage the user is using currently. 
 		if (default_language) {
 			var text_default = ContentText.findOne({
@@ -49,7 +93,7 @@ Template.content.helpers({
 				changeVoteColor(text_default);
 				var likesCounter = text_default.upVote.length - text_default.downVote.length;
 				text_default.likesCounter = likesCounter;
-
+				text_default.groups = groups;
 				Session.set("content", text_default);
 				Session.set("content_language", default_language.name);
 				return ;
@@ -73,7 +117,7 @@ Template.content.helpers({
 					changeVoteColor(content_1);
 					var likesCounter = content_1.upVote.length - content_1.downVote.length;
 					content_1.likesCounter = likesCounter;
-
+					content_1.groups = groups;
 					Session.set("content", content_1);
 					Session.set("content_language", lang.name);
 					return;
@@ -91,6 +135,7 @@ Template.content.helpers({
 			var likesCounter = foo.upVote.length - foo.downVote.length;
 			foo.likesCounter = likesCounter;
 		}
+		foo.groups = groups;
 
 		Session.set("content", foo);
 		Session.set("content_language", foo.language);
@@ -128,8 +173,86 @@ var changeVoteColor = function(contentText){
 
 };
 
+var logSuc = function() {
+	$("#logSuccess").show();
+	setTimeout(function() {
+		$("#logSuccess").hide();
+	}, 4000);
+}
+
+var logErr = function(error) {
+	$("#logError").show();
+	$("#logErrorText").text(error);
+	setTimeout(function() {
+		$("#logError").hide();
+	}, 4000);
+}
+
 
 Template.content.events({
+	"click #del_content": function(event, template) {
+		Meteor.call("delete_content", Router.current().params._id, function(error) {
+			if (error) {
+				logErr(error);
+			}
+			else {
+				Router.go("home");
+			}
+		});
+	},
+	"keyup #autocomplete-input-Com": function(event, template, doc) {
+		if (event.keyCode == 13) {
+			var text = template.$("#autocomplete-input-Com").val();
+			var group = Groups.findOne({name: text});
+			if (group) {
+				Meteor.call("add_group_content", {
+					content_id: Router.current().params._id,
+					name: text
+				}, function(error, result) {
+					if (error){
+						console.log(error);
+						logErr(error);
+					}
+					else {
+						logSuc();
+					}
+				});
+			} else {
+				Meteor.call("add_group", {name: text}, function(error, result) {
+					if (error){
+						logErr(error);
+						console.log(error);
+					}
+					else {
+						Meteor.call("add_group_content", {
+							content_id: Router.current().params._id,
+							name: text
+						}, function(error, result) {
+							if (error) {
+								console.log(error);
+								logErr(error);
+							}
+							else {
+								logSuc();
+							}
+						});
+					}
+				});
+			}
+			template.$("#autocomplete-input-Com").val("");
+			template.$("#new_groups").hide();
+			template.$("#open_groups").removeClass("active");
+		}
+	},
+	"click #open_groups": function(event, template) {
+		// console.log("LKJLKSFJLK");
+		if (!template.$("#open_groups").hasClass('active')) {
+			template.$("#new_groups").show();
+			template.$("#autocomplete-input-Com").focus();
+		}else {
+			template.$("#new_groups").hide();
+		}
+	},
 	//changes the language for the content. 
     "click .langButton": function(event, template){
     	var id = event.target.id;
@@ -139,6 +262,15 @@ Template.content.events({
     	// console.log(text);
 
     	text.likesCounter = text.upVote.length - text.downVote.length;
+    	var content = Content.findOne({_id: Router.current().params._id});
+    	var groups = [];
+		for (var a in content.groups) {
+			var group = Groups.findOne({name: content.groups[a]});
+			if (group) {
+				groups.push(group);
+			}
+		}
+		text.groups = groups;
 
     	Session.set("content", text);
     	Session.set("content_language", name);
@@ -181,9 +313,6 @@ Template.content.events({
 		});
 	}
 });
-
-
-
 
 Comments.ui.config({
 	template: 'semantic-ui'
