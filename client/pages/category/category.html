@@ -18,90 +18,103 @@
                 </div>
             {{/if}}
         </ol>
-
-    <!--     {{#with data}}
-        <table class="table">
-            <tr>
-                <td><h2>{{name}}</h2></td>
-            </tr>
-            <tr>
-                <td><p>{{description}}</p></td>
-            </tr>
-        </table>
-        {{/with}} -->
-
-        <!-- {{#if currentUser}}
-        <a href="{{pathFor 'create_content'}}/{{data._id}}" style="font-family: FontAwesome" class="btn btn-default">
-            &#xf067; {{_ "mainContent.create_content"}}
-        </a>
-        {{/if}} -->
-
         {{#if currentUser}}
         <div class="alert alert-danger" id="logError" style="display: none;">
             <div id="logErrorText"></div>
+        </div>
+        <div class="alert alert-success" id="logSuccess" style="display: none;">
+            <div>{{_ "category.translated"}}</div>
         </div>
         <div style="display: inline-block" class="col-lg-12">
             <div  class="pull-right" style="display: inline-block;">
                 <a href="{{pathFor 'create_content'}}/{{_id}}" style="font-family: FontAwesome" class="btn btn-default">
                     &#xf067; {{_ "mainContent.create_content"}}
                 </a>
-                <!-- TODO -->
-                <button id="transbtn" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.translate"}}</button>
-                <form id="translate_category" style="display: none">
-                    <table>
-                        <tr>
-                            <th>{{_ "category.translate"}}</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>{{_ "category.name"}}:</td>
-                            <td><input type="text" id="name_trans"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{_ "category.description"}}:</td>
-                            <td><input type="text" id="desc_trans"/></td>
-                        </tr>
-                        <tr>
-                            <!-- make it be able to search language like createContent -->
-                            <td>{{_ "category.language"}}:</td>
-                            <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang-trans" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
-                        </tr>
-                        <tr>
-                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.translate'}}" />
-                        </tr>
-                    </table>
-                </form>
-
-                <button id="subCatButton" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.new_sub"}}</button>
-                <form id="new_subcategory" style="display: none">
-                    <table>
-                        <tr>
-                            <th>{{_ "category.new_sub_text"}}</th>
-                            <th></th>
-                        </tr>
-                        <tr>
-                            <td>{{_ "category.name"}}:</td>
-                            <td><input type="text" id="name"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{_ "category.description"}}:</td>
-                            <td><input type="text" id="description"/></td>
-                        </tr>
-                        <tr>
-                            <!-- make it be able to search language like createContent -->
-                            <td>{{_ "category.language"}}:</td>
-                            <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
-                        </tr>
-                        <tr>
-                            <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.new_sub'}}" />
-                        </tr>
-                    </table>
-                </form>
+                <button id="transbtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_stuff" style="font-family: FontAwesome;">
+                    &#xf150; {{_ "category.translate"}}
+                </button>
+                <div id="translate_stuff" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <form id="translate_category">
+                        <table>
+                            <tr>
+                                <th>{{_ "category.translate"}}</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>{{_ "category.name"}}:</td>
+                                <td><input type="text" id="name_trans"/></td>
+                            </tr>
+                            <tr>
+                                <td>{{_ "category.description"}}:</td>
+                                <td><input type="text" id="desc_trans"/></td>
+                            </tr>
+                            <tr>
+                                <!-- make it be able to search language like createContent -->
+                                <td>{{_ "category.language"}}:</td>
+                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang-trans" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.translate'}}" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-default" data-dismiss="modal">
+                                        {{_ 'category.cancel'}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+                <button id="subCatButton" type="button" class="btn btn-default" data-toggle="modal" data-target="#new_sub_cat" style="font-family: FontAwesome;">
+                    &#xf150; {{_ "category.new_sub"}}
+                </button>
+                <div id="new_sub_cat" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <form id="new_subcategory">
+                        <table>
+                            <tr>
+                                <th>{{_ "category.new_sub_text"}}</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>{{_ "category.name"}}:</td>
+                                <td><input type="text" id="name"/></td>
+                            </tr>
+                            <tr>
+                                <td>{{_ "category.description"}}:</td>
+                                <td><input type="text" id="description"/></td>
+                            </tr>
+                            <tr>
+                                <!-- make it be able to search language like createContent -->
+                                <td>{{_ "category.language"}}:</td>
+                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.new_sub'}}" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-default cancel" data-dismiss="modal">
+                                        {{_ 'category.cancel'}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
         {{/if}}
 
-        <div class="sidebar nav navbar" >
+        <!--<div class="sidebar nav navbar" >
             <table style="margin-top: 25px" class="table">
                 <tr><th>Subcategories</th><th></th></tr>
                 {{#each get_children}}
@@ -114,7 +127,7 @@
                 {{/each}}
             </table>
         </div>
-
+-->
         {{#with load_category}}
         <table style="float: left; display: inline-block">
             <tr>
@@ -155,6 +168,7 @@
             {{/each}}
             </tbody>
         </table>
+        <!--
         {{#if get_children}}
         <table style="margin-top: 25px" class="table">
             <tr><th>Subcategories</th><th></th></tr>
@@ -168,6 +182,7 @@
             {{/each}}
         </table>
         {{/if}}
+        -->
     </div>
 </template>
 
@@ -183,4 +198,5 @@
 <template name="serverNoMatchCategory">
     <span class="text-danger">Nothing found on the server for <b>{{getFilter}}</b>!</span>
 </template>
+
 <!-- End of language search -->

@@ -13,13 +13,24 @@
 
 
                 <div class="alert alert-success" id="createSuccess" style="display: none" role="alert">Content is created</div>
+                <div class="alert alert-danger" id="logError" style="display: none;">
+                    <strong>Ooops!</strong>
+                    <div>
+                        {{_ "createContent.error"}}    
+                    </div>
+                </div>
+                <div class="alert alert-danger" id="logError2" style="display: none;">
+                    <strong>Ooops!</strong>
+                    <div id="logErrorText">
+                    </div>
+                </div>
 
                 <div class="row">
                   <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="title">{{_ "createContent.Title"}}</label>
                             <div class="col-md-4">
-                                <input tabindex=1 id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" required="" autofocus="autofocus">
+                                <input tabindex=1 id="title" name="title" type="text" placeholder="{{_ 'typeHere.TypeHere'}}" class="form-control input-md" autofocus="autofocus" autocomplete="off" required="true">
                             </div>
                         </div>
 
@@ -27,7 +38,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="description">{{_ "createContent.Description"}}</label>
                             <div class="col-md-4">
-                                <textarea tabindex=2 type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}"></textarea>
+                                <textarea tabindex=2 type="text" required="true" id="description" class="form-control input-md" placeholder="{{_ 'typeHere.TypeHere'}}" autocomplete="off"></textarea>
                             </div>
                         </div>
 
@@ -39,26 +50,28 @@
 
                         {{else}}
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose categories" data-content="Write a # before the categories you want your content under. #Mat #Økonomi f.eks" class="glyphicon glyphicon-info-sign"></a>
+                                <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label>
+                                <!-- <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" data-trigger="hover" data-content="{{_ "createContent.categoryHelp"}}" class="glyphicon glyphicon-info-sign"></a> -->
                                 <div class="col-md-4">
-                                    {{> inputAutocomplete autocomplete="off" settings=settingsCat id="autocomplete-input-Cat" tabindex=3 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
+                                    {{> inputAutocomplete autocomplete="off" settings=settingsCat id="autocomplete-input-Cat" tabindex=3 class="form-control" placeholder=(_ 'typeHere.category') required="true"}}
                                 </div>
                             </div>
                         {{/if}}
 
                         <!-- Select Language -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
+                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label>
+<!--                             <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" data-trigger="hover" data-content="{{_ "createContent.languageHelp"}}" class="glyphicon glyphicon-info-sign"></a> -->
                             <div class="col-md-4">
-                                {{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" tabindex=4 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
+                                {{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" tabindex=4 class="form-control" placeholder=(_ 'typeHere.language') required="true"}}
                             </div>
                         </div>
 
                         <!-- Select Community -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose groups" data-content="Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g." class="glyphicon glyphicon-info-sign"></a>
+                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" data-trigger="hover" data-content="{{_ "createContent.communityHelp"}}" class="glyphicon glyphicon-info-sign"></a>
                             <div class="col-md-4">
-                                {{> inputAutocomplete autocomplete="off" settings=settingsCom id="autocomplete-input-Com" tabindex=5 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
+                                {{> inputAutocomplete autocomplete="off" settings=settingsCom id="autocomplete-input-Com" tabindex=5 class="form-control" placeholder=(_ 'typeHere.startWith')}}
                             </div>
                         </div>
                     </div>
@@ -82,12 +95,12 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="singlebutton"></label>
                             <div class="col-md-4">
-                                <input tabindex=7 type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; Create Content" >
+                                <input tabindex=7 type="submit" name="content-submit" id="content-submit" class="btn btn-default" style="font-family: FontAwesome;"  value="&#xf067; {{_ "createContent.create"}}" >
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-default" onclick="history.back()"><i class="fa fa-backward" aria-hidden="true"> Back </i></button>
+                <button class="btn btn-sm btn-default" onclick="history.back()"><i class="fa fa-backward" aria-hidden="true"> {{_ "createContent.back"}} </i></button>
             </fieldset>
             
             <!-- <input type="submit" id="save_btn"/> -->

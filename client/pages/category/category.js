@@ -242,29 +242,12 @@ Template.category.helpers({
 
 Template.category.events({
 	//Listens to a click. When clicked it will show the "Create new sub category"-form
-	"click #subCatButton":function(event, template){
-		if (template.$("#new_subcategory").hasClass('active')){
-			template.$("#new_subcategory").removeClass('active');
-			template.$("#new_subcategory").hide();
-			// template.$("#subCatButton").html("&#xf150; Create Subcategory");
-		}
-		else{
-			template.$("#new_subcategory").addClass('active');
-			template.$("#new_subcategory").show();
-			// template.$("#subCatButton").html("&#xf151; Cancel");
-		}
+	"click #subCatButton":function(event, template) {
+
 	},
+
 	"click #transbtn": function(event, template) {
-		if (template.$("#translate_category").hasClass('active')){
-			template.$("#translate_category").removeClass('active');
-			template.$("#translate_category").hide();
-			// template.$("#transbtn").html("&#xf150; Create Subcategory");
-		}
-		else{
-			template.$("#translate_category").addClass('active');
-			template.$("#translate_category").show();
-			// template.$("#transbtn").html("&#xf151; Cancel");
-		}
+
 	},
 	// Listens to click. When clicked it will create a new sub category 
     "submit #new_subcategory": function(event, template) {
@@ -280,6 +263,8 @@ Template.category.events({
     		parent_id: Router.current().params._id,
     	}
     	Meteor.call("add_category", cat, langs[0], function(error, result) {
+    		$(".modal-backdrop").remove();
+    		$('.modal.in').modal('hide');
     		if (error)
     			console.log(error);
     		else{
@@ -287,13 +272,11 @@ Template.category.events({
     			event.target.name.value = "";
     			event.target.description.value = "";
     			template.$("#autocomplete-input-Lang").val("");
-    			template.$("#new_subcategory").removeClass('active');
-				template.$("#new_subcategory").hide();
-				template.$("#subCatButton").html("&#xf150; Create Subcategory");
     		}
     		if (result) {
     			Router.go("show_category", {_id: result});
     		}
+
     	});
     },
 
@@ -313,6 +296,8 @@ Template.category.events({
     		metacategory: Router.current().params._id
     	}
     	Meteor.call("translate_category", text, function(error, result) {
+    		$(".modal-backdrop").remove();
+          	$('.modal.in').modal('hide');
     		if (error) {
     			console.log(error);
     			template.$("#logErrorText").text(error);
@@ -322,11 +307,13 @@ Template.category.events({
           		}, 5000);
     		}
     		else {
-    			template.$("#logErrorText").text("Category translated.");
-          		template.$("#logError").show();
+          		template.$("#logSuccess").show();
           		setTimeout(function() {
-          			template.$("#logError").hide();
+          			template.$("#logSuccess").hide();
           		}, 5000);
+          		event.target.name_trans.value = "";
+    			event.target.desc_trans.value = "";
+    			template.$("#autocomplete-input-Lang-trans").val("");
     		}
     	});
     },

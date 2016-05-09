@@ -1,0 +1,149 @@
+{
+    "header": {
+        "Home": "الصفحة الرئيسية",
+        "BrowseContent": "تصفح المحتوى",
+        "CreateContent": "إنشاء المحتوى",
+        "LogOut": "خروج",
+        "Login": "تسجيل الدخول / تسجيل",
+        "Admin": "مشرف",
+        "toggle_lang": "تظهر فقط ألسنتكم"
+    },
+    "mainContent": {
+        "create_content": "إنشاء المحتوى",
+        "title": "عنوان",
+        "description": "وصف",
+        "created": "التي أنشأتها",
+        "date": "تم إنشاؤها على",
+        "rating": "تصنيف",
+        "ago": "منذ",
+        "search": "البحث عن المحتوى هنا",
+        "settings": "إعدادات"
+    },
+    "profile": {
+        "Username": "اسم المستخدم",
+        "FirstName": "الاسم الاول",
+        "LastName": "الكنية",
+        "Organization": "منظمة",
+        "Language": "لغة",
+        "Joined": "انضم",
+        "Email": "البريد الإلكتروني",
+        "UserPrivileges": "امتيازات المستخدم",
+        "CreatedContent": "المحتوى الذي تم إنشاؤه",
+        "edit_profile": "تعديل الملف الشخصي",
+        "edit_lang": "تحرير اللغات",
+        "show_activity": "مشاهدة آخر",
+        "change_pass": "تغيير كلمة السر",
+        "old_pass": "كلمة المرور القديمة",
+        "new_pass": "كلمة السر الجديدة",
+        "retype": "أعد كتابة كلمة السر الجديدة",
+        "no_match": "حدث شيء خطأ",
+        "welcome": "أهلا بك"
+    },
+    "createContent": {
+        "CreateContent": "إنشاء المحتوى",
+        "Title": "عنوان",
+        "Description": "وصف",
+        "Content": "محتوى",
+        "Community": "مجتمع",
+        "Category": "فئة",
+        "Language": "لغة",
+        "cancel": "إلغاء",
+        "translate_from": "الترجمة من",
+        "edit_lang": "لغة",
+        "toggle_markdown": "تخفيض السعر تبديل",
+        "success": "يتم إنشاء المحتوى",
+        "categoryHelp": "Write a # before the categories you want your content under. #Mat #Økonomi e.g.",
+        "languageHelp": "Write a # before the language of the content. #Norwegian e.g.",
+        "communityHelp": "Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g.",
+        "create": "إنشاء المحتوى",
+        "back": "الى الخلف"
+    },
+    "submit": {
+        "Submit": "عرض"
+    },
+    "typeHere": {
+        "TypeHere": "أكتب هنا"
+    },
+    "admin": {
+        "menu": {
+            "add_language": "إضافة اللغة",
+            "rm_language": "إزالة لغة",
+            "show_users": "عرض جميع المستخدمين"
+        },
+        "add_language": {
+            "name": "اسم",
+            "short_name": "اسم قصير",
+            "english": "الاسم باللغة الانكليزية",
+            "lang_added": "تم إضافة اللغة."
+        },
+        "users": {
+            "username": "اسم المستخدم",
+            "email": "البريد الإلكتروني",
+            "roles": "الأدوار",
+            "delete": "مسح المستخدم",
+            "show": "مشاهدة المستخدم",
+            "back": "الى الخلف"
+        },
+        "delete_language": "حذف اللغة",
+        "delete_language_msg": "تم حذف اللغة",
+        "settings": "إعدادات",
+        "add": "إضافة اللغة"
+    },
+    "changeLanguage": {
+        "ChangeLanguage": "غير اللغة"
+    },
+    "settings": {
+        "header": "إعدادات",
+        "toggle_lang": "عرض المحتوى في اللغات الخاصة بك فقط.",
+        "back": "الى الخلف"
+
+    },
+    "content": {
+        "translate": "ترجمة المحتوى",
+        "edit": "تعديل المحتوى",
+        "save_changes": "حفظ التغيرات",
+        "submit_translation": "حفظ الترجمة"
+    },
+    "home": {
+        "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others",
+        "added": "وأضاف",
+        "ago": "منذ",
+        "newsfeed": "أخبار الأعلاف"
+    },
+    "error": {
+        "empty_category": "لم يكن لديك هذه الفئة أي محتوى حتى الان. إذا قمت بتسجيل الدخول يمكنك إضافة محتوى جديد لهذه الفئة."
+    },
+    "category": {
+        "new_sub": "إنشاء فئة فرعية",
+        "translate": "ترجمة الفئة",
+        "name": "اسم",
+        "description": "وصف",
+        "new_sub_text": "فرعية جديدة",
+        "language": "لغة"
+    },
+    "editLanguages": {
+        "title": "ألسنتكم",
+        "engName": "الاسم باللغة الانكليزية",
+        "name": "اسم",
+        "short": "نموذج قصير",
+        "delete": "حذف",
+        "add": "إضافة اللغة",
+        "back": "الى الخلف",
+        "type": "نوع لغة"
+    },
+    "editProfile": {
+        "info": "معلومات! جميع الحقول تحرير بحرية الآن. تعديل ما تريد واضغط على زر حفظ",
+        "first": "الاسم الاول",
+        "last": "الكنية",
+        "email": "البريد الإلكتروني",
+        "save": "حفظ التغيرات",
+        "back": "الى الخلف",
+        "success": "يتم حفظ التغييرات"
+    },
+    "activity": {
+        "title": "نشاطك",
+        "back": "الى الخلف"
+    }
+
+}
+
