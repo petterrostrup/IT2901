@@ -172,6 +172,14 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
+                    var category = CategoryText.find({
+                        metacategory: doc.contentObj[0].category_id
+                    }).fetch()
+                    doc.categoryName = category[0].name
+                    var group = GroupsText.find({
+                        metagroups: doc.contentObj[0].community_id
+                    }).fetch()
+                    doc.groupName = group[0].name
                 return doc
                 }
                 }).fetch()
@@ -209,6 +217,14 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
+                    var category = CategoryText.find({
+                        metacategory: doc.contentObj[0].category_id
+                    }).fetch()
+                    doc.categoryName = category[0].name
+                    var group = GroupsText.find({
+                        metagroups: doc.contentObj[0].community_id
+                    }).fetch()
+                    doc.groupName = group[0].name
                 return doc
                 }
                 }).fetch()
@@ -224,6 +240,16 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
             doc.contentObj = Content.find({
                 contents: { $in: [doc._id]}
             }).fetch();
+            var category = CategoryText.find({
+                metacategory: doc.contentObj[0].category_id
+            }).fetch()
+            doc.categoryName = category[0].name
+            var group = GroupsText.find({
+                metagroups: doc.contentObj[0].community_id
+            }).fetch()
+            doc.groupName = group[0].name
+            console.log("test test")
+            console.log(doc.groupName)
         return doc;
         }
         }).fetch()

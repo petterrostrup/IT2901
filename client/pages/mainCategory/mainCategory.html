@@ -45,7 +45,7 @@
             <i class="fa fa-search" aria-hidden="true"></i>
         </div>
         <div class="col-lg-10">
-            <input type="text" id="search-box" class="form-control" placeholder="Search for content here"/>
+            <input type="text" id="search-box" class="form-control" placeholder="Search for content here" autocomplete="off"/>
         </div>
     </div>
 </template>
@@ -113,6 +113,12 @@
         <br>
         Description: {{{description}}}
         <br>
+        Category: {{{categoryName}}}
+        <br>
+        Group: {{{groupName}}}
+        <br>
+       
+        
         {{#each contentObj}}
           {{_id}}
         {{/each}}

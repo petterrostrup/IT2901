@@ -1,6 +1,16 @@
 
 Template.content.helpers({
 
+	get_timestamp: function() {
+		var timestamp = Session.get("content").timestamp
+		return timestamp
+	},
+
+	get_createdByUsername: function() {
+		var id = Router.current().params._id;
+		return Content.find({_id: id}).fetch()[0].createdByUsername
+	},
+
 	/*	Gets the current content for the user. 
 	* 	The content stored in session is markdown
 	*/

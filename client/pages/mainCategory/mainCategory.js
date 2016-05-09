@@ -1,9 +1,9 @@
 // Search function
 var options = {
   keepHistory: 1000 * 60 * 5,
-  localSearch: true
+  localSearch: false
 };
-var fields = ['name', 'title', 'description', "_id", "icon"];
+var fields = ['name', 'title', 'description', "_id", "icon", "categoryName", "groupName"];
 
 PackageSearch = new SearchSource('categorySearch', fields, options);
 ContentSearch = new SearchSource('contentSearch', fields, options);
@@ -15,7 +15,6 @@ Template.searchResult.helpers({
       return categories;
   },
   getPackages: function() {
-  	// put if here for saperate two collections for two section search result, might need type for content or category
     return PackageSearch.getData({
       transform: function(matchText, regExp) {
         return matchText.replace(regExp, "<b>$&</b>")
@@ -32,9 +31,12 @@ Template.searchResult.helpers({
 
 Template.searchResultContent.helpers({
   getContents: function() {
-        // put if here for saperate two collections for two section search result, might need type for content or category
     return ContentSearch.getData({
       transform: function(matchText, regExp) {
+        console.log("transform")
+        console.log(matchText)
+        console.log(regExp)
+        console.log(matchText.replace(regExp, "<b>$&</b>"))
         return matchText.replace(regExp, "<b>$&</b>")
       },
       sort: {isoScore: -1}
