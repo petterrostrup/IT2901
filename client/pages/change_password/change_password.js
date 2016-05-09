@@ -14,9 +14,11 @@ Template.change_password.events({
 			if (error) {
 				template.$("#regErrorText").text("Password not changed.");
 				template.$("#regError").show();
+				template.$("#logSuccess").hide();
 			} else {
-				template.$("#regErrorText").text("Password changed.");
-				template.$("#regError").show();
+				template.$("#regSuccessText").text("Password changed.");
+				template.$("#logSuccess").show();
+				template.$("#regError").hide();
 			}
 			event.target.old_pass.value = "";
 			event.target.new_pass.value = "";

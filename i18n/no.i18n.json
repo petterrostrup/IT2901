@@ -99,6 +99,7 @@
         "submit_translation": "Lagre oversettingen"
     },
     "home": {
+        "description": "Dette er en side der alle kan dele sin kunnskap på en måte som kan hjelpe andre. Det kan være noe som enkelt som 'Jeg vet om et sted å få tak i god og billig mat' eller det kan være noe litt mer seriøst som hvordan å få seg en jobb. Så vær gjerne med å bruke din kunnskap for å hjelpe andre",
         "added": "Lagt til for",
         "ago": "siden",
         "newsfeed": "Nyhetsstrøm"
