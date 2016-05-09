@@ -1,89 +1,66 @@
 <template name="group">
     <div class="wrapper">
-        <ol class="breadcrumb">
-            {{#each get_parent_url}}
-                <li class="">
-                    <a class="" href="{{pathFor 'group'}}/{{_id}}"> {{name}} </a>
-                </li>
-            {{/each}}
-            {{#if get_children}}
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
-                    <ul class="dropdown-menu scrollable-menu" role="menu">
-                        {{#each get_children}}
-                            <li><a href="{{pathFor 'group'}}/{{_id}}">{{name}}</a></li>
-                        {{/each}}
-                    </ul>
-                </div>
+        {{loadIsMember}}
+        {{#with data}}
+        <div class="row">
+            <div class="col-md-8">
+                <h2>{{name}}</h2>
+            </div>
+            {{#if currentUser}}
+            <div class="col-md-4">
+                <button class="btn btn-default" id="toggleGroup">
+                    {{#if userIsMember}}
+                        {{_ "group.leave"}}
+                    {{else}}
+                        {{_ "group.join"}}
+                    {{/if}}
+                </button>
+            </div>
             {{/if}}
-        </ol>
-
-        <table class="table">
-            <tr>
-                <td><h2>{{data.name}}</h2></td>
-            </tr>
-            <tr>
-                <td><p>{{data.description}}</p></td>
-            </tr>
-        </table>
-        
-        {{#if userIsMember}}
-            <button class="btn btn-default" id="toogleGroup">Leave group</button>
-        {{else}}
-            <button class="btn btn-default" id="toggleGroup">Join group</button>
-        {{/if}}
-
-
-        <table class="table">
-            {{#each get_content}}
-                <tr class="contentRow">
-                    <td>
-                        <a href="{{pathFor 'show_content' _id=_id}}">
-                            {{title}}
-                        </a>
-                    </td>
-                    <td>
-                        {{description}}
-                    </td>
-                    <td>
-                        {{timeSince time}} 
-                    </td>
-                    <td>
-                        Rating
-                    </td>
-                </tr>
-            {{/each}}
-        </table>
-
-        <table style="margin-top: 25px" class="table">
-            <tr><th>Subgroups</th><th></th></tr>
-            {{#each get_children}}
-                <tr>
-                    <td>
-                        <a href="{{pathFor 'Group'}}/{{_id}}">{{name}}</a>
-                    </td>
-                    <td></td>
-                </tr>
-            {{/each}}
-        </table>
-        <form id="new_subgroup">
-            <table>
-                <tr>
-                    <th>New subgroup</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>Navn:</td>
-                    <td><input type="text" id="name"/></td>
-                </tr>
-                <tr>
-                    <td>Beskrivelse:</td>
-                    <td><input type="text" id="description"/></td>
-                </tr>
-                <tr>
-                    <input type="submit" class="btn btn-default" id="newSubGroup" style="font-family: FontAwesome" value="&#xf067; Add Subgroup" />
-                </tr>
-            </table>
-        </form>
+        </div>
+        {{/with}}
+        <div class="row">
+            <div class="col-md-8">
+                <h3>{{_ "group.content"}}</h3>
+                <hr/>
+                <table class="table">
+                    <tr>
+                        <th>{{_ "mainContent.title"}}</th>
+                        <th>{{_ "mainContent.description"}}</th>
+                        <th>{{_ "mainContent.created"}}</th>
+                        <th>{{_ "mainContent.rating"}}</th>
+                    </tr>
+                    {{#each get_content}}
+                        <tr class="contentRow">
+                            <td>
+                                <a href="{{pathFor 'show_content' _id=_id}}">
+                                    {{title}}
+                                </a>
+                            </td>
+                            <td>
+                                {{description}}
+                            </td>
+                            <td>
+                                {{createdBy}} 
+                            </td>
+                            <td>
+                                {{rating}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3>{{_ "group.members"}}</h3>
+                <hr/>
+                <table class="table">
+                    {{#each get_members}}
+                        <tr>
+                            <td>{{this}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
     </div>
 </template>

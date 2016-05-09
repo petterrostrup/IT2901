@@ -4,7 +4,6 @@ Tag = new Mongo.Collection("tags");
 Category = new Mongo.Collection("categories");
 CategoryText = new Mongo.Collection("categoryText");
 LanguageTags = new Mongo.Collection("LanguageTags");
-CommunityTags = new Mongo.Collection("CommunityTags");
 //Groups can not be named Group
 Groups = new Mongo.Collection("groups");
 

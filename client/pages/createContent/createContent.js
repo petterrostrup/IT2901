@@ -45,7 +45,7 @@ Template.createContent.helpers({
 	      rules: [
 	        {
 	          token: '#',
-	          collection: CommunityTags,  // Mongo.Collection object means client-side collection
+	          collection: Groups,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
 	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
@@ -172,7 +172,7 @@ Template.createContent.events({
     	// console.log(coms)
 
     	if (coms) {
-    		main.community = coms;
+    		main.groups = coms;
     	}
 
     	if (!langs) {

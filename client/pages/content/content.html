@@ -49,12 +49,30 @@
 {{get_content.text}}
         {{/markdown}}
 
-
-    <div class="contentRating">
-        <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
-        <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
-        <p class="voteField">{{get_content.likesCounter}}</p>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="contentRating">
+                <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
+                <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
+                <p class="voteField">{{get_content.likesCounter}}</p>
+            </div>
+        </div>
+        {{#if get_content.groups}}
+        <div class="col-md-10">
+            <ul class="list-inline">
+                <li>
+                    {{_ "content.groups"}}:
+                </li>
+                {{#each get_content.groups}}
+                <li>
+                    <a href="{{pathFor 'group_page' _id=_id}}">{{name}}</a>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/if}}
     </div>
+
     <div class="comment-section">
         {{> commentsBox id=get_id}}
     </div>

@@ -36,6 +36,13 @@ Template.content.helpers({
 		var default_language = LanguageTags.findOne({
 			short_form: Session.get("current_language")
 		});
+		var groups = [];
+		for (var a in content.groups) {
+			var group = Groups.findOne({name: content.groups[a]});
+			if (group) {
+				groups.push(group);
+			}
+		}
 		//Checks if the there is a content with the lanugage the user is using currently. 
 		if (default_language) {
 			var text_default = ContentText.findOne({
@@ -49,7 +56,7 @@ Template.content.helpers({
 				changeVoteColor(text_default);
 				var likesCounter = text_default.upVote.length - text_default.downVote.length;
 				text_default.likesCounter = likesCounter;
-
+				text_default.groups = groups;
 				Session.set("content", text_default);
 				Session.set("content_language", default_language.name);
 				return ;
@@ -73,7 +80,7 @@ Template.content.helpers({
 					changeVoteColor(content_1);
 					var likesCounter = content_1.upVote.length - content_1.downVote.length;
 					content_1.likesCounter = likesCounter;
-
+					content_1.groups = groups;
 					Session.set("content", content_1);
 					Session.set("content_language", lang.name);
 					return;
@@ -91,6 +98,7 @@ Template.content.helpers({
 			var likesCounter = foo.upVote.length - foo.downVote.length;
 			foo.likesCounter = likesCounter;
 		}
+		foo.groups = groups;
 
 		Session.set("content", foo);
 		Session.set("content_language", foo.language);

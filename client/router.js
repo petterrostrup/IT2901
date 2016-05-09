@@ -167,7 +167,7 @@ Router.route("/group/:_id", function() {
     this.render("group");
   else
     this.render("page_not_found");
-});
+}, {name: "group_page"});
 
 // Routing for a distinct content page.
 // Takes the content's id as input from the url
