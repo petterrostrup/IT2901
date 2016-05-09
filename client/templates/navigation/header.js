@@ -51,27 +51,27 @@ Template.navigation.events({
         else {
             $('#layoutContainer').removeClass('reverseSite');
         }
-        console.log(lang);
-            console.log(TAPi18n.getLanguages());
-            TAPi18n.setLanguage(lang)
-                .done(function () {
+        // console.log(lang);
+            // console.log(TAPi18n.getLanguages());
+        TAPi18n.setLanguage(lang)
+            .done(function () {
 
-                    if (Meteor.userId()) {
+                if (Meteor.userId()) {
 
-                        Meteor.call("set_preferred_language", lang, function (error, result) {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log("Preferred language changed.");
-                            }
-                        });
-                    }
-                    Session.set("showLoadingIndicator", false);
-                })
-                .fail(function (error_message) {
-                    // Handle the situation
-                    console.log(error_message);
-                });
+                    Meteor.call("set_preferred_language", lang, function (error, result) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Preferred language changed.");
+                        }
+                    });
+                }
+                Session.set("showLoadingIndicator", false);
+            })
+            .fail(function (error_message) {
+                // Handle the situation
+                console.log(error_message);
+            });
         }
 
 });

@@ -13,10 +13,10 @@ Template.yourGroups.helpers({
         var groupsQuery = Groups.find({}).fetch();
         var groups = [];
         $.each(groupsQuery, function(index, val){
-            console.log(val);
+            // console.log(val);
             groups.push(val);
         });
-        console.log(groups);
+        // console.log(groups);
         return groups;
 
     }

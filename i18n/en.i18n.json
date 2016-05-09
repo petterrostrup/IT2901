@@ -159,7 +159,9 @@
         "content": "Content linked with group",
         "members": "Members of this group",
         "add_group": "Add group",
-        "group_added": "Group added"
+        "group_added": "Group added",
+        "your_groups": "Your groups",
+        "content_text": "Add new or existing group"
     }
 
 }

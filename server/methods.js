@@ -1,4 +1,11 @@
 
+var log_text = function(text, user) {
+	if (user) {
+		console.log(new Date().toLocaleString() + "@" + user.username + "\t\t" + text);
+	} else {
+		console.log(new Date().toLocaleString() + " (no user)" + "\t\t" + text);
+	}
+}
 
 Meteor.methods({
 
@@ -7,7 +14,7 @@ Meteor.methods({
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
 
-		console.log(user);
+		// console.log(user);
 		check(user, {
 			username: String,
 			email: String,
@@ -23,15 +30,11 @@ Meteor.methods({
 
 		// Checks if the username chosen is taken
 		if (!!Meteor.users.findOne({username: user.username})){
-			if (Meteor.settings.DEBUG)
-				console.log(user.username + " was taken.");
 			throw new Meteor.Error(400, "Username is taken");
 		}
 
 		// Checks if the email chosen is taken.
 		if (!!Meteor.users.findOne({email: user.email})){
-			if (Meteor.settings.DEBUG)
-				console.log(user.email + " was taken.");
 			throw new Meteor.Error(400, "Email was taken.");
 		}
 
@@ -46,76 +49,10 @@ Meteor.methods({
 			// Sets the password to the user Id
 			Accounts.setPassword(userId, password);
 			if (Meteor.settings.DEBUG) {
-				console.log("The user " + user.username + " was added.");
+				log_text("The user " + user.username + " was added.");
 			}
 		}
 	},
-
-	// Method for insert new content to the database.
-	// create_content: function(post) {
-
-	// 	// Simple check that the input are valid
-	// 	check(post, Object);
-
-	// 	// If you are not logged in, you are not allowed to create content
-	// 	if (!Meteor.userId()) {
-	// 		throw new Meteor.Error(530, "You are not logged in.");
-	// 	}
-	// 	post.tags = [];
-	// 	// Adds the id of the user in the post
-	// 	post.createdById = Meteor.userId();
-
-	// 	// Category id
-	// 	if (!post.category_id){
-	// 		throw new Meteor.Error(400, "Missing category id.");
-	// 	}
-
-	// 	var category = Category.findOne({_id: post.category_id});
-	// 	if (!category) {
-	// 		throw new Meteor.Error(400, "Missing valid category id.");
-	// 	}
-
-	// 	// Community id
-	// 	if (!post.community){
-	// 		throw new Meteor.Error(400, "Missing community.");
-	// 	}
-
-	// 	var community_id = CommunityTags.findOne({name: post.community})._id;
-	// 	if (!community_id) {
-	// 		throw new Meteor.Error(400, "Missing valid community id.");
-	// 	}
-	// 	post.community_id = community_id;
-
-	// 	// Language id
-	// 	// if (!post.language){
-	// 	// 	throw new Meteor.Error(400, "Missing language.");
-	// 	// }
-
-	// 	// var language_id = LanguageTags.findOne({name: post.language})._id;
-	// 	// if (!language_id) {
-	// 	// 	throw new Meteor.Error(400, "Missing valid language id.");
-	// 	// }
-	// 	// post.language_id = language_id;
-
-	// 	post.contents = [];
-
-	// 	var content_id = Content.insert(post);
-	// 	if (!content_id) {
-	// 		throw new Meteor.Error(400, "Content not added!");
-	// 	}
-	// 	category.content_ids.push(content_id);
-
-	// 	Category.update({_id: category._id}, {"$set": {
-	// 		content_ids: category.content_ids
-	// 	}});
-
-	// 	// Check if a user can insert a post in Content.
-	// 	// If not, it will throw an error.
-	// 	// Commenting this out so people not will hate me
-	// 	// Security.can(this.userId).insert(post).for(Content).throw(); 
-		
-	// 	return content_id;
-	// },
 
 	submit_content: function(main, content) {
 
@@ -223,6 +160,10 @@ Meteor.methods({
 		Meteor.users.update({_id: Meteor.userId()}, {
 			$push: {"createdContents": text_id}
 		});
+
+		if (Meteor.settings.DEBUG){
+			log_text("New content submited with id='" + content_id + "'", Meteor.user());
+		}
 		
 		return content_id;
 	},
@@ -272,6 +213,10 @@ Meteor.methods({
 			},{
 				$set: content
 			});
+		}
+
+		if (Meteor.settings.DEBUG){
+			log_text("Content translated with id='" + content_id + "'", Meteor.user());
 		}
 		
 		return content.metacontent;
@@ -327,6 +272,9 @@ Meteor.methods({
 			}, {
 				$push: {categories: id}
 			});
+		}
+		if (Meteor.settings.DEBUG){
+			log_text("Category translated with id='" + category_father._id + "'", Meteor.user());
 		}
 	},
 
@@ -398,6 +346,10 @@ Meteor.methods({
 			categories: cat.categories
 		}});
 
+		if (Meteor.settings.DEBUG){
+			log_text("New category added with id='" + category_id + "'", Meteor.user());
+		}
+
 		return category_id;		
 	},
 
@@ -415,8 +367,13 @@ Meteor.methods({
 		userInfo.languages = Meteor.user().profile.languages;
 		userInfo.organization = "Company AS";
 		userInfo.preferred_language = Meteor.user().profile.preferred_language;
+		userInfo.groups = Meteor.user().profile.groups;
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
+
+		if (Meteor.settings.DEBUG){
+			log_text("Updated profile", Meteor.user());
+		}
 	},
 
 	tag_content: function(content, tagID) {
@@ -452,6 +409,9 @@ Meteor.methods({
 		if (index > -1) {
 			languages.splice(index, 1);
 			Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+			if (Meteor.settings.DEBUG){
+			log_text("Removed language from profile", Meteor.user());
+		}
 		}else {
 			throw new Meteor.Error(400, "Language not found.");
 		}
@@ -474,6 +434,9 @@ Meteor.methods({
 		}
 		languages.push(languageId);
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
+		if (Meteor.settings.DEBUG){
+			log_text("Added language to profile", Meteor.user());
+		}
 	},
 
 
@@ -502,6 +465,10 @@ Meteor.methods({
 			throw new Meteor.Error(400, "Language already exist.");
 
 		LanguageTags.insert(language);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The language " + language.english_name + " was added to the system", Meteor.user());
+		}
 	},
 
 
@@ -517,6 +484,10 @@ Meteor.methods({
 		var is_deleted = LanguageTags.remove({_id: lang_id});
 		if (!is_deleted)
 			throw new Meteor.Error(404, "Language does not exist");
+
+		if (Meteor.settings.DEBUG){
+			log_text("Language deleted", Meteor.user());
+		}
 	},
 
 
@@ -557,6 +528,10 @@ Meteor.methods({
 
 		Roles.addUsersToRoles(obj.user_id, obj.role);
 
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " got " + obj.role + " priveliges.", Meteor.user());
+		}
+
 	},
 
 
@@ -581,6 +556,10 @@ Meteor.methods({
 			throw new Meteor.Error(430, "You cannot remove admin from your self.");
 
 		Roles.removeUsersFromRoles(obj.user_id, obj.role);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " was removed from " + obj.role, Meteor.user());
+		}
 	},
 
 
@@ -698,6 +677,11 @@ Meteor.methods({
 		group.members = [];
 		group.content_ids = [];
 		var id = Groups.insert(group);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The group " + group.name + " was added.", Meteor.user());
+		}
+
 		return id;
 	},
 

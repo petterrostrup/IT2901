@@ -158,7 +158,9 @@
         "content": "Innhold for gruppen",
         "members": "Medlemmer av gruppen",
         "add_group": "Legg til gruppe til innhold",
-        "group_added": "Gruppen ble lagt til"
+        "group_added": "Gruppen ble lagt til",
+        "your_groups": "Dine grupper",
+        "content_text": "Legg til ny eller eksisterende gruppe"
     }
 }
 

@@ -15,15 +15,18 @@
                         {{_ "group.join"}}
                     {{/if}}
                 </button>
+                <a href="{{pathFor 'yourGroups'}}" class="btn btn-default">
+                    <i class="fa fa-users" aria-hidden="true"></i> {{_ "group.your_groups"}}
+                </a>
             </div>
             {{/if}}
         </div>
         {{/with}}
         <div class="row" >
-            <div class="col-md-8" style="margin-top: -3%">
+            <div class="col-md-8">
                 <h3>{{_ "group.content"}}</h3>
                 <hr/>
-                <table class="table table-striped table-hover" style="margin-top: 10%">
+                <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th>{{_ "mainContent.title"}}</th>
@@ -36,9 +39,7 @@
                     {{#each get_content}}
                     <tr class="clickAble {{_id}}">
                             <td>
-
                                 {{title}}
-
                             </td>
                             <td>
                                 {{description}}
@@ -57,7 +58,7 @@
             <div class="col-md-4">
                 <h3>{{_ "group.members"}}</h3>
                 <hr/>
-                <table class="table table-striped table-hover" style="margin-top: 10%">
+                <table class="table table-striped table-hover">
                     <thead>
                     <tr>
                         <th class="tableHeader">{{_ "mainContent.title"}}</th>

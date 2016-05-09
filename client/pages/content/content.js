@@ -245,7 +245,7 @@ Template.content.events({
 		}
 	},
 	"click #open_groups": function(event, template) {
-		console.log("LKJLKSFJLK");
+		// console.log("LKJLKSFJLK");
 		if (!template.$("#open_groups").hasClass('active')) {
 			template.$("#new_groups").show();
 			template.$("#autocomplete-input-Com").focus();
@@ -262,6 +262,15 @@ Template.content.events({
     	// console.log(text);
 
     	text.likesCounter = text.upVote.length - text.downVote.length;
+    	var content = Content.findOne({_id: Router.current().params._id});
+    	var groups = [];
+		for (var a in content.groups) {
+			var group = Groups.findOne({name: content.groups[a]});
+			if (group) {
+				groups.push(group);
+			}
+		}
+		text.groups = groups;
 
     	Session.set("content", text);
     	Session.set("content_language", name);
@@ -304,9 +313,6 @@ Template.content.events({
 		});
 	}
 });
-
-
-
 
 Comments.ui.config({
 	template: 'semantic-ui'
