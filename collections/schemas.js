@@ -29,7 +29,7 @@ Schema.UserProfile = new SimpleSchema({
     home_adress: {
         type: String,
         label: "Home Adress",
-        optional: false
+        optional: true
     },
     preferred_language: {
     	type: String,
