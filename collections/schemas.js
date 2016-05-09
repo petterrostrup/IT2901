@@ -34,7 +34,7 @@ Schema.UserProfile = new SimpleSchema({
     preferred_language: {
     	type: String,
     	label: "Preferred language",
-    	optional: true
+    	optional: false
     }
 });
 
@@ -91,6 +91,10 @@ Schema.Content = new SimpleSchema({
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
 		optional:false
+	},
+	createdByUsername: {
+		type: String,
+		optional: false
 	},
 	timestamp: {
 	    type: Date,
@@ -251,7 +255,15 @@ Schema.ContentText = new SimpleSchema({
 		    	this.unset();  // Prevent user from supplying their own value
 		    }
 	    }
-  	}
+  	},
+	upVote: {
+		type: [String],
+		optional: false
+	},
+	downVote: {
+		type: [String],
+		optional: false
+	}
 });
 
 Schema.LanguageTags = new SimpleSchema({

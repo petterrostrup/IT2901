@@ -3,7 +3,7 @@
     <div class="wrapper" style="margin-bottom: 50px">
 
         <ol class="breadcrumb">
-
+            {{load_content}}
             {{#each get_parent_url}}
                 <li>
                     <a href="{{pathFor 'category'}}/{{_id}}">{{name}} </a>
@@ -11,36 +11,32 @@
             {{/each}}
 
             <li>
-                <a href="#">{{getContentText.title}}</a>
+                <a href="#">{{get_content.title}}</a>
             </li>
 
         </ol>
 
-
-
-
-
         </div>
-
-
 
         <div class="row">
             <div id="lang-btn-group" class="btn-group" role="group" aria-label="...">
                 {{#each get_supported_languages}}
                     <button id={{_id}} name="{{language}}" type="button" class="btn btn-default langButton">{{language}}</button>
-                {{/each}}       
+                {{/each}}
+                {{#if currentUser}}    
                 <a href="{{pathFor 'translateContent' _id=get_id}}" class="btn btn-default">
                     {{_ "content.translate"}}
                 </a>
                 <a href="{{pathFor 'editContent' _id=get_id}}" class="btn btn-default">
                     {{_ "content.edit"}}
                 </a>
+                {{/if}}
             </div>
         </div>
         <!-- <div class="row">
             
         </div> -->
-        {{#with getContentText}}
+        {{#with get_content}}
 
             <h1 id="title">{{title}}</h1>
 
@@ -50,15 +46,14 @@
         {{/with}}
 
         {{#markdown}}
-{{get_content}}
+{{get_content.text}}
         {{/markdown}}
 
 
     <div class="contentRating">
         <i id="upVote" class="voteField vote angle up link icon" style="font-size: 20px"></i>
         <i id="downVote" class="voteField vote angle down link icon" style="font-size: 20px"></i>
-        <p class="voteField">{{getContentText.likesCounter}}</p>
-
+        <p class="voteField">{{get_content.likesCounter}}</p>
     </div>
     <div class="comment-section">
         {{> commentsBox id=get_id}}

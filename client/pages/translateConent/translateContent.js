@@ -1,8 +1,10 @@
 
 Template.translateContent.helpers({
+	//Returns the id of the current content that the user is on based on the url. 
 	get_id: function() {
 		return Router.current().params._id;
 	},
+	//Sets the content that you are trying to translate in the session
 	getContentText: function() {
 		var content = Content.findOne({_id: Router.current().params._id});	
 		var foo = ContentText.find({metacontent: content._id}).fetch();
@@ -15,17 +17,19 @@ Template.translateContent.helpers({
 		}
 		Session.set("trans_content", foo[0]);
 	},
+	//Gets all the different translations of the content
 	get_supported_languages: function() {
 		var id = Router.current().params._id;
 		return ContentText.find({metacontent: id});
 	},
+	//
 	settingsLang: function() {
 	    return {
 	      position: Session.get("position"),
 	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
 	      rules: [
 	        {
-	          token: '#',
+	          token: '',
 	          collection: LanguageTags,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
@@ -35,15 +39,18 @@ Template.translateContent.helpers({
 	      ]
 	    }
 	},
+	//returns the content that you are trying to translate
 	get_content: function() {
 		return Session.get("trans_content");
 	},
+	//returns the current language the user are using. 
 	current_language: function() {
 		return Session.get("content_language");
 	}
 });
 
 Template.translateContent.events({
+	//Toggles between sourcecode of markdown and markdown
 	"click #toggle_markdown": function(event, template) {
 		var checked = event.target.checked;
 		if (checked) {
@@ -54,6 +61,8 @@ Template.translateContent.events({
 			template.$("#markdown_content").hide();
 		}
 	},
+
+	//Submits the translated content
 	"click #content-submit": function(event, template) {
 		event.preventDefault();
 		// console.log(template.$("#epicarea0").val());
@@ -92,7 +101,7 @@ Template.translateContent.events({
 			content.language = Session.get("content_language");
 		}
 
-
+		//calls the method "transelate_content" in methods.js
 		Meteor.call("transelate_content", content, function(error, result) {
 			if (result)
 				console.log(result);
@@ -102,6 +111,7 @@ Template.translateContent.events({
 				Router.go("show_content", {_id: result});
 		});
 	},
+	//Changes the language of the content that is being translated 
 	"click .langButton": function(event, template){
     	var id = event.target.id;
     	// todo: change based on id.

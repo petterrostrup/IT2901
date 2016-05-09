@@ -39,7 +39,7 @@
 
                         {{else}}
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" title="How to choose categories" data-content="Write a # before the categories you want your content under. #Mat #Økonomi f.eks" class="glyphicon glyphicon-info-sign"></a>
+                                <label class="col-md-4 control-label" for="tags">{{_ "createContent.Category"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose categories" data-content="Write a # before the categories you want your content under. #Mat #Økonomi f.eks" class="glyphicon glyphicon-info-sign"></a>
                                 <div class="col-md-4">
                                     {{> inputAutocomplete autocomplete="off" settings=settingsCat id="autocomplete-input-Cat" tabindex=3 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
                                 </div>
@@ -48,7 +48,7 @@
 
                         <!-- Select Language -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
+                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Language"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose languages" data-content="Write a # before the language of the content. #Norwegian e.g." class="glyphicon glyphicon-info-sign"></a>
                             <div class="col-md-4">
                                 {{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" tabindex=4 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
                             </div>
@@ -56,7 +56,7 @@
 
                         <!-- Select Community -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" title="How to choose groups" data-content="Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g." class="glyphicon glyphicon-info-sign"></a>
+                            <label class="col-md-4 control-label" for="tags">{{_ "createContent.Community"}}</label><a href="#" data-toggle="popover" data-trigger="hover" title="How to choose groups" data-content="Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g." class="glyphicon glyphicon-info-sign"></a>
                             <div class="col-md-4">
                                 {{> inputAutocomplete autocomplete="off" settings=settingsCom id="autocomplete-input-Com" tabindex=5 class="form-control" placeholder=(_ 'typeHere.TypeHere')}}
                             </div>
@@ -87,6 +87,7 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn btn-sm btn-default" onclick="history.back()"><i class="fa fa-backward" aria-hidden="true"> Back </i></button>
             </fieldset>
             
             <!-- <input type="submit" id="save_btn"/> -->
