@@ -12,10 +12,10 @@ Template.editProfile.events({
 	    console.log($("#email").val());
 	    var profile = {
 	    	first_name: $("#first_name").val(),
-	    	last_name: $("#last_name").val(),
+	    	last_name: $("#last_name").val()
 	    	// organization: $("#organization").val(),
 	    	// languages: $("#languages").val().split(","),
-	    	home_adress: "Oslo"
+	    	// home_adress: "Oslo"
 	    }
 
 	    var email = $("#email").val();

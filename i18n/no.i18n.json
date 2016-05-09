@@ -44,13 +44,14 @@
         "Title": "Tittel",
         "Description": "Beskrivelse",
         "Content": "Innhold",
-        "Community": "Samfunn",
+        "Community": "Grupper",
         "Category": "Kategori",
         "Language": "Språk",
         "cancel": "Avbryt",
         "translate_from": "Oversett fra",
         "edit_lang": "Språk",
         "toggle_markdown": "Vis innhold i markdown",
+        "error": "Noen feil har skjedd. Mangler noen felter eller feil input på feltene",
         "success": "Innholdet er laget",
         "categoryHelp": "Skriv en # og deretter navnet på kategorien. #Mat #Økonomi f.eks.",
         "languageHelp": "Skriv en # og deretter språket på innholdet #English f.eks.",
@@ -62,7 +63,10 @@
         "Submit": "Send inn"
     },
     "typeHere": {
-        "TypeHere": "Skriv her"
+        "TypeHere": "Skriv her",
+        "language": "Språk",
+        "startWith": "Start med #",
+        "category": "Kategori"
     },
     "admin": {
         "menu": {
@@ -118,6 +122,8 @@
         "name": "Navn",
         "description": "Beskrivelse",
         "new_sub_text": "Ny subkategori",
+        "translated": "Category translated",
+        "cancel": "Avbryt",
         "language": "Språk"
     },
     "editLanguages": {

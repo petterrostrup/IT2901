@@ -44,13 +44,14 @@
         "Title": "Title",
         "Description": "Description",
         "Content": "Content",
-        "Community": "Community",
+        "Community": "Groups",
         "Category": "Category",
         "Language": "Language",
         "cancel": "Cancel",
         "translate_from": "Translate from",
         "edit_lang": "Language",
         "toggle_markdown": "Toggle markdown",
+        "error": "Something wrong has happened. Maybe some fields are empty?",
         "success": "Content is created",
         "categoryHelp": "Write a # before the categories you want your content under. #Mat #Økonomi e.g.",
         "languageHelp": "Write a # before the language of the content. #Norwegian e.g.",
@@ -62,7 +63,10 @@
         "Submit": "Submit"
     },
     "typeHere": {
-        "TypeHere": "Type Here"
+        "TypeHere": "Type Here",
+        "language": "Language",
+        "startWith": "Start with #",
+        "category": "Category"
     },
     "admin": {
         "menu": {
@@ -119,6 +123,8 @@
         "name": "Name",
         "description": "Description",
         "new_sub_text": "New subcategory",
+        "translated": "Category translated",
+        "cancel": "Cancel",
         "language": "Language"
     },
     "editLanguages": {

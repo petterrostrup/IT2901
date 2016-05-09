@@ -26,11 +26,6 @@ Schema.UserProfile = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
-    home_adress: {
-        type: String,
-        label: "Home Adress",
-        optional: true
-    },
     preferred_language: {
     	type: String,
     	label: "Preferred language",
@@ -114,7 +109,7 @@ Schema.Content = new SimpleSchema({
   		optional: false
   	},
   	community_id: {
-  		type: String,
+  		type: [String],
   		//check if the value is id
   		regEx: SimpleSchema.RegEx.Id,
   		optional: false

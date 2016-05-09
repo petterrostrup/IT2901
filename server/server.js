@@ -448,7 +448,7 @@ Meteor.startup(function(){
             organization: "CC AS",
             languages: languageIds,
             home_adress: "Trondheim",
-            preferred_language: "English"
+            preferred_language: "en"
         }
         userid = Meteor.users.insert({
             username: defUser.username,
