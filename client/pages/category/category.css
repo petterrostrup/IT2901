@@ -22,3 +22,24 @@
         width: 500px;
     }
 }
+
+.sidebar {
+    position: absolute;
+    left: -20%;
+    width: 150px;
+    text-align: center;
+
+}
+
+.sidebar th{
+    align-content: center;
+    text-align: center;
+}
+
+.tableSelection:nth-child(odd) {
+    background-color: #F9F9F9;
+}
+
+.clickAble {
+    cursor: pointer;
+}

@@ -6,7 +6,17 @@ Meteor.methods({
 	create_user: function(user, password) {
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
-		check(user, Object);
+
+		console.log(user);
+		check(user, {
+			username: String,
+			email: String,
+			profile: {
+				preferred_language: String,
+				first_name: String,
+				last_name: String
+			}
+		});
 		check(password, String);
 
 		// Security.can().insert(user).for(Meteor.users).throw();
@@ -27,6 +37,7 @@ Meteor.methods({
 
 		user.createdContents = [];
 		user.roles = ["standard", "creator"];
+		user.profile.languages = [];
 
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
@@ -191,7 +202,7 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
-		console.log(content);
+		// console.log(content);
 		check(content, {
 			title: String,
 			description: String,
@@ -205,6 +216,7 @@ Meteor.methods({
 		content.downVote = [];
 
 		var father = Content.findOne({_id: content.metacontent});
+		
 		if (!father) 
 			throw new Meteor.Error(404, "Content not found.");
 
@@ -235,14 +247,73 @@ Meteor.methods({
 	},
 
 
+	translate_category: function(cat_text) {
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		check(cat_text, {
+			name: String,
+			description: String,
+			metacategory: String,
+			language: String
+		});
+
+		var category_father = Category.findOne({
+			_id: cat_text.metacategory
+		});
+
+		if (!category_father) {
+			throw new Meteor.Error(404, "Could not find category.");
+		}
+
+		var language = LanguageTags.findOne({
+			name: cat_text.language
+		});
+
+		if (!language) {
+			throw new Meteor.Error(404, "Could not find language.");
+		}
+
+		var check_cat = CategoryText.findOne({
+			language: language.name
+		});
+
+		if (check_cat) {
+			CategoryText.update({
+				_id: check_cat._id
+			}, cat_text);
+		}
+		else {
+			var id = CategoryText.insert(cat_text);
+			if (!id) {
+				throw new Meteor.Error(500, "Category not created.");
+			}
+			Category.update({
+				_id: cat_text.metacategory
+			}, {
+				$push: {categories: id}
+			});
+		}
+	},
+
+
 	// Method for adding a new category
-	add_category: function(category) {
+	add_category: function(category, language) {
 
 		check(category, Object);
+
+		check(language, String);
+		console.log(category);
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
+
+
+		// below need to decide what to keep
+
 		// console.log(category.parent);
 		var parent = undefined;
 		if (category.parent_id) {
@@ -256,16 +327,46 @@ Meteor.methods({
 		// If the name of the category already exists, you are not allowed to create one.
 		if (Category.findOne({name: category.name}))
 			throw new Meteor.Error(422, "The category name already exists.");
-		category.children_id = [];
-		category.children = [];
-		category.content_ids = [];
-		var id = Category.insert(category);
+
+
+
+		// create category and send _id to metecategory
+		var cat = {
+			parent_id: parent._id,
+			children_id: [],
+			content_ids: [],
+			categories: [],
+			icon: parent.icon
+		}
+		var category_id = Category.insert(cat)
+		if (!category_id) {
+			throw new Meteor.Error(400, "Category not added!");
+		}
+
 		if (parent) {
-			parent.children_id.push(id);
+			parent.children_id.push(category_id);
 			Category.update({_id: parent._id}, {$set: {
 				children_id: parent.children_id
 			}});
 		}
+
+		// create categoryText
+		var categoryText = {
+			name: category.name,
+			description: category.description,
+			metacategory: category_id,
+			language: language
+		}
+
+		var categoryText_id = CategoryText.insert(categoryText)
+
+		cat.categories.push(categoryText_id)
+
+		Category.update({_id: cat._id}, {"$set": {
+			categories: cat.categories
+		}});
+
+		return category_id;		
 	},
 
 	// edit_profile with first_name, last_name, language, email
@@ -490,18 +591,25 @@ Meteor.methods({
 		}
 	},
 
-	vote: function(content_id, user_id, vote){
-		check(user_id, String);
+	vote: function(content_id, vote){
+
+		if (!Meteor.userId())
+			throw new Meteor.Error(530, "You are not logged in.");
+
 		check(content_id, String);
+
+		var user_id = Meteor.userId();
+
 		var upvoteArray = ContentText.findOne({_id: content_id}).upVote;
 		var downVoteArray = ContentText.findOne({_id: content_id}).downVote;
+
 		if(vote == 1){ //upvote
 			ContentText.update(
 				content_id,
 				{
 					$pull: {downVote: user_id}
 				});
-			if(typeof upvoteArray === 'undefined' || upvoteArray.indexOf(user_id) === -1){
+			if(upvoteArray.indexOf(user_id) === -1){
 				ContentText.update(
 				content_id,
 				{
@@ -513,7 +621,7 @@ Meteor.methods({
 					content_id,
 					{
 						$pull: {upVote: user_id}
-					});
+				});
 			}
 		}
 
@@ -523,7 +631,7 @@ Meteor.methods({
 				{
 					$pull: {upVote: user_id}
 				});
-			if(typeof downVoteArray === 'undefined' || downVoteArray.indexOf(user_id) === -1){
+			if(downVoteArray.indexOf(user_id) === -1){
 
 				ContentText.update(
 				content_id,
@@ -539,6 +647,10 @@ Meteor.methods({
 					});
 			}
 		}
+		var content = ContentText.findOne({
+			_id: content_id
+		});
+
+		return content.upVote.length - content.downVote.length;
 	}
-	
 });

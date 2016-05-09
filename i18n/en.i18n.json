@@ -26,7 +26,15 @@
         "Joined": "Joined",
         "Email": "Email",
         "UserPrivileges": "User Privileges",
-        "CreatedContent": "Created content"
+        "CreatedContent": "Created content",
+        "edit_profile": "Edit Profile",
+        "edit_lang": "Edit Languages",
+        "show_activity": "Show Activity",
+        "change_pass": "Change password",
+        "old_pass": "Old password",
+        "new_pass": "New password",
+        "retype": "Retype new password",
+        "no_match": "Something wrong happened"
     },
     "createContent": {
         "CreateContent": "Create Content",
@@ -88,7 +96,21 @@
         "submit_translation": "Save translation"
     },
     "home": {
-        "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others"
+        "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others",
+        "added": "Added",
+        "ago": "ago",
+        "newsfeed": "Newsfeed"
+    },
+    "error": {
+        "empty_category": "This category does not have any content yet. If you log in you can add new content to this category."
+    },
+    "category": {
+        "new_sub": "Create subcategory",
+        "translate": "Translate category",
+        "name": "Name",
+        "description": "Description",
+        "new_sub_text": "New subcategory",
+        "language": "Language"
     }
 }
 

@@ -1,10 +1,14 @@
+
 Template.home.helpers({
+	getUserLanguages: function() {
+		Session.set("home_languages", Methods.get_current_languages());
+	},
 
 	//Gets all the content from the database
 	//Limits it to 10. 
 	//finds the most recent content created. 
 	getContent: function() {
-		var default_language = Session.get("current_language");
+		var default_language = TAPi18next.lng();
 		default_language = LanguageTags.findOne({
 			short_form: default_language
 		});
@@ -51,7 +55,27 @@ Template.home.helpers({
 	getCategory: function(catId) {
 		var content = Content.findOne({_id: catId});
 		var cat = Category.findOne({_id: content.category_id});
-		return cat.name;
+		var texts = CategoryText.find({
+			metacategory: cat._id
+		}).fetch();
+		var languages = Session.get("home_languages");
+		for (var a in texts) {
+			var t = texts[a];
+			if (t.language === languages.main_lang){
+				return t.name;
+			}
+		}
+		if (languages.supported_langs) {
+			for (var a in texts) {
+				var t = texts[a];
+				if (t.language in languages.supported_langs) {
+					return t.name;
+				}
+			}
+		}
+		if (texts.length)
+			return texts[0].name;
+		return "Not found";
 	},
 	//Gets the icon for the category based on the catId
 	getIcon: function(catId) {

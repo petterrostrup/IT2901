@@ -1,40 +1,90 @@
     // Search
 SearchSource.defineSource('categorySearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {name: regExp},
-      {description: regExp},
-      {title: regExp},
-      {community_id: regExp}
-    ]};
-    // search by commu and lang
-    // var selectorTag = {$or: [
-    //   {name: regExp},
-    // ]};
-    // var result_community_id = CommunityTags.find(selectorTag, options).fetch()
-    // var com_id = result_community_id[0].name
-    // var regExpCom = buildRegExp(com_id)
-    // console.log(com_id)
-    // console.log(regExpCom)
-    // var selector = {$or: [
-    //   {name: regExp},
-    //   {description: regExp},
-    //   {community_id: regExpCom}
-    // ]};
+    var options = {sort: {isoScore: -1}, limit: 20};
+    var arr = [];
+    var language = "English";
+    if (Meteor.userId()) {
+        language = Meteor.user().profile.preferred_language;
+    }
 
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {name: regExp},
+          {description: regExp},
+        ]};
+
+    // try using lookup from mongodb
     
-    //concat two returned collections
-    return Category.find(selector, options).fetch();
-  } else {
-    return Category.find({}, options).fetch();
-  }
+        var result = CategoryText.find(selector, { options,
+            transform: function(doc) {
+                doc.categoryObj = Category.find({
+                    categories: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch();
+    // end of try lookup
+    
+        return result
+    } else {
+// another transform
+//     , {
+//     transform: function(doc) {
+//         doc.categoryTextObj = CategoryText.find({
+//             _id: { $in: doc.categories}
+//         });
+//         return doc
+//     }
+// }
+        var list = [];
+        var categories = Category.find({}).fetch();
+        for (var a in categories) {
+            var cat = categories[a];
+            if (cat.parent_id)
+                continue;
+            var texts = CategoryText.find({
+                metacategory: cat._id
+            }).fetch();
+            var found = false;
+            for (var t in texts) {
+                if (texts[t].language === language) {
+                    found = true;
+                    texts[t].categoryObj = [cat];
+                    list.push(texts[t]);
+                    break;
+                }
+            }
+            if (!found) {
+                var chosen = texts[0];
+                chosen.categoryObj = [cat];
+                list.push(chosen);
+            }
+        }
+        return list;
+
+        // var result = CategoryText.find({}, {
+        //     transform: function(doc) {
+        //         var hei = Category.findOne({
+        //             parent_id: {$exists:false},
+        //             _id: doc.metacategory
+        //             // categories: { $in: [doc._id]}
+        //         });
+        //         if (!hei)
+        //             return {};
+        //         doc.categoryObj = Category.find({
+        //             categories: { $in: [doc._id]}
+        //         }).fetch();
+        //         return doc
+        //     }
+        // }).fetch();
+        // // console.log(result);
+        // return result;
+    }
 });
 
-    function buildRegExp(searchText) {
+function buildRegExp(searchText) {
   // this is a dumb implementation
   var parts = searchText.trim().split(/[ \-\:]+/);
   return new RegExp("(" + parts.join('|') + ")", "ig");
@@ -43,16 +93,19 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 // content search
 SearchSource.defineSource('contentSearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {name: regExp},
-      {description: regExp},
-      {title: regExp}
-      // {community_id: regExp}
-    ]};
+    var options = {sort: {isoScore: -1}, limit: 20};
+    // console.log("SEARHC: " + searchText);
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {title: regExp},
+          {description: regExp},
+          // {title: regExp}
+          // {community_id: regExp}
+        ]};
+        var selectorCatText = {$or: [
+          {name: regExp},
+        ]};
     // search by commu and lang
     // var selectorTag = {$or: [
     //   {name: regExp},
@@ -67,11 +120,111 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     //   {description: regExp},
     //   {community_id: regExpCom}
     // ]};
-   
+
+    // test lookup
+//    console.log(ContentText.aggregate([
+//     {
+//       $lookup:
+//         {
+//           from: "Content",
+//           localField: "metacontent",
+//           foreignField: "_id",
+//           as: "content_info"
+//         }
+//    }
+// ]))
+    // end of test lookup
+
+    // test join collections
+    // var result = []
+    // var cate = Category.find(selector, options).fetch();
+    // for (var index in cate){
+    //     result.concat(Content.find({_id: cate[index]._id}).fetch())
+    // }
+    // console.log(result)
+    // end of test join collections
     //concat two returned collections
-    return ContentText.find(selector, options).fetch();
-  } else {
-    return Category.find({}, options).fetch();
+
+        var catText = CategoryText.find(selectorCatText, { options,
+            transform: function(doc) {
+                doc.categoryObj = Category.find({
+                    categories: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch();
+        var con_id = []
+        for (var i in catText) {
+            for (var j in catText[i].categoryObj){
+                for (var k in catText[i].categoryObj[j].content_ids){
+                    con_id.push(catText[i].categoryObj[j].content_ids[k]);
+                }
+            }
+        }
+        // got content_ids then use it to get content
+        var searchByCatResult = []
+        for (var i in con_id) {
+            var resultContent = ContentText.find({metacontent:con_id[i]}, { options,
+                transform: function(doc) {
+                    doc.contentObj = Content.find({
+                        contents: { $in: [doc._id]}
+                    }).fetch();
+                return doc
+                }
+            }).fetch();
+            searchByCatResult.push(resultContent);
+            // console.log("in loop")
+            ContentText.find({metacontent:con_id[i]}, { options,
+                transform: function(doc) {
+                    doc.contentObj = Content.find({
+                        contents: { $in: [doc._id]}
+                    }).fetch();
+                return doc
+                }
+            }).fetch();
+            // console.log("searchByCatResult")
+            // console.log(searchByCatResult)
+        }
+        // console.log("cat Re")
+        // console.log(searchByCatResult)
+
+        var result = ContentText.find(selector, { options,
+            transform: function(doc) {
+                doc.contentObj = Content.find({
+                    contents: { $in: [doc._id]}
+                }).fetch();
+                return doc;
+            }
+        }).fetch();
+            // console.log("content")
+            // console.log(result.concat(searchByCatResult))
+        var finalResult = result.concat(searchByCatResult);
+        // console.log("concat")
+        // console.log(finalResult)
+
+        var finalFinal = [];
+        for (var i in finalResult) {
+            for (var j in finalResult[i]){
+                finalFinal.push(finalResult[i][j])
+            }
+        }   
+        // console.log("finalfinal")
+        // console.log(finalFinal);
+        return finalFinal
+    } else {
+        return [];
+
+    var result = ContentText.find({}, {
+        transform: function(doc) {
+            doc.contentObj = Content.find({
+                contents: { $in: [doc._id]}
+            }).fetch();
+            return doc
+        }
+    }).fetch()
+    // console.log("reslult")
+    // console.log(result)
+    return result;
   }
 });
 
@@ -127,6 +280,10 @@ Meteor.publish("contentText", function() {
     return ContentText.find({});
 });
 
+Meteor.publish("categoryText", function() {
+    return CategoryText.find({});
+});
+
 Meteor.publish("tags", function(tag_string) {
     console.log(tag_string);
     return Tag.find({
@@ -148,6 +305,24 @@ Meteor.publish("CommunityTags", function() {
     return CommunityTags.find({});
 });
 
+
+var add_category = function(icon, catText) {
+    var mainCat = {
+        children_id: [],
+        content_ids: [],
+        categories: [],
+        icon: icon
+    }
+    var mainId = Category.insert(mainCat);
+    catText.metacategory = mainId
+    var childId = CategoryText.insert(catText);
+    Category.update({_id: mainId}, {
+        $push: {categories: childId}
+    });
+
+
+}
+
 Meteor.publish("groups", function() {
     return Groups.find({});
 });
@@ -157,119 +332,72 @@ Meteor.startup(function(){
     // If no category is found, it will create all the standard categories
     if (!Category.findOne()){
         console.log("Default category created.");
-        Category.insert({
-            name: "By",
-            children: [],
-            content_ids: [],
-            children_id: [],
-            description: "Informasjon anngående byen",
-            icon: "city2",
-            url_name: "city"
-        });
-        Category.insert({
+        add_category("community2", {
             name: "Samfunn",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående samfunnet",
-            icon: "community2",
-            url_name: "community"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("economy2", {
             name: "Økonomi",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående økonomi",
-            icon: "economy2",
-            url_name: "economy"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("education2", {
             name: "Utdanning",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående utdanning og skolering",
-            icon: "education2",
-            url_name: "education"
+            language: "Norsk"
         });
-        Category.insert({
-            name: "Food",
-            children: [],
-            content_ids: [],
-            children_id: [],
+        add_category("food2", {
+            name: "Mat",
             description: "Informasjon anngående skaffing av mat, forberedelse, oppskrifter etc.",
-            icon: "food2",
-            url_name: "food"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("health2", {
             name: "Helse",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående helse og hvor man kan få hjelp",
-            icon: "health2",
-            url_name: "health"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("help2", {
             name: "Hjelp",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Hvor hjelp er å finne og hvem man kan be om hjelp",
-            icon: "help2",
-            url_name: "help"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("housing2", {
             name: "Bolig",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Hvordan å få tak i bolig og annet relevant informasjon",
-            icon: "housing2",
-            url_name: "housing"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("jobs2", {
             name: "Jobb",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Jobbrelatert informasjon. Hvordan å skaffe jobb etc.",
-            icon: "jobs2",
-            url_name: "jobs"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("language2", {
             name: "Språk",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående språk. Hvordan å lære nye språk etc.",
-            icon: "language2",
-            url_name: "language"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("legal2", {
             name: "Rettshjelp",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Rettshjelp, lover etc.",
-            icon: "legal2",
-            url_name: "legal"
+            language: "Norsk"
         });
-        Category.insert({
+        add_category("transport2", {
             name: "Transport",
-            children: [],
-            content_ids: [],
-            children_id: [],
             description: "Informasjon anngående transport",
-            icon: "transport2",
-            url_name: "transport"
+            language: "Norsk"
+        });
+        add_category("city2", {
+            name: "By",
+            description: "Informasjon anngående byen",
+            language: "Norsk"
         });
     }
+    
 
     var languageIds = [];
     // add something in database for language test
-    if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
+    if (!LanguageTags.findOne()){
         console.log("Default LanguageTags created.");
         languageIds.push(LanguageTags.insert({
             name: "Norsk",
@@ -288,9 +416,8 @@ Meteor.startup(function(){
         }));
     }
 
-
     // add something in database for community test
-    if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
+    if (!CommunityTags.findOne()){
         console.log("Default CommunityTags created.");
         CommunityTags.insert({
             name: "StudentInTrondheim"
@@ -300,8 +427,8 @@ Meteor.startup(function(){
         })
     }
 
-    if (!Groups.findOne() && Meteor.settings.DEBUG){
-        console.log("Default Group totally made")
+    if (!Groups.findOne()){
+        console.log("Default Group made.")
         Groups.insert({
             name: "Trondheim party people",
             description: "party party party",
@@ -311,13 +438,6 @@ Meteor.startup(function(){
         })
     }
 
-    if (!Tag.findOne() && Meteor.settings.DEBUG){
-        console.log("Default tag totally made");
-        Tag.insert({
-            name: "Kult",
-            taggedContent: []
-        });
-    }
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");
 
@@ -327,7 +447,8 @@ Meteor.startup(function(){
             last_name: "Pong",
             organization: "CC AS",
             languages: languageIds,
-            home_adress: "Trondheim"
+            home_adress: "Trondheim",
+            preferred_language: "English"
         }
         userid = Meteor.users.insert({
             username: defUser.username,

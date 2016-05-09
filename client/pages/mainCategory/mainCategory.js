@@ -5,16 +5,15 @@ var options = {
 };
 var fields = ['name', 'title', 'description', "_id", "icon"];
 
-
 PackageSearch = new SearchSource('categorySearch', fields, options);
 ContentSearch = new SearchSource('contentSearch', fields, options);
 
 Template.searchResult.helpers({
-    all_categories: function() {
-        var categories = Category.find({});
+  all_categories: function() {
+      var categories = Category.find({});
 
-        return categories;
-    },
+      return categories;
+  },
   getPackages: function() {
   	// put if here for saperate two collections for two section search result, might need type for content or category
     return PackageSearch.getData({
@@ -34,12 +33,8 @@ Template.searchResult.helpers({
 Template.searchResultContent.helpers({
   getContents: function() {
         // put if here for saperate two collections for two section search result, might need type for content or category
-    // console.log(ContentSearch.getData({
-    //   transform: function(matchText, regExp) {
-    //     return matchText.replace(regExp, "<b>$&</b>")
-    //   },
-    //   sort: {isoScore: -1}
-    // }))
+        // console.log("in getContents")
+        // console.log(ContentSearch.getData())
     return ContentSearch.getData({
       transform: function(matchText, regExp) {
         return matchText.replace(regExp, "<b>$&</b>")

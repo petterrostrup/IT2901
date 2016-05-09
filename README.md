@@ -69,6 +69,10 @@ This is for multiple search selection for createContent
 
 Simple framework for adding constraints on adding, deleting and reading the mongdo database. Based on alanning:roles.
 
+### [accounts-ui](https://atmospherejs.com/meteor/accounts-ui)
+Used for change password to a user account.
+Can also be used for logging in with facebook etc.
+
 ## How-to-git (simple)
 
 *Never* push directly to the master branch and the developer branch. You can check witch branch you are on by typing "git branch". 

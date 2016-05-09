@@ -6,13 +6,13 @@ Schema.UserProfile = new SimpleSchema({
 		type: String,
 		label: "First Name",
 		max: 30,
-		optional: true
+		optional: false
 	},
 	last_name: {
 		type: String,
 		label: "Last Name",
 		max: 30,
-		optional: true
+		optional: false
 	},
 	organization: {
 		type: String,
@@ -24,7 +24,7 @@ Schema.UserProfile = new SimpleSchema({
 		type: [String],
 		label: "Languages",
 		regEx: SimpleSchema.RegEx.Id,
-		optional: true
+		optional: false
 	},
     home_adress: {
         type: String,
@@ -34,7 +34,7 @@ Schema.UserProfile = new SimpleSchema({
     preferred_language: {
     	type: String,
     	label: "Preferred language",
-    	optional: true
+    	optional: false
     }
 });
 
@@ -145,16 +145,7 @@ Schema.Tag = new SimpleSchema({
 });
 
 Schema.Category = new SimpleSchema({
-	name: {
-		type: String,
-		label: "Name",
-		optional: false,
-		max: 60
-	},
-	url_name: {
-		type: String,
-		optional: false
-	},
+
 	parent_id: {
 		type: String,
 		regEx: SimpleSchema.RegEx.Id,
@@ -182,13 +173,9 @@ Schema.Category = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
-	description: {
-		type: String,
-		optional: false
-	},
 	icon: {
 		type: String,
-		optional: true
+		optional: false
 	},
 	timestamp: {
 	    type: Date,
@@ -202,14 +189,37 @@ Schema.Category = new SimpleSchema({
 		    }
 	    }
   	},
+  	categories: {
+  		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
+  	}
+});
+
+Schema.CategoryText = new SimpleSchema({
+	name: {
+		type: String,
+		label: "Name",
+		optional: false,
+		max: 60
+	}, 
+	description: {
+		type: String,
+		optional: false
+	},
+	metacategory: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: true
+	},	
+	language: {
+		type: String,
+		optional: false,
+		max: 20
+	},
 });
 
 Schema.ContentText = new SimpleSchema({
-	createdById: {
-		type: String,
-		regEx: SimpleSchema.RegEx.Id,
-		optional:false
-	},
 	title: {
 		type: String,
 		optional: false,
@@ -248,11 +258,11 @@ Schema.ContentText = new SimpleSchema({
   	},
 	upVote: {
 		type: [String],
-		optional: true
+		optional: false
 	},
 	downVote: {
 		type: [String],
-		optional: true
+		optional: false
 	}
 });
 
@@ -321,4 +331,5 @@ Tag.attachSchema(Schema.Tag);
 Category.attachSchema(Schema.Category);
 ContentText.attachSchema(Schema.ContentText);
 LanguageTags.attachSchema(Schema.LanguageTags);
+CategoryText.attachSchema(Schema.CategoryText);
 Groups.attachSchema(Schema.Groups);
