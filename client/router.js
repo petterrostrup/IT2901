@@ -49,6 +49,11 @@ Router.route("/settings", {
   template: "settings"
 });
 
+Router.route("/yourGroups", {
+  name: "yourGroups",
+  template: "yourGroups"
+});
+
 Router.route("/activity", {
   name: "activity",
   template: "activity"

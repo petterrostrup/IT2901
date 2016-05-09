@@ -1,0 +1,57 @@
+<template name="yourGroups" >
+<div class="wrapper groups">
+    <div class="col-md-4">
+        <h3>Your Groups</h3>
+        <hr/>
+        {{#with get_your_groups}}
+        <table style="float: left; display: inline-block">
+            <tr>
+                <td><h2>{{name}}</h2></td>
+            </tr>
+            <tr>
+                <td><p>{{description}}</p></td>
+            </tr>
+        </table>
+        {{/with}}
+        <table class="table table-striped table-hover" style="margin-top: 10%">
+            <thead>
+            <tr>
+                <th class="tableHeader">{{_ "mainContent.title"}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each get_your_groups}}
+            <tr class="clickAble {{_id}}">
+                <td>
+
+                    {{name}}
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4 pull-right">
+        <h3>All Groups</h3>
+        <hr/>
+        <table class="table table-striped table-hover" style="margin-top: 10%">
+            <thead>
+            <tr>
+                <th class="tableHeader">{{_ "mainContent.title"}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each get_all_groups}}
+            <tr class="clickAble {{_id}}">
+                <td>
+                    {{name}}
+                </td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</template>

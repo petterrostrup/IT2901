@@ -135,5 +135,10 @@ Template.group.events({
 				// console.log(Session.get("isMember"));
 			}
 		});
-	} 
+	},
+	"click .clickAble": function(event){
+		// event.preventDefault();
+		Router.go("show_content", {_id: event.target.parentElement.className.split(" ")[1]});
+
+	}
 });

@@ -2,25 +2,34 @@
 
     <div class="wrapper">
         <div class="row">
-            <div class="col-lg-5">
-                <div class="input-group">
+            <div class="col-lg-12">
+
+                <div class="col-lg-2 pull-right">
+                    <a href="{{pathFor 'settings'}}" class="btn btn-default">
+                        <i class="fa fa-cogs" aria-hidden="true"></i> {{_ "mainContent.settings"}}
+                    </a>
+                </div>
+
+                <div class="col-lg-2 pull-right">
+                    <a href="{{pathFor 'yourGroups'}}" class="btn btn-default">
+                        <i class="fa fa-users" aria-hidden="true"></i> Your Groups
+                    </a>
+                </div>
+
+                <div class="input-group pull-left">
                     <!-- Search function-->
                     
                         {{> searchBox }}             
-                        
-                        
-                    
+
                     <!-- End of Search function-->
                 </div>
             </div>
-            <div class="col-lg-5">
-            </div>
-            <div class="col-lg-2">
-              <a href="{{pathFor 'settings'}}" class="btn btn-default">
-                <i class="fa fa-cogs" aria-hidden="true"></i> {{_ "mainContent.settings"}}
-              </a>
-            </div>
+
+
         </div>
+
+
+
 
         <div class="col-lg-15">
             <div class="row">
