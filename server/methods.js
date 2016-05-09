@@ -377,7 +377,10 @@ Meteor.methods({
 
 	// edit_profile with first_name, last_name, language, email
 	edit_profile: function(userInfo, newEmail) {
-		check(userInfo, Object);
+		check(userInfo, {
+			first_name: String,
+			last_name: String
+		});
 		check(newEmail, String);
 
 		if (!Meteor.userId()) {
@@ -385,6 +388,7 @@ Meteor.methods({
 		}
 		userInfo.languages = Meteor.user().profile.languages;
 		userInfo.organization = "Company AS";
+		userInfo.preferred_language = Meteor.user().profile.preferred_language;
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {profile: userInfo}});
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {email: newEmail}});
 	},

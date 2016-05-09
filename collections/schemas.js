@@ -26,11 +26,6 @@ Schema.UserProfile = new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Id,
 		optional: false
 	},
-    home_adress: {
-        type: String,
-        label: "Home Adress",
-        optional: false
-    },
     preferred_language: {
     	type: String,
     	label: "Preferred language",
