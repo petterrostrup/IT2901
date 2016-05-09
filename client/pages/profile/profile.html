@@ -57,9 +57,10 @@
                         </div>
                         <div class="panel-footer">
                         <span>
-                            <a href="{{pathFor 'editProfile'}}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit">  </i> Edit Profile</a>
-                            <a href="{{pathFor 'languages'}}" class="edit-lang btn btn-sm btn-info" type="button"><i class="glyphicon glyphicon-edit">  </i> Edit Languages</a>
-                            <a href="{{pathFor 'activity'}}" class="activity btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-list-alt">  </i> Show Activity</a>
+                            <a href="{{pathFor 'editProfile'}}" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit">  </i> {{_ "profile.edit_profile"}}</a>
+                            <a href="{{pathFor 'languages'}}" class="edit-lang btn btn-sm btn-info" type="button"><i class="glyphicon glyphicon-edit">  </i> {{_ "profile.edit_lang"}}</a>
+                            <a href="{{pathFor 'activity'}}" class="activity btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-list-alt">  </i> {{_ "profile.show_activity"}}</a>
+                            <a href="{{pathFor 'change_password'}}" class="activity btn btn-sm btn-success" type="button"><i class="glyphicon glyphicon-list-alt">  </i> {{_ "profile.change_pass"}}</a>
                         </span>
                         </div>
                     </div>

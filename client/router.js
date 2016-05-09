@@ -54,6 +54,15 @@ Router.route("/activity", {
   template: "activity"
 });
 
+Router.route("/change_password", function() {
+  if (Meteor.userId()) {
+    this.render("change_password");
+  }
+  else {
+    this.render("page_not_found");
+  }
+}, {name: "change_password"});
+
 
 Router.route("/translateContent/:_id", function() {
   if (!Meteor.user()) {
@@ -146,7 +155,7 @@ Router.route("/category/:_id", function() {
       this.render("category_empty", {data: data});
     }
     else
-      this.render("category");
+      this.render("category", {data: data});
   }
   else
     this.render("page_not_found");

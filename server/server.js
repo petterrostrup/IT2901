@@ -1,16 +1,19 @@
     // Search
 SearchSource.defineSource('categorySearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  var arr = [];
+    var options = {sort: {isoScore: -1}, limit: 20};
+    var arr = [];
+    var language = "English";
+    if (Meteor.userId()) {
+        language = Meteor.user().profile.preferred_language;
+    }
 
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {name: regExp},
-      {description: regExp},
-
-    ]};
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {name: regExp},
+          {description: regExp},
+        ]};
 
     // try using lookup from mongodb
     
@@ -21,11 +24,11 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
                 }).fetch();
             return doc
             }
-        }).fetch()
+        }).fetch();
     // end of try lookup
     
-    return result
-  } else {
+        return result
+    } else {
 // another transform
 //     , {
 //     transform: function(doc) {
@@ -35,19 +38,54 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 //         return doc
 //     }
 // }
-    var result = CategoryText.find({}, {
-        transform: function(doc) {
-            doc.categoryObj = Category.find({
-                categories: { $in: [doc._id]}
+
+        var list = [];
+        var categories = Category.find({}).fetch();
+        for (var a in categories) {
+            var cat = categories[a];
+            if (cat.parent_id)
+                continue;
+            var texts = CategoryText.find({
+                metacategory: cat._id
             }).fetch();
-            return doc
+            var found = false;
+            for (var t in texts) {
+                if (texts[t].language === language) {
+                    found = true;
+                    texts[t].categoryObj = [cat];
+                    list.push(texts[t]);
+                    break;
+                }
+            }
+            if (!found) {
+                var chosen = texts[0];
+                chosen.categoryObj = [cat];
+                list.push(chosen);
+            }
         }
-    }).fetch()
-    return result;
-  }
+        return list;
+
+        // var result = CategoryText.find({}, {
+        //     transform: function(doc) {
+        //         var hei = Category.findOne({
+        //             parent_id: {$exists:false},
+        //             _id: doc.metacategory
+        //             // categories: { $in: [doc._id]}
+        //         });
+        //         if (!hei)
+        //             return {};
+        //         doc.categoryObj = Category.find({
+        //             categories: { $in: [doc._id]}
+        //         }).fetch();
+        //         return doc
+        //     }
+        // }).fetch();
+        // // console.log(result);
+        // return result;
+    }
 });
 
-    function buildRegExp(searchText) {
+function buildRegExp(searchText) {
   // this is a dumb implementation
   var parts = searchText.trim().split(/[ \-\:]+/);
   return new RegExp("(" + parts.join('|') + ")", "ig");
@@ -56,19 +94,19 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
 // content search
 SearchSource.defineSource('contentSearch', function(searchText, options) {
     options = options || {};
-  var options = {sort: {isoScore: -1}, limit: 20};
-  
-  if(searchText) {
-    var regExp = buildRegExp(searchText);
-    var selector = {$or: [
-      {title: regExp},
-      {description: regExp},
-      // {title: regExp}
-      // {community_id: regExp}
-    ]};
-    var selectorCatText = {$or: [
-      {name: regExp},
-    ]};
+    var options = {sort: {isoScore: -1}, limit: 20};
+    // console.log("SEARHC: " + searchText);
+    if(searchText) {
+        var regExp = buildRegExp(searchText);
+        var selector = {$or: [
+          {title: regExp},
+          {description: regExp},
+          // {title: regExp}
+          // {community_id: regExp}
+        ]};
+        var selectorCatText = {$or: [
+          {name: regExp},
+        ]};
     // search by commu and lang
     // var selectorTag = {$or: [
     //   {name: regExp},
@@ -115,12 +153,12 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }).fetch();
             return doc
             }
-        }).fetch()
+        }).fetch();
         var con_id = []
         for (var i in catText) {
             for (var j in catText[i].categoryObj){
                 for (var k in catText[i].categoryObj[j].content_ids){
-                    con_id.push(catText[i].categoryObj[j].content_ids[k])
+                    con_id.push(catText[i].categoryObj[j].content_ids[k]);
                 }
             }
         }
@@ -166,6 +204,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         var resultContentGroup = []
         for (var i in con_id_group) {
             var resultContentGroup = ContentText.find({metacontent:con_id_group[i]}, { options,
+
                 transform: function(doc) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
@@ -175,6 +214,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }).fetch()
 
             searchByGroupResult.push(resultContentGroup[0])
+
         }
 
         // end of group
@@ -191,9 +231,34 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         // result - array of contents by name, searchByCatResult - array of contents by category
         var finalResult = searchByCatResult.concat(searchByGroupResult.concat(result))
 
+        return finalResult;
+    // return finalResult
+//   } else {
+// =======
+//             transform: function(doc) {
+//                 doc.contentObj = Content.find({
+//                     contents: { $in: [doc._id]}
+//                 }).fetch();
+//                 return doc;
+//             }
+//         }).fetch();
+//             // console.log("content")
+//             // console.log(result.concat(searchByCatResult))
+//         var finalResult = result.concat(searchByCatResult);
+//         // console.log("concat")
+//         // console.log(finalResult)
 
-    return finalResult
-  } else {
+//         var finalFinal = [];
+//         for (var i in finalResult) {
+//             for (var j in finalResult[i]){
+//                 finalFinal.push(finalResult[i][j])
+//             }
+//         }   
+//         // console.log("finalfinal")
+//         // console.log(finalFinal);
+        // return finalFinal
+    } else {
+        return [];
 
     var result = ContentText.find({}, {
         transform: function(doc) {
@@ -367,12 +432,17 @@ Meteor.startup(function(){
             description: "Informasjon anngående transport",
             language: "Norsk"
         });
+        add_category("city2", {
+            name: "By",
+            description: "Informasjon anngående byen",
+            language: "Norsk"
+        });
     }
     
 
     var languageIds = [];
     // add something in database for language test
-    if (!LanguageTags.findOne() && Meteor.settings.DEBUG){
+    if (!LanguageTags.findOne()){
         console.log("Default LanguageTags created.");
         languageIds.push(LanguageTags.insert({
             name: "Norsk",
@@ -434,13 +504,6 @@ Meteor.startup(function(){
         });
     }
 
-    if (!Tag.findOne() && Meteor.settings.DEBUG){
-        console.log("Default tag totally made");
-        Tag.insert({
-            name: "Kult",
-            taggedContent: []
-        });
-    }
     if(!Meteor.users.findOne() && Meteor.settings.DEBUG){
         console.log("Create default user");
 

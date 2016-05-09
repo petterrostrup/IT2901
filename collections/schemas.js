@@ -6,13 +6,13 @@ Schema.UserProfile = new SimpleSchema({
 		type: String,
 		label: "First Name",
 		max: 30,
-		optional: true
+		optional: false
 	},
 	last_name: {
 		type: String,
 		label: "Last Name",
 		max: 30,
-		optional: true
+		optional: false
 	},
 	organization: {
 		type: String,
@@ -24,12 +24,12 @@ Schema.UserProfile = new SimpleSchema({
 		type: [String],
 		label: "Languages",
 		regEx: SimpleSchema.RegEx.Id,
-		optional: true
+		optional: false
 	},
     home_adress: {
         type: String,
         label: "Home Adress",
-        optional: true
+        optional: false
     },
     preferred_language: {
     	type: String,
@@ -175,7 +175,7 @@ Schema.Category = new SimpleSchema({
 	},
 	icon: {
 		type: String,
-		optional: true
+		optional: false
 	},
 	timestamp: {
 	    type: Date,

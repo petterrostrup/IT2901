@@ -26,13 +26,26 @@ Template.category.helpers({
 	// End of language search
 
 	//Returns the category you are currently in. 
-	data: function() {
+	load_category: function() {
 		// var data = Category.findOne({_id: Router.current().params._id});
-		var data = CategoryText.findOne({
-			metacategory: Router.current().params._id
+		// var language = Methods.get_current_language();
+		// console.log("LOLASKIS");
+		var lang = TAPi18next.lng();
+		var language = LanguageTags.findOne({
+			short_form: lang
 		});
+		var data = CategoryText.findOne({
+			metacategory: Router.current().params._id,
+			language: language.name
+		});
+		if (!data) {
+			data = CategoryText.findOne({
+				metacategory: Router.current().params._id
+			});
+		}
 		return data;
 	},
+
 	//
 	timeSince: function(time) {
 
@@ -54,7 +67,7 @@ Template.category.helpers({
 			console.log("ERROR");
 			return;
 		}
-		var lang = Session.get("current_language");
+		var lang = TAPi18next.lng();
 		var db_lang = LanguageTags.findOne({
 			short_form: lang
 		});
@@ -63,9 +76,15 @@ Template.category.helpers({
 			supported_langs = [];
 			var user_languages = Meteor.user().profile.languages;
 			for (var a in user_languages) {
-				supported_langs.push(LanguageTags.findOne({
+				var l = LanguageTags.findOne({
 					_id: user_languages[a]
-				}).name);
+				});
+				if (l){
+					supported_langs.push(l.name);
+				}
+				// supported_langs.push(LanguageTags.findOne({
+				// 	_id: user_languages[a]
+				// }).name);
 			}
 		}
 
@@ -119,7 +138,7 @@ Template.category.helpers({
 	get_content: function() {
 		// console.log("Init get_content!");
 		var list = [];
-		var default_language = Session.get("current_language");
+		var default_language = TAPi18next.lng();
 		var db_language = LanguageTags.findOne({
 			short_form: default_language
 		});
@@ -185,7 +204,7 @@ Template.category.helpers({
 					if (found)
 						break;
 				}
-				if (found)
+				if (found || !cont_lang.length)
 					continue;
 				else if (!hide_other_lang) {
 					all_contents.push({
@@ -227,12 +246,24 @@ Template.category.events({
 		if (template.$("#new_subcategory").hasClass('active')){
 			template.$("#new_subcategory").removeClass('active');
 			template.$("#new_subcategory").hide();
-			template.$("#subCatButton").html("&#xf150; Create Subcategory");
+			// template.$("#subCatButton").html("&#xf150; Create Subcategory");
 		}
 		else{
 			template.$("#new_subcategory").addClass('active');
 			template.$("#new_subcategory").show();
-			template.$("#subCatButton").html("&#xf151; Cancel");
+			// template.$("#subCatButton").html("&#xf151; Cancel");
+		}
+	},
+	"click #transbtn": function(event, template) {
+		if (template.$("#translate_category").hasClass('active')){
+			template.$("#translate_category").removeClass('active');
+			template.$("#translate_category").hide();
+			// template.$("#transbtn").html("&#xf150; Create Subcategory");
+		}
+		else{
+			template.$("#translate_category").addClass('active');
+			template.$("#translate_category").show();
+			// template.$("#transbtn").html("&#xf151; Cancel");
 		}
 	},
 	// Listens to click. When clicked it will create a new sub category 
@@ -262,6 +293,40 @@ Template.category.events({
     		}
     		if (result) {
     			Router.go("show_category", {_id: result});
+    		}
+    	});
+    },
+
+    "submit #translate_category": function(event, template) {
+    	event.preventDefault();
+    	var name = event.target.name_trans.value;
+    	var desc = event.target.desc_trans.value;
+    	var langs = $("#autocomplete-input-Lang-trans").val().split(" ");
+	   	for (var lang in langs) {
+	   		langs[lang] = langs[lang].replace("#", "");
+	   	}
+    	var language = langs[0];
+    	var text = {
+    		name: name,
+    		description: desc,
+    		language: language,
+    		metacategory: Router.current().params._id
+    	}
+    	Meteor.call("translate_category", text, function(error, result) {
+    		if (error) {
+    			console.log(error);
+    			template.$("#logErrorText").text(error);
+          		template.$("#logError").show();
+          		setTimeout(function() {
+          			template.$("#logError").hide();
+          		}, 5000);
+    		}
+    		else {
+    			template.$("#logErrorText").text("Category translated.");
+          		template.$("#logError").show();
+          		setTimeout(function() {
+          			template.$("#logError").hide();
+          		}, 5000);
     		}
     	});
     },

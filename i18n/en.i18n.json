@@ -26,7 +26,15 @@
         "Joined": "Joined",
         "Email": "Email",
         "UserPrivileges": "User Privileges",
-        "CreatedContent": "Created content"
+        "CreatedContent": "Created content",
+        "edit_profile": "Edit Profile",
+        "edit_lang": "Edit Languages",
+        "show_activity": "Show Activity",
+        "change_pass": "Change password",
+        "old_pass": "Old password",
+        "new_pass": "New password",
+        "retype": "Retype new password",
+        "no_match": "Something wrong happened"
     },
     "createContent": {
         "CreateContent": "Create Content",
@@ -89,10 +97,19 @@
     },
     "home": {
         "added": "Added",
-        "ago": "ago"
+        "ago": "ago",
+        "newsfeed": "Newsfeed"
     },
     "error": {
         "empty_category": "This category does not have any content yet. If you log in you can add new content to this category."
+    },
+    "category": {
+        "new_sub": "Create subcategory",
+        "translate": "Translate category",
+        "name": "Name",
+        "description": "Description",
+        "new_sub_text": "New subcategory",
+        "language": "Language"
     }
 }
 

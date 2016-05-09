@@ -6,11 +6,15 @@ Meteor.methods({
 	create_user: function(user, password) {
 
 		// Checks that the input are in the correct format, and that it does not contain database-strings
+
+		console.log(user);
 		check(user, {
 			username: String,
 			email: String,
 			profile: {
-				preferred_language: String
+				preferred_language: String,
+				first_name: String,
+				last_name: String
 			}
 		});
 		check(password, String);
@@ -33,6 +37,7 @@ Meteor.methods({
 
 		user.createdContents = [];
 		user.roles = ["standard", "creator"];
+		user.profile.languages = [];
 
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
@@ -208,7 +213,7 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
-		console.log(content);
+		// console.log(content);
 		check(content, {
 			title: String,
 			description: String,
@@ -222,6 +227,7 @@ Meteor.methods({
 		content.downVote = [];
 
 		var father = Content.findOne({_id: content.metacontent});
+		
 		if (!father) 
 			throw new Meteor.Error(404, "Content not found.");
 
@@ -249,6 +255,58 @@ Meteor.methods({
 		}
 		
 		return content.metacontent;
+	},
+
+
+	translate_category: function(cat_text) {
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		check(cat_text, {
+			name: String,
+			description: String,
+			metacategory: String,
+			language: String
+		});
+
+		var category_father = Category.findOne({
+			_id: cat_text.metacategory
+		});
+
+		if (!category_father) {
+			throw new Meteor.Error(404, "Could not find category.");
+		}
+
+		var language = LanguageTags.findOne({
+			name: cat_text.language
+		});
+
+		if (!language) {
+			throw new Meteor.Error(404, "Could not find language.");
+		}
+
+		var check_cat = CategoryText.findOne({
+			language: language.name
+		});
+
+		if (check_cat) {
+			CategoryText.update({
+				_id: check_cat._id
+			}, cat_text);
+		}
+		else {
+			var id = CategoryText.insert(cat_text);
+			if (!id) {
+				throw new Meteor.Error(500, "Category not created.");
+			}
+			Category.update({
+				_id: cat_text.metacategory
+			}, {
+				$push: {categories: id}
+			});
+		}
 	},
 
 
@@ -288,8 +346,8 @@ Meteor.methods({
 			parent_id: parent._id,
 			children_id: [],
 			content_ids: [],
-			categories: []
-			//icon: , since its optional
+			categories: [],
+			icon: parent.icon
 		}
 		var category_id = Category.insert(cat)
 		if (!category_id) {
