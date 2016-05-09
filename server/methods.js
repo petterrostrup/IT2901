@@ -114,8 +114,11 @@ Meteor.methods({
 
 		check(main, {
 			category_id: String,
-			community: String
+			community_id: String
 		});
+		console.log("test group")
+	   	console.log(main.community_id)
+	   	console.log(main.category_id)
 
 		check(content, {
 			title: String,
@@ -149,21 +152,29 @@ Meteor.methods({
 		// 	community_id.push(CommunityTags.findOne({name: post.community[com]})._id)
 		// }
 		
-		var community_id = CommunityTags.findOne({name: main.community})._id;
-		if (!community_id) {
-			throw new Meteor.Error(400, "Missing valid community id.");
-		}
+		var group = Groups.findOne({_id: main.community_id});
 
-		main.community_id = community_id;
+		if (!group) {
+			throw new Meteor.Error(400, "Missing valid group id.");
+		}
 
 		var content_id = Content.insert(main);
 		if (!content_id) {
 			throw new Meteor.Error(400, "Content not added!");
 		}
+
+		// add category
 		category.content_ids.push(content_id);
 
 		Category.update({_id: category._id}, {"$set": {
 			content_ids: category.content_ids
+		}});
+
+		// add group
+		group.content_ids.push(content_id);
+
+		Groups.update({_id: group._id}, {"$set": {
+			content_ids: group.content_ids
 		}});
 
 		content.metacontent = content_id;

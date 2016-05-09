@@ -270,15 +270,15 @@ Schema.LanguageTags = new SimpleSchema({
 });
 
 Schema.Groups = new SimpleSchema({
-	name: {
-		type: String,
-		optional: false
-	},
-	description: {
-		type: String,
-		optional: false
-	},
-	members: {
+	// name: {
+	// 	type: String,
+	// 	optional: false
+	// },
+	// description: {
+	// 	type: String,
+	// 	optional: false
+	// },
+	membersOfGroup: {
 		type: [String],
 		optional: false
 	},
@@ -308,8 +308,37 @@ Schema.Groups = new SimpleSchema({
 		    	this.unset();  // Prevent user from supplying their own value
 		    }
 	    }
+  	},
+  	groupsText: {
+  		type: [String],
+		regEx: SimpleSchema.RegEx.Id,
+		optional: false
   	}
 });
+
+Schema.GroupsText = new SimpleSchema({
+	name: {
+		type: String,
+		label: "Name",
+		optional: false,
+		max: 60
+	}, 
+	description: {
+		type: String,
+		optional: false
+	},
+	metagroups: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Id,
+		optional: true
+	},	
+	language: {
+		type: String,
+		optional: false,
+		max: 20
+	},
+});
+
 
 
 
@@ -321,3 +350,4 @@ ContentText.attachSchema(Schema.ContentText);
 LanguageTags.attachSchema(Schema.LanguageTags);
 CategoryText.attachSchema(Schema.CategoryText);
 Groups.attachSchema(Schema.Groups);
+GroupsText.attachSchema(Schema.GroupsText);

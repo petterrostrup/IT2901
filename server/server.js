@@ -107,7 +107,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     // console.log(result)
     // end of test join collections
     //concat two returned collections
-
+        // category
         var catText = CategoryText.find(selectorCatText, { options,
             transform: function(doc) {
                 doc.categoryObj = Category.find({
@@ -124,8 +124,10 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }
             }
         }
+
         // got content_ids then use it to get content
         var searchByCatResult = []
+        var resultContent = []
         for (var i in con_id) {
             var resultContent = ContentText.find({metacontent:con_id[i]}, { options,
                 transform: function(doc) {
@@ -135,21 +137,47 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 return doc
                 }
                 }).fetch()
-            searchByCatResult.push(resultContent)
-            console.log("in loop")
-            console.log(ContentText.find({metacontent:con_id[i]}, { options,
+
+            searchByCatResult.push(resultContent[0])
+        }
+
+        // end of category
+
+        // group
+        var groupText = GroupsText.find(selectorCatText, { options,
+            transform: function(doc) {
+                doc.groupObj = Groups.find({
+                    groupsText: { $in: [doc._id]}
+                }).fetch();
+            return doc
+            }
+        }).fetch()
+        var con_id_group = []
+        for (var i in groupText) {
+            for (var j in groupText[i].groupObj){
+                for (var k in groupText[i].groupObj[j].content_ids){
+                    con_id_group.push(groupText[i].groupObj[j].content_ids[k])
+                }
+            }
+        }
+
+        // got content_ids then use it to get content
+        var searchByGroupResult = []
+        var resultContentGroup = []
+        for (var i in con_id_group) {
+            var resultContentGroup = ContentText.find({metacontent:con_id_group[i]}, { options,
                 transform: function(doc) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
                 return doc
                 }
-                }).fetch())
-            console.log("searchByCatResult")
-            console.log(searchByCatResult)
+                }).fetch()
+
+            searchByGroupResult.push(resultContentGroup[0])
         }
-        console.log("cat Re")
-        console.log(searchByCatResult)
+
+        // end of group
 
         var result = ContentText.find(selector, { options,
         transform: function(doc) {
@@ -159,21 +187,12 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         return doc
         }
         }).fetch()
-            console.log("content")
-            console.log(result.concat(searchByCatResult))
-        var finalResult = result.concat(searchByCatResult)
-        console.log("concat")
-        console.log(finalResult)
 
-        var finalFinal = []
-        for (var i in finalResult) {
-            for (var j in finalResult[i]){
-                finalFinal.push(finalResult[i][j])
-            }
-        }   
-        console.log("finalfinal")
-        console.log(finalFinal)
-    return finalFinal
+        // result - array of contents by name, searchByCatResult - array of contents by category
+        var finalResult = searchByCatResult.concat(searchByGroupResult.concat(result))
+
+
+    return finalResult
   } else {
 
     var result = ContentText.find({}, {
@@ -184,8 +203,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
             return doc
         }
     }).fetch()
-    console.log("reslult")
-    console.log(result)
     return result;
   }
 });
@@ -263,10 +280,13 @@ Meteor.publish("LanguageTags", function() {
     return LanguageTags.find({});
 });
 
-Meteor.publish("CommunityTags", function() {
-    return CommunityTags.find({});
+Meteor.publish("groups", function() {
+    return Groups.find({});
 });
 
+Meteor.publish("groupsText", function() {
+    return GroupsText.find({});
+});
 
 var add_category = function(icon, catText) {
     var mainCat = {
@@ -285,9 +305,7 @@ var add_category = function(icon, catText) {
 
 }
 
-Meteor.publish("groups", function() {
-    return Groups.find({});
-});
+
 
 Meteor.startup(function(){
     
@@ -456,26 +474,48 @@ Meteor.startup(function(){
     }
 
 
-    // add something in database for community test
-    if (!CommunityTags.findOne() && Meteor.settings.DEBUG){
-        console.log("Default CommunityTags created.");
-        CommunityTags.insert({
-            name: "StudentInTrondheim"
-        }); 
-        CommunityTags.insert({
-            name: "StartUp"
-        })
-    }
 
     if (!Groups.findOne() && Meteor.settings.DEBUG){
         console.log("Default Group totally made")
-        Groups.insert({
-            name: "Trondheim party people",
-            description: "party party party",
-            members: [],
+        var id = Groups.insert({
+            membersOfGroup: [],
             children_id: [],
-            content_ids: []
-        })
+            content_ids: [],
+            groupsText: []
+        });
+        var group = {
+            name: "NewStudent",
+            description: "Informasjon om ny student",
+            language: "Norsk",
+            metagroups: id
+        }
+        var content_text_id = GroupsText.insert(group);
+
+        Groups.update({
+            _id: id
+        }, {
+            $push: {groupsText: content_text_id}
+        });
+
+        id = Groups.insert({
+            membersOfGroup: [],
+            children_id: [],
+            content_ids: [],
+            groupsText: []
+        });
+        group = {
+            name: "Refugee",
+            description: "Informasjon om Refugee",
+            language: "Norsk",
+            metagroups: id
+        }
+        var content_text_id = GroupsText.insert(group);
+
+        Groups.update({
+            _id: id
+        }, {
+            $push: {groupsText: content_text_id}
+        });
     }
 
     if (!Tag.findOne() && Meteor.settings.DEBUG){

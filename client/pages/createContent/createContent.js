@@ -30,7 +30,7 @@ Template.createContent.helpers({
 	      rules: [
 	        {
 	          token: '#',
-	          collection: CommunityTags,  // Mongo.Collection object means client-side collection
+	          collection: GroupsText,  // Mongo.Collection object means client-side collection
 	          field: 'name',
 	          // set to true to search anywhere in the field, which cannot use an index.
 	          matchAll: true,  // 'ba' will match 'bar' and 'baz' first, then 'abacus'
@@ -137,11 +137,14 @@ Template.createContent.events({
 			cat_id = Category.findOne({categories: CategoryText.findOne({name: cat_id})._id})._id;
 			console.log(cat_id)
 		}
-		// check community
+		// check group
 	   	var coms = $("#autocomplete-input-Com").val().split(" ");
 	   	for (var com in coms) {
 	   		coms[com] = coms[com].replace("#", "");
 	   	}
+	   	var group_id = coms[0];
+		group_id = Groups.findOne({groupsText: GroupsText.findOne({name: group_id})._id})._id;
+
 		// check language
 		// Crate array of category that was summitted
 	   	var langs = $("#autocomplete-input-Lang").val().split(" ");
@@ -153,10 +156,9 @@ Template.createContent.events({
 	 	var main = {
 			category_id: cat_id
     	};
-    	console.log(coms)
 
-    	if (coms) {
-    		main.community = coms[0];
+    	if (group_id) {
+    		main.community_id = group_id;
     	}
 
     	if (!langs) {
