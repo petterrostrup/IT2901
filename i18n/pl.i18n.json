@@ -1,0 +1,149 @@
+{
+  "header": {
+    "Home": "Home",
+    "BrowseContent": "Browse Content",
+    "CreateContent": "Create Content",
+    "LogOut": "Log Out",
+    "Login": "Login  / Register",
+    "Admin": "Admin",
+    "toggle_lang": "Only show your languages"
+  },
+  "mainContent": {
+    "create_content": "Create content",
+    "title": "Title",
+    "description": "Description",
+    "created": "Created by",
+    "date": "Created",
+    "rating": "Rating",
+    "ago": "ago",
+    "search": "Search for content here",
+    "settings": "Settings"
+  },
+  "profile": {
+    "Username": "Username",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "Organization": "Organization",
+    "Language": "Language",
+    "Joined": "Joined",
+    "Email": "Email",
+    "UserPrivileges": "User Privileges",
+    "CreatedContent": "Created content",
+    "edit_profile": "Edit Profile",
+    "edit_lang": "Edit Languages",
+    "show_activity": "Show Activity",
+    "change_pass": "Change password",
+    "old_pass": "Old password",
+    "new_pass": "New password",
+    "retype": "Retype new password",
+    "no_match": "Something wrong happened",
+    "welcome": "Welcome"
+  },
+  "createContent": {
+    "CreateContent": "Create Content",
+    "Title": "Title",
+    "Description": "Description",
+    "Content": "Content",
+    "Community": "Community",
+    "Category": "Category",
+    "Language": "Language",
+    "cancel": "Cancel",
+    "translate_from": "Translate from",
+    "edit_lang": "Language",
+    "toggle_markdown": "Toggle markdown",
+    "success": "Content is created",
+    "categoryHelp": "Write a # before the categories you want your content under. #Mat #Økonomi e.g.",
+    "languageHelp": "Write a # before the language of the content. #Norwegian e.g.",
+    "communityHelp": "Write a # before the user groups your content is suitable for. #StudenterITrondheim e.g.",
+    "create": "Create content",
+    "back": "Back"
+  },
+  "submit": {
+    "Submit": "Submit"
+  },
+  "typeHere": {
+    "TypeHere": "Type Here"
+  },
+  "admin": {
+    "menu": {
+      "add_language": "Add language",
+      "rm_language": "Remove language",
+      "show_users": "Show all users"
+    },
+    "add_language": {
+      "name": "Name",
+      "short_name": "Short name",
+      "english": "English name",
+      "lang_added": "The language was added."
+    },
+    "users": {
+      "username": "Username",
+      "email": "Email",
+      "roles": "Roles",
+      "delete": "Delete user",
+      "show": "Show user",
+      "back": "Back"
+    },
+    "delete_language": "Delete language",
+    "delete_language_msg": "The language was deleted",
+    "settings": "Settings",
+    "add": "Add language"
+  },
+  "changeLanguage": {
+    "ChangeLanguage": "Change Language"
+  },
+  "settings": {
+    "header": "Settings",
+    "toggle_lang": "Only show content in your languages.",
+    "back": "Back"
+
+  },
+  "content": {
+    "translate": "Translate content",
+    "edit": "Edit content",
+    "save_changes": "Save changes",
+    "submit_translation": "Save translation"
+  },
+  "home": {
+    "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others",
+    "added": "Added",
+    "ago": "ago",
+    "newsfeed": "Newsfeed"
+  },
+  "error": {
+    "empty_category": "This category does not have any content yet. If you log in you can add new content to this category."
+  },
+  "category": {
+    "new_sub": "Create subcategory",
+    "translate": "Translate category",
+    "name": "Name",
+    "description": "Description",
+    "new_sub_text": "New subcategory",
+    "language": "Language"
+  },
+  "editLanguages": {
+    "title": "Your languages",
+    "engName": "English name",
+    "name": "Name",
+    "short": "Short form",
+    "delete": "Delete",
+    "add": "Add language",
+    "back": "Back",
+    "type": "Type language"
+  },
+  "editProfile": {
+    "info": "Info! All fields are freely editable now. Edit what you want and press the save button",
+    "first": "First Name",
+    "last": "Last Name",
+    "email": "Email",
+    "save": "Save Changes",
+    "back": "Back",
+    "success": "Changes are saved"
+  },
+  "activity": {
+    "title": "Your activity",
+    "back": "Back"
+  }
+
+}
+

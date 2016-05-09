@@ -45,31 +45,34 @@ Template.navigation.events({
         event.preventDefault();
         disablePopovers();
         var lang = (event.target).id;
-        if(supportedLanguages[(event.target).id].flipped){
+        if (supportedLanguages[(event.target).id].flipped) {
             $('#layoutContainer').addClass('reverseSite');
         }
-        else{
+        else {
             $('#layoutContainer').removeClass('reverseSite');
         }
+        console.log(lang);
+            console.log(TAPi18n.getLanguages());
+            TAPi18n.setLanguage(lang)
+                .done(function () {
 
+                    if (Meteor.userId()) {
 
-        TAPi18n.setLanguage(lang)
-            .done(function () {
-                if (Meteor.userId()) {
-                    Meteor.call("set_preferred_language", lang, function(error, result){
-                        if (error) {
-                            console.log(error);
-                        }else {
-                            console.log("Preferred language changed.");
-                        }
-                    });
-                }
-                Session.set("showLoadingIndicator", false);
-            })
-            .fail(function (error_message) {
-                // Handle the situation
-                console.log(error_message);
-            });
-    }
+                        Meteor.call("set_preferred_language", lang, function (error, result) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log("Preferred language changed.");
+                            }
+                        });
+                    }
+                    Session.set("showLoadingIndicator", false);
+                })
+                .fail(function (error_message) {
+                    // Handle the situation
+                    console.log(error_message);
+                });
+        }
+
 });
 
