@@ -122,10 +122,9 @@ Meteor.methods({
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
-
 		check(main, {
 			category_id: String,
-			community: String
+			community: Array
 		});
 
 		check(content, {
@@ -146,7 +145,7 @@ Meteor.methods({
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
-			throw new Meteor.Error(400, "Missing valid category id.");
+			throw new Meteor.Error(400, "Missing valid category");
 		}
 
 		// Community id
@@ -159,13 +158,25 @@ Meteor.methods({
 		// for (com in post.community) {
 		// 	community_id.push(CommunityTags.findOne({name: post.community[com]})._id)
 		// }
-		
-		var community_id = CommunityTags.findOne({name: main.community})._id;
-		if (!community_id) {
-			throw new Meteor.Error(400, "Missing valid community id.");
+
+		var language_id = LanguageTags.findOne({name: content.language});
+		if (!language_id) {
+			throw new Meteor.Error(400, "Missing valid language.");
 		}
 
-		main.community_id = community_id;
+		main.community_id = [];
+		if (main.community.length){
+			for (var a in main.community) {
+				var community_id = CommunityTags.findOne({name: main.community[a]});
+				if (community_id){
+					main.community_id.push(community_id._id);
+				}
+				
+			}
+		}
+		// if (!community_id) {
+		// 	throw new Meteor.Error(400, "Missing valid community id.");
+		// }
 
 		var content_id = Content.insert(main);
 		if (!content_id) {
@@ -178,12 +189,6 @@ Meteor.methods({
 		}});
 
 		content.metacontent = content_id;
-
-				// Language id
-		var language_id = LanguageTags.findOne({name: content.language})._id;
-		if (!language_id) {
-			throw new Meteor.Error(400, "Missing valid language id.");
-		}
 
 		var text_id = ContentText.insert(content);
 
@@ -277,13 +282,14 @@ Meteor.methods({
 		}
 
 		var check_cat = CategoryText.findOne({
-			language: language.name
+			language: language.name,
+			metacategory: category_father._id
 		});
 
 		if (check_cat) {
 			CategoryText.update({
 				_id: check_cat._id
-			}, cat_text);
+			}, {$set: cat_text});
 		}
 		else {
 			var id = CategoryText.insert(cat_text);

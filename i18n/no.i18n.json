@@ -41,19 +41,23 @@
         "Title": "Tittel",
         "Description": "Beskrivelse",
         "Content": "Innhold",
-        "Community": "Samfunn",
+        "Community": "Grupper",
         "Category": "Kategori",
         "Language": "Språk",
         "cancel": "Avbryt",
         "translate_from": "Oversett fra",
         "edit_lang": "Språk",
-        "toggle_markdown": "Vis innhold i markdown"
+        "toggle_markdown": "Vis innhold i markdown",
+        "error": "Noen feil har skjedd. Mangler noen felter eller feil input på feltene"
     },
     "submit": {
         "Submit": "Send inn"
     },
     "typeHere": {
-        "TypeHere": "Skriv her"
+        "TypeHere": "Skriv her",
+        "language": "Språk",
+        "startWith": "Start med #",
+        "category": "Kategori"
     },
     "admin": {
         "menu": {
@@ -108,7 +112,8 @@
         "name": "Navn",
         "description": "Beskrivelse",
         "new_sub_text": "Ny subkategori",
-        "language": "Språk"
+        "language": "Språk",
+        "translated": "Category translated"
     }
 }
 

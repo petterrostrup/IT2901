@@ -2,6 +2,21 @@ Template.createContent.rendered = function() {
 	$('[data-toggle="popover"]').popover();
 };
 
+var showError = function() {
+	$("#logError").show();
+	setTimeout(function() {
+		$("#logError").hide();
+	}, 3000);
+}
+
+var showMeteorError = function(error) {
+	$("#logErrorText").text(error);
+	$("#logError2").show();
+	setTimeout(function() {
+		$("#logError2").hide();
+	}, 3000);	
+}
+
 var selectedCategory = [];
 var selectedCommunity = [];
 var selectedLanguage = [];
@@ -135,7 +150,7 @@ Template.createContent.events({
 		   	}
 			cat_id = cats[0];
 			cat_id = Category.findOne({categories: CategoryText.findOne({name: cat_id})._id})._id;
-			console.log(cat_id)
+			// console.log(cat_id)
 		}
 		// check community
 	   	var coms = $("#autocomplete-input-Com").val().split(" ");
@@ -153,14 +168,15 @@ Template.createContent.events({
 	 	var main = {
 			category_id: cat_id
     	};
-    	console.log(coms)
+    	// console.log(coms)
 
     	if (coms) {
-    		main.community = coms[0];
+    		main.community = coms;
     	}
 
     	if (!langs) {
     		console.log("Need languages!!!");
+    		showError();
     		return;
     	}
 		content = {
@@ -172,14 +188,13 @@ Template.createContent.events({
 
 		if (!content.text) {
 			console.log("Ingen text funnet.");
+			showError();
 			return;
 		}
 
 		Meteor.call("submit_content", main, content, function(error, result) {
-			if (result)
-				console.log(result);
 			if (error)
-				console.log(error);
+				showMeteorError(error);
 			else
 				Router.go("show_content", {_id: result});
 		});

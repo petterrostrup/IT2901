@@ -322,11 +322,15 @@ Template.category.events({
           		}, 5000);
     		}
     		else {
-    			template.$("#logErrorText").text("Category translated.");
-          		template.$("#logError").show();
+          		template.$("#logSuccess").show();
           		setTimeout(function() {
-          			template.$("#logError").hide();
+          			template.$("#logSuccess").hide();
           		}, 5000);
+          		event.target.name_trans.value = "";
+    			event.target.desc_trans.value = "";
+    			template.$("#autocomplete-input-Lang-trans").val("");
+    			template.$("#translate_category").removeClass('active');
+				template.$("#translate_category").hide();
     		}
     	});
     },
