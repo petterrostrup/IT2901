@@ -15,7 +15,9 @@
         "created": "Laget av",
         "date": "Opprettet",
         "rating": "Vurdering",
-        "ago": "siden"
+        "ago": "siden",
+        "search": "Søk for innhold her",
+        "settings": "innstillinger"
     },
     "profile": {
         "Username": "Brukernavn",
@@ -34,7 +36,8 @@
         "old_pass": "Gammelt passord",
         "new_pass": "Nytt passord",
         "retype": "Gjengi nytt passord",
-        "no_match": "Noe feil har skjedd"
+        "no_match": "Noe feil har skjedd",
+        "welcome": "Velkommen"
     },
     "createContent": {
         "CreateContent": "Lag innhold",
@@ -48,7 +51,13 @@
         "translate_from": "Oversett fra",
         "edit_lang": "Språk",
         "toggle_markdown": "Vis innhold i markdown",
-        "error": "Noen feil har skjedd. Mangler noen felter eller feil input på feltene"
+        "error": "Noen feil har skjedd. Mangler noen felter eller feil input på feltene",
+        "success": "Innholdet er laget",
+        "categoryHelp": "Skriv en # og deretter navnet på kategorien. #Mat #Økonomi f.eks.",
+        "languageHelp": "Skriv en # og deretter språket på innholdet #English f.eks.",
+        "communityHelp": "Skriv en # og deretter navnet på brukergruppen innholdet er passende for. #StudenterITrondheim f.eks.",
+        "create": "Lag innhold",
+        "back": "Tilbake"
     },
     "submit": {
         "Submit": "Send inn"
@@ -113,9 +122,32 @@
         "name": "Navn",
         "description": "Beskrivelse",
         "new_sub_text": "Ny subkategori",
-        "language": "Språk",
         "translated": "Category translated",
-        "cancel": "Avbryt"
+        "cancel": "Avbryt",
+        "language": "Språk"
+    },
+    "editLanguages": {
+        "title": "Dine språk",
+        "engName": "Engelsk navn",
+        "name": "Navn",
+        "short": "Forkortet form",
+        "delete": "Slett",
+        "add": "Legg til språk",
+        "back": "Tilbake",
+        "type": "Skriv språk"
+    },
+    "editProfile": {
+        "info": "Info! Alle felt kan endres nå. Endre på det du vil, så lagrer du det med å trykke på lagre-knappen",
+        "first": "Fornavn",
+        "last": "Etternavn",
+        "email": "Email",
+        "save": "Lagre Endringer",
+        "back": "Tilbake",
+        "success": "Endringene er lagret"
+    },
+    "activity": {
+        "title": "Din aktivitet",
+        "back": "Tilbake"
     }
 }
 

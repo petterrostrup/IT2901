@@ -9,19 +9,19 @@
                         <h3 class="panel-title headerText">{{ getUserInfo.username }} - {{ currentUser.profile.first_name }} {{currentUser.profile.last_name}}</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="alert alert-success" id="editSuccess" style="display: none" role="alert">Profile information is edited</div>
-                        <div class="alert alert-info"><strong>Info!</strong> All fields are freely editable now. Edit what you want and press the save button</div>
+                        <div class="alert alert-success" id="editSuccess" style="display: none" role="alert">{{_ "editProfile.success"}}</div>
+                        <div class="alert alert-info">{{_ "editProfile.info"}}</div>
                         <div class="row">
                             <div class="col-md-3 col-lg-3 " align="center"></div>
                             <div class=" col-md-9 col-lg-9 ">
                                 <table class="table table-user-information">
                                     <tbody>
                                     <tr>
-                                        <td>First Name:</td>
+                                        <td>{{_ "editProfile.first"}}:</td>
                                         <td><input id="first_name" class="editInput" type="text" name="first_name" value="{{ getUserProfile.first_name }}"></td>
                                     </tr>
                                     <tr>
-                                        <td>Last Name:</td>
+                                        <td>{{_ "editProfile.last"}}:</td>
                                         <td><input id="last_name" class="editInput" type="text" name="last_name" value="{{ getUserProfile.last_name }}"></td>
                                     </tr>
                                     <!-- <tr>
@@ -29,7 +29,7 @@
                                         <td><input id="organization" class="editInput" type="text" name="organization" value="{{ getUserProfile.organization }}" readonly="readonly"></td>
                                     </tr> -->
                                     <tr>
-                                        <td>Email:</td>
+                                        <td>{{_ "editProfile.email"}}:</td>
                                         <td><input id="email" class="editInput" type="text" name="email" value="{{ getUserInfo.email }}"></td>
                                     </tr>
                                     <!-- <tr>
@@ -44,9 +44,9 @@
                     <div class="panel-footer">
                         <span>
                             <form id="edit-profile-submit">
-                                 <input class="btn btn-sm btn-default" type="submit" name="edit-profile-submit" style="font-family: FontAwesome;"  value="Save Changes  &#xf0c7;">
+                                 <input class="btn btn-sm btn-default" type="submit" name="edit-profile-submit" style="font-family: FontAwesome;"  value="{{_ "editProfile.save"}}  &#xf0c7;">
                             </form>
-                            <button class="btn btn-sm btn-default" style="margin-top: 5px;" onclick="history.back()"><i class="fa fa-backward" aria-hidden="true"> Back </i></button>
+                            <button class="btn btn-sm btn-default" style="margin-top: 5px;" onclick="history.back()"><i class="fa fa-backward" aria-hidden="true"> {{_ "editProfile.back"}} </i></button>
                         </span>
                     </div>
 
