@@ -30,10 +30,10 @@
                 <a href="{{pathFor 'create_content'}}/{{_id}}" style="font-family: FontAwesome" class="btn btn-default">
                     &#xf067; {{_ "mainContent.create_content"}}
                 </a>
-                <button id="transbtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_stuff" style="font-family: FontAwesome;">
+                <button id="transbtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#translate_content" style="font-family: FontAwesome;">
                     &#xf150; {{_ "category.translate"}}
                 </button>
-                <div id="translate_stuff" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div id="translate_content" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <form id="translate_category">
@@ -53,14 +53,14 @@
                             <tr>
                                 <!-- make it be able to search language like createContent -->
                                 <td>{{_ "category.language"}}:</td>
-                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang-trans" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang-trans" class="form-control" placeholder=(_ 'typeHere.TypeHere') }}</td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.translate'}}" />
+                                    <input type="submit" class="btn btn-default" id="transCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.translate'}}" />
                                 </td>
                                 <td>
-                                    <button class="btn btn-default" data-dismiss="modal">
+                                    <button class="btn btn-default cancelModalTranslate" data-dismiss="modal">
                                         {{_ 'category.cancel'}}
                                     </button>
                                 </td>
@@ -93,14 +93,14 @@
                             <tr>
                                 <!-- make it be able to search language like createContent -->
                                 <td>{{_ "category.language"}}:</td>
-                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') autofocus="autofocus"}}</td>
+                                <td>{{> inputAutocomplete autocomplete="off" settings=settingsLang id="autocomplete-input-Lang" class="form-control" placeholder=(_ 'typeHere.TypeHere') }}</td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.new_sub'}}" />
+                                    <input type="submit" class="btn btn-default" id="newSubCat" style="font-family: FontAwesome" value="&#xf067; {{_ 'category.new_sub'}}"  />
                                 </td>
                                 <td>
-                                    <button class="btn btn-default cancel" data-dismiss="modal">
+                                    <button class="btn btn-default cancel cancelModalCategory" data-dismiss="modal">
                                         {{_ 'category.cancel'}}
                                     </button>
                                 </td>
