@@ -46,8 +46,8 @@
                     &#xf067; {{_ "mainContent.create_content"}}
                 </a>
                 <!-- TODO -->
-                <button id="transbtn" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.translate"}}</button>
-                <form id="translate_category" style="display: none">
+                <button id="transbtn" data-placement="bottom" data-toggle="popover" data-trigger="manual" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.translate"}}</button>
+                <form class="popover" id="translate_category" style="display: none">
                     <table>
                         <tr>
                             <th>{{_ "category.translate"}}</th>
@@ -72,8 +72,8 @@
                     </table>
                 </form>
 
-                <button id="subCatButton" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.new_sub"}}</button>
-                <form id="new_subcategory" style="display: none">
+                <button id="subCatButton" data-placement="bottom" data-toggle="popover" data-trigger="manual" class="btn btn-default" style="font-family: FontAwesome;">&#xf150; {{_ "category.new_sub"}}</button>
+                <form id="new_subcategory" class="popover" style="display: none">
                     <table>
                         <tr>
                             <th>{{_ "category.new_sub_text"}}</th>
@@ -101,7 +101,7 @@
         </div>
         {{/if}}
 
-        <div class="sidebar nav navbar" >
+        <!--<div class="sidebar nav navbar" >
             <table style="margin-top: 25px" class="table">
                 <tr><th>Subcategories</th><th></th></tr>
                 {{#each get_children}}
@@ -114,7 +114,7 @@
                 {{/each}}
             </table>
         </div>
-
+-->
         {{#with load_category}}
         <table style="float: left; display: inline-block">
             <tr>
@@ -155,6 +155,7 @@
             {{/each}}
             </tbody>
         </table>
+        <!--
         {{#if get_children}}
         <table style="margin-top: 25px" class="table">
             <tr><th>Subcategories</th><th></th></tr>
@@ -168,6 +169,7 @@
             {{/each}}
         </table>
         {{/if}}
+        -->
     </div>
 </template>
 
