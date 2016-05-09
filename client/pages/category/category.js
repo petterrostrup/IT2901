@@ -1,6 +1,4 @@
 
-
-
 Template.registerHelper('last',
     function(list, elem) {
         return _.last(list) === elem;
@@ -241,104 +239,14 @@ Template.category.helpers({
 	}
 });
 
-Template.category.rendered = function(){
-	$('#subCatButton').popover({
-		html : true,
-		content: function() {
-			return $("#new_subcategory").html();
-		},
-		trigger: 'manual'
-	});
-
-	$('#transbtn').popover({
-		html : true,
-		content: function() {
-			return $("#translate_category").html();
-		},
-		trigger: 'manual'
-	});
-
-};
-
-var initPopovers = function(){
-	$('#subCatButton').popover({
-		html : true,
-		content: function() {
-			return $("#new_subcategory").html();
-		},
-		trigger: 'manual'
-	});
-
-	$('#transbtn').popover({
-		html : true,
-		content: function() {
-			return $("#translate_category").html();
-		},
-		trigger: 'manual'
-	});
-
-};
 
 Template.category.events({
 	//Listens to a click. When clicked it will show the "Create new sub category"-form
 	"click #subCatButton":function(event, template) {
 
-		event.preventDefault();
-
-
-		/*
-		 if (template.$("#new_subcategory").hasClass('active')){
-		 template.$("#new_subcategory").removeClass('active');
-		 template.$("#new_subcategory").hide();
-		 // template.$("#subCatButton").html("&#xf150; Create Subcategory");
-		 }
-		 else{
-		 template.$("#new_subcategory").addClass('active');
-		 template.$("#new_subcategory").show();
-		 // template.$("#subCatButton").html("&#xf151; Cancel");
-		 }
-		 */
-
-
-		$('#subCatButton').popover({
-			html : true,
-			content: function() {
-				return $("#new_subcategory").html();
-			},
-			trigger: 'manual'
-		});
-		$('#subCatButton').popover('toggle');
-		$('#transbtn').popover('hide');
-		initPopovers();
-
-
 	},
 
 	"click #transbtn": function(event, template) {
-		event.preventDefault();
-		/*
-		if (template.$("#translate_category").hasClass('active')){
-			template.$("#translate_category").removeClass('active');
-			template.$("#translate_category").hide();
-			// template.$("#transbtn").html("&#xf150; Create Subcategory");
-		}
-		else{
-			template.$("#translate_category").addClass('active');
-			template.$("#translate_category").show();
-			// template.$("#transbtn").html("&#xf151; Cancel");
-		}
-		*/
-
-		$('#transbtn').popover({
-			html : true,
-			content: function() {
-				return $("#translate_category").html();
-			},
-			trigger: 'manual'
-		});
-		$('#transbtn').popover('toggle');
-		$('#subCatButton').popover('hide');
-		initPopovers();
 
 	},
 	// Listens to click. When clicked it will create a new sub category 
@@ -355,6 +263,8 @@ Template.category.events({
     		parent_id: Router.current().params._id,
     	}
     	Meteor.call("add_category", cat, langs[0], function(error, result) {
+    		$(".modal-backdrop").remove();
+    		$('.modal.in').modal('hide');
     		if (error)
     			console.log(error);
     		else{
@@ -362,13 +272,11 @@ Template.category.events({
     			event.target.name.value = "";
     			event.target.description.value = "";
     			template.$("#autocomplete-input-Lang").val("");
-    			template.$("#new_subcategory").removeClass('active');
-				template.$("#new_subcategory").hide();
-				template.$("#subCatButton").html("&#xf150; Create Subcategory");
     		}
     		if (result) {
     			Router.go("show_category", {_id: result});
     		}
+
     	});
     },
 
@@ -388,6 +296,8 @@ Template.category.events({
     		metacategory: Router.current().params._id
     	}
     	Meteor.call("translate_category", text, function(error, result) {
+    		$(".modal-backdrop").remove();
+          	$('.modal.in').modal('hide');
     		if (error) {
     			console.log(error);
     			template.$("#logErrorText").text(error);
@@ -404,8 +314,6 @@ Template.category.events({
           		event.target.name_trans.value = "";
     			event.target.desc_trans.value = "";
     			template.$("#autocomplete-input-Lang-trans").val("");
-    			template.$("#translate_category").removeClass('active');
-				template.$("#translate_category").hide();
     		}
     	});
     },

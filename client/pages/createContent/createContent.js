@@ -95,6 +95,7 @@ Template.createContent.helpers({
 });
 Template.createContent.events({
 	"autocompleteselect input": function(e, t, doc) {
+		console.log("LOL");
 		// console.log("selected ", doc);
 
 		// if (e.target.id === "autocomplete-input-Com") {

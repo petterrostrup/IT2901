@@ -114,7 +114,8 @@
         "description": "Beskrivelse",
         "new_sub_text": "Ny subkategori",
         "language": "Språk",
-        "translated": "Category translated"
+        "translated": "Category translated",
+        "cancel": "Avbryt"
     }
 }
 

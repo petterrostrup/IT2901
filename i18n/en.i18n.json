@@ -115,7 +115,8 @@
         "description": "Description",
         "new_sub_text": "New subcategory",
         "language": "Language",
-        "translated": "Category translated"
+        "translated": "Category translated",
+        "cancel": "Cancel"
     }
 }
 
