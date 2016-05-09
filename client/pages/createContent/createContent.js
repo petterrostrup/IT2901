@@ -86,7 +86,8 @@ Template.createContent.helpers({
         var category = Category.findOne({_id: cat_id});
         if (!category)
             return null;
-        return category;    
+		var cat = CategoryText.findOne({metacategory: category._id});
+        return cat;
     },
 
 	getContentCategory: function() {
@@ -95,7 +96,6 @@ Template.createContent.helpers({
 });
 Template.createContent.events({
 	"autocompleteselect input": function(e, t, doc) {
-		console.log("LOL");
 		// console.log("selected ", doc);
 
 		// if (e.target.id === "autocomplete-input-Com") {

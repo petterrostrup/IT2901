@@ -1,4 +1,8 @@
 {
+  "ar": {
+    "language": "العربية",
+    "flipped": true
+  },
   "no": {
     "language": "Norsk",
     "flipped": false
@@ -7,8 +11,8 @@
     "language": "English",
     "flipped": false
   },
-  "ar": {
-    "language": "Arabic",
-    "flipped": true
+  "pl": {
+    "language": "Polski",
+    "flipped": false
   }
 }

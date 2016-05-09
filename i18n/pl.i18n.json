@@ -1,0 +1,149 @@
+{
+  "header": {
+    "Home": "Strona Główna",
+    "BrowseContent": "Przeglądaj zawartość",
+    "CreateContent": "Stwórz zawartość",
+    "LogOut": "Wyloguj",
+    "Login": "Zaloguj się / Zarejestruj",
+    "Admin": "Adminostrator",
+    "toggle_lang": "Pokaż tylko twoje języki"
+  },
+  "mainContent": {
+    "create_content": "Stwórz zawartość",
+    "title": "Tytuł",
+    "description": "Opis",
+    "created": "Stworzony przez",
+    "date": "Stworzony",
+    "rating": "Ocena",
+    "ago": "temu",
+    "search": "szukaj zawartości",
+    "settings": "Ustawienia"
+  },
+  "profile": {
+    "Username": "Nazwa użytkownika",
+    "FirstName": "Imię",
+    "LastName": "Nazwisko",
+    "Organization": "Organizacja",
+    "Language": "Język",
+    "Joined": "Dołączył(a)",
+    "Email": "Email",
+    "UserPrivileges": "Uprawnienia użytkownika",
+    "CreatedContent": "Stworzona zawartość",
+    "edit_profile": "Edytuj profil",
+    "edit_lang": "Edytuj języki",
+    "show_activity": "Pokaż aktywność",
+    "change_pass": "Zmień hasło",
+    "old_pass": "Stare hasło",
+    "new_pass": "Nowe hasło",
+    "retype": "Powtórz nowe hasło",
+    "no_match": "Coś poszło nie tak",
+    "welcome": "Witaj"
+  },
+  "createContent": {
+    "CreateContent": "Stwórz zawartość",
+    "Title": "Tytuł",
+    "Description": "Opis",
+    "Content": "Zawartość",
+    "Community": "Grupa",
+    "Category": "Kategoria",
+    "Language": "Język",
+    "cancel": "Anuluj",
+    "translate_from": "Przetłumacz z",
+    "edit_lang": "Język",
+    "toggle_markdown": "Toggle markdown",
+    "success": "Zawartość została stworzona",
+    "categoryHelp": "Wpisz # przed kategorią w której chcesz stworzyć zawartość, np. #Food #Economy",
+    "languageHelp": "Wpisz # przed językiem w którym chcesz stworzyć zawartość, np. #English",
+    "communityHelp": "Wpisz # przed grupą do której pasuje stworzona zawartość, np. #StudenterITrondheim",
+    "create": "Stwórz zawartość",
+    "back": "Wróć"
+  },
+  "submit": {
+    "Submit": "Dodaj"
+  },
+  "typeHere": {
+    "TypeHere": "Twój tekst"
+  },
+  "admin": {
+    "menu": {
+      "add_language": "Dodaj język",
+      "rm_language": "Usuń język",
+      "show_users": "Pokaż wszystkich użytkowników"
+    },
+    "add_language": {
+      "name": "Nazwa",
+      "short_name": "Skrót",
+      "english": "Angielska nazwa",
+      "lang_added": "Język został dodany."
+    },
+    "users": {
+      "username": "Nazwa użytkownika",
+      "email": "Email",
+      "roles": "Role",
+      "delete": "Usuń użytkownika",
+      "show": "Pokaż użytkownika",
+      "back": "Wróć"
+    },
+    "delete_language": "Usuń język",
+    "delete_language_msg": "Język został usunięty",
+    "settings": "Ustawienia",
+    "add": "Dodaj język"
+  },
+  "changeLanguage": {
+    "ChangeLanguage": "Zmień język"
+  },
+  "settings": {
+    "header": "Ustawienia",
+    "toggle_lang": "Pokaż zawartość tylko w twoich językach",
+    "back": "Wróć"
+
+  },
+  "content": {
+    "translate": "Przetłumacz zawartość",
+    "edit": "Edytuj zawartość",
+    "save_changes": "Zapisz zmiany",
+    "submit_translation": "Zapisz tłumaczenie"
+  },
+  "home": {
+    "description": " Ta strona jest poświęcona dzieleniu wiedzy i doświadczeń przez użytkowników w celu pomocy innym w oparciu o crowdsourcing. Dotyczy to zarówno prostych zagadnień, jak 'Znam sklep gdzie można tanio kupić jedzenie', jak i poważniejszych, np. artykuł dotyczący poszukiwania pracy. Serdecznie prosimy o podzielenie się swoją wiedzą i pomoc innym.",
+    "added": "Dodany",
+    "ago": "temu",
+    "newsfeed": "News feed"
+  },
+  "error": {
+    "empty_category": "Ta kategoria jest pusta. Zaloguj się aby dodać zawartość."
+  },
+  "category": {
+    "new_sub": "Stwórz podkategorię",
+    "translate": "Przetłumacz kategorię",
+    "name": "Nazwa",
+    "description": "Opis",
+    "new_sub_text": "Nowa podkategoria",
+    "language": "Język"
+  },
+  "editLanguages": {
+    "title": "Twoje języki",
+    "engName": "Angielska nazwa",
+    "name": "Nazwa",
+    "short": "Skrót",
+    "delete": "Usuń",
+    "add": "Dodaj język",
+    "back": "Wróć",
+    "type": "Wpisz język"
+  },
+  "editProfile": {
+    "info": "Wszystkie pola są teraz edytowalne. Po edycji kliknij 'Zapisz zmiany'.",
+    "first": "Imię",
+    "last": "Nazwisko",
+    "email": "Email",
+    "save": "Zapisz zmiany",
+    "back": "Wróć",
+    "success": "Zmiany zostały zapisane."
+  },
+  "activity": {
+    "title": "Twoja aktywność",
+    "back": "Wróć"
+  }
+
+}
+
