@@ -26,6 +26,13 @@
                 <td><p>{{data.description}}</p></td>
             </tr>
         </table>
+        
+        {{#if userIsMember}}
+            <button class="btn btn-default" id="toogleGroup">Leave group</button>
+        {{else}}
+            <button class="btn btn-default" id="toggleGroup">Join group</button>
+        {{/if}}
+
 
         <table class="table">
             {{#each get_content}}

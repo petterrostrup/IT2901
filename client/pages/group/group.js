@@ -112,6 +112,11 @@ Template.group.helpers({
 	get_members: function(id){
 		var data = Groups.findOne({_id: Router.current().params._id});
 		return data.members;
+	},
+	userIsMember: function(){
+		var data = Groups.findOne({_id: Router.current().params._id});
+		var user = Meteor.user();
+		return  ((data.members.indexOf(user._id) < -1) ? true : false);
 	}
 });
 
@@ -131,5 +136,24 @@ Template.group.events({
     		if (result)
     			console.log(result);
     	});
-    }
+    },
+    "click #toogleGroup": function(event, template) {
+    	var data = Groups.findOne({_id: Router.current().params._id});	
+    	if ((data.members.indexOf(user._id) < -1) ? true : false){
+    		Meteor.call('toogleGroup', Router.current().params._id, 1, function(error, result){
+				if(error){
+					console.log(error);
+				} else {
+
+				}});
+		} else {	
+			Meteor.call("toogleGroup", Router.current().params._id, 1, function(error, result){
+				if(error){
+					console.log(error);
+				} else {
+
+				}
+			});
+		}
+    },
 });

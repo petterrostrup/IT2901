@@ -652,5 +652,29 @@ Meteor.methods({
 		});
 
 		return content.upVote.length - content.downVote.length;
-	}
+	},
+	toogleGroup: function(group_id, value){
+		console.log(group_id);
+		console.log(value);
+		if (!Meteor.userId()){
+			throw new Meteor.Error(530, "You are not logged in")
+		}
+		var group = Groups.findOne({
+			_id: group_id
+		});
+		if (value > 0) {
+			Groups.update(
+				{_id: group_id},
+				{
+					$push: {members: Meteor.userId()}
+			});
+		} else {
+			Groups.update(
+				{_id: group_id},
+				{
+					$pull: {members: Meteor.userId()}
+			});
+		}
+
+	},
 });
