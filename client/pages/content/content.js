@@ -10,8 +10,9 @@ Template.content.helpers({
 		var list = [];
 		var current = Content.findOne({_id: Router.current().params._id});
 		current = Category.findOne({_id: current.category_id});
+		currentText = CategoryText.findOne({metacategory: current._id})
 		while (current) {
-			list.push({_id: current._id, name: current.name});
+			list.push({_id: current._id, name: currentText.name});
 			current = Category.findOne({_id: current.parent_id});
 		}
 		list.reverse();
