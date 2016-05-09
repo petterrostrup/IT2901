@@ -416,7 +416,7 @@ Meteor.startup(function(){
     if (!Groups.findOne()){
         console.log("Default Group made.")
         Groups.insert({
-            name: "Trondheim party people",
+            name: "StudentInTrondheim",
             // description: "party party party",
             members: [],
             content_ids: []

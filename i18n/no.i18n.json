@@ -106,7 +106,9 @@
         "edit": "Rediger",
         "save_changes": "Lagre endringer",
         "submit_translation": "Lagre oversettingen",
-        "groups": "Tilhørende grupper"
+        "groups": "Tilhørende grupper",
+        "created_by": "Opprettet av",
+        "delete": "Delete"
     },
     "home": {
         "description": "Dette er en side der alle kan dele sin kunnskap på en måte som kan hjelpe andre. Det kan være noe som enkelt som 'Jeg vet om et sted å få tak i god og billig mat' eller det kan være noe litt mer seriøst som hvordan å få seg en jobb. Så vær gjerne med å bruke din kunnskap for å hjelpe andre",
@@ -154,7 +156,9 @@
         "leave": "Forlat gruppe",
         "join": "Bli medlem",
         "content": "Innhold for gruppen",
-        "members": "Medlemmer av gruppen"
+        "members": "Medlemmer av gruppen",
+        "add_group": "Legg til gruppe til innhold",
+        "group_added": "Gruppen ble lagt til"
     }
 }
 

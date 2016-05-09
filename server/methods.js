@@ -598,11 +598,94 @@ Meteor.methods({
 		});
 	},
 
+	add_group_content: function(obj) {
+		check(obj, {
+			content_id: String,
+			name: String 
+		});
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+
+		var content = Content.findOne({_id: obj.content_id});
+		if (!content) {
+			throw new Meteor.Error(404, "Did not find content.");
+		}
+
+		var group = Groups.findOne({name: obj.name});
+		if (!group) {
+			throw new Meteor.Error(404, "Did not find group.");
+		}
+
+		if (group.content_ids.indexOf(content._id) > -1) {
+			throw new Meteor.Error(400, "Content already in group.");
+		}
+
+		Content.update({_id: obj.content_id}, {
+			$push: {groups: obj.name}
+		});
+
+		Groups.update({_id: group._id}, {
+			$push: {content_ids: content._id}
+		});
+	},
+
+	delete_content: function(content_id) {
+
+		check(content_id, String);
+
+		var user = Meteor.user();
+		if (!user) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		var content = Content.findOne({
+			_id: content_id
+		});
+		if (!content) {
+			throw new Meteor.Error(404, "Did not find content.");
+		}
+
+		if (content.createdById !== user._id) {
+			throw new Meteor.Error(400, "You cannot delete this content.");
+		}
+
+		Meteor.users.update({_id: user._id}, {
+			$pull: {createdContents: content._id}
+		});
+
+		Category.update({_id: content.category_id}, {
+			$pull: {content_ids: content._id}
+		});
+
+		ContentText.remove({
+			metacontent: content._id
+		}, {
+			justOne: false
+		});
+
+		for (var a in content.groups) {
+			var name = content.groups[a];
+			Groups.update({
+				name: name
+			}, {
+				$pull: {content_ids: content._id}
+			});
+		}
+
+		Content.remove({_id: content._id});
+	},
+
 	add_group: function(group) {
 		check(group, {
 			name: String
 			// description: String
 		});
+
+		if (group.name.trim().split(" ").length > 1) {
+			throw new Meteor.Error(400, "String cannot contain whitespace.");
+		}
 
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
