@@ -17,7 +17,8 @@
         "rating": "Vurdering",
         "ago": "siden",
         "search": "Søk for innhold her",
-        "settings": "innstillinger"
+        "settings": "innstillinger",
+        "seals": "Antall kvalitetstempel"
     },
     "profile": {
         "Username": "Brukernavn",
@@ -108,7 +109,10 @@
         "submit_translation": "Lagre oversettingen",
         "groups": "Tilhørende grupper",
         "created_by": "Opprettet av",
-        "delete": "Delete"
+        "delete": "Delete",
+        "give_seal": "Gi kvalitetsstempel",
+        "remove_seal": "Fjern kvalitetsstempel",
+        "seal_of_approval": "Kvalitetsstempel"
     },
     "home": {
         "description": "Dette er en side der alle kan dele sin kunnskap på en måte som kan hjelpe andre. Det kan være noe som enkelt som 'Jeg vet om et sted å få tak i god og billig mat' eller det kan være noe litt mer seriøst som hvordan å få seg en jobb. Så vær gjerne med å bruke din kunnskap for å hjelpe andre",

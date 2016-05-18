@@ -45,6 +45,37 @@
                 <button class="btn btn-default" id="open_groups" type="button" data-toggle="button">
                     {{_ "group.add_group"}}
                 </button>
+                {{#with is_organization}}
+                    {{#if found}}
+                        {{#if crossed}}
+                            <button id="remove_seal" class="btn btn-success">
+                                {{_ "content.remove_seal"}}
+                            </button>
+                        {{else}}
+                            <button id="give_seal" class="btn btn-default">
+                                {{_ "content.give_seal"}}
+                            </button>
+                        {{/if}}
+                    {{/if}}
+                {{/with}}
+                {{#with get_seals}}
+                    {{#if found}}
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">{{_ "content.seal_of_approval"}} ({{seals.length}})</button>
+
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                          <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                              <h3>{{_ "content.seal_of_approval"}}</h3>
+                              <ul>
+                              {{#each seals}} 
+                                <li>{{this}}</li>
+                              {{/each}}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                    {{/if}}
+                {{/with}}
                 <div id="new_groups" style="display: none;">
                     {{> inputAutocomplete autocomplete="off" settings=settingsCom id="autocomplete-input-Com" tabindex=5 class="form-control" placeholder=(_ 'group.content_text')}}
                 </div>

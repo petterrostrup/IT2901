@@ -17,6 +17,32 @@ Template.content.helpers({
 		return user.username === content.createdByUsername;
 	},
 
+	get_seals: function() {
+		var seals = Session.get("content").seals;
+		if (seals.length) {
+			return {
+				found: true,
+				seals: seals
+			}
+		}
+		return {found: false}
+	},
+
+	is_organization: function() {
+		var user = Meteor.user();
+		if (!user) 
+			return {found: false};
+		if (!user.profile.organization) {
+			return {found: false};
+		}
+		var content = Session.get("content");
+		var text = ContentText.findOne({_id: content._id});
+		return {
+			found: true,
+			crossed: text.seals.indexOf(user.profile.organization) > -1
+		}
+	},
+
 	timeSince: function(time) {
 		return time.toISOString().slice(0,10);
 	},
@@ -190,6 +216,24 @@ var logErr = function(error) {
 
 
 Template.content.events({
+	"click #give_seal": function(event, template) {
+		Meteor.call("give_seal_of_approval", Session.get("content")._id, function(error, result) {
+			if (error) {
+				console.log(error);
+			} else {
+				// console.log("Seal given!");
+			}
+		});
+	},
+	"click #remove_seal": function(event, template) {
+		Meteor.call("remove_seal_of_approval", Session.get("content")._id, function(error, result) {
+			if (error) {
+				console.log(error);
+			} else {
+				// console.log("Seal removed!");
+			}
+		});
+	},
 	"click #del_content": function(event, template) {
 		Meteor.call("delete_content", Router.current().params._id, function(error) {
 			if (error) {

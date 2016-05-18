@@ -1,0 +1,39 @@
+<template name="translateCategory">
+	<div class="row">
+		<div class="col-md-4">
+			<table class="table">
+				<thead>
+					<tr></tr>
+					<tr>
+						{{_ "translateCategory.old"}}
+					</tr>
+					<tr>
+						{{_ "translateCategory.new"}}
+					</tr>
+				</thead>
+				<tbody>
+					<form>
+						<tr>
+							<th>{{_ "translateCategory.title"}}</th>
+							<td>{{title}}</td>
+							<td><input id="new_title" type="text"></td>
+						</tr>
+						<tr>
+							<th>{{_ "translateCategory.description"}}</th>
+							<td>{{description}}</td>
+							<td><input id="new_description" type="text"></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><input type="submit"></td>
+						</tr>
+					</form>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-4">
+			
+		</div>
+	</div>
+</template>

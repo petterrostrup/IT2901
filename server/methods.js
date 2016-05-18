@@ -21,7 +21,8 @@ Meteor.methods({
 			profile: {
 				preferred_language: String,
 				first_name: String,
-				last_name: String
+				last_name: String,
+				organization: Match.Maybe(String)
 			}
 		});
 		check(password, String);
@@ -42,6 +43,14 @@ Meteor.methods({
 		user.roles = ["standard", "creator"];
 		user.profile.languages = [];
 		user.profile.groups = [];
+		if (user.profile.organization) {
+			user.roles.push("organization");
+			if (!!Meteor.users.findOne({
+				"profile.organization": user.profile.organization 
+			})) {
+				throw new Meteor.Error(400, "Organization is already taken.");
+			}
+		}
 		// Inserts the user into the database and returns the user id.
 		userId = Meteor.users.insert(user);
 
@@ -52,6 +61,48 @@ Meteor.methods({
 				log_text("The user " + user.username + " was added.");
 			}
 		}
+	},
+
+	give_seal_of_approval: function(content_text_id) {
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+
+		if (!Meteor.user().profile.organization) 
+			throw new Meteor.Error(400, "You are not connected to a organization.");
+
+		var content = ContentText.findOne({
+			_id: content_text_id
+		});
+
+		if (!content) 
+			throw new Meteor.Error(404, "Did not find content.");
+		if (content.seals.indexOf(Meteor.user().profile.organization) < 0) {
+			ContentText.update({_id: content_text_id}, {
+				$push: {seals: Meteor.user().profile.organization}
+			});
+		}
+	},
+
+	remove_seal_of_approval: function(content_text_id) {
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in!");
+		}
+
+		if (!Meteor.user().profile.organization) 
+			throw new Meteor.Error(400, "You are not connected to a organization.");
+
+		var content = ContentText.findOne({
+			_id: content_text_id
+		});
+
+		if (!content) 
+			throw new Meteor.Error(404, "Did not find content.");
+
+		ContentText.update({_id: content_text_id}, {
+			$pull: {seals: Meteor.user().profile.organization}
+		});
+
 	},
 
 	submit_content: function(main, content) {
@@ -81,6 +132,7 @@ Meteor.methods({
 		main.createdByUsername = Meteor.user().username;
 		content.upVote = [];
 		content.downVote = [];
+		content.seals = [];
 
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
@@ -186,6 +238,7 @@ Meteor.methods({
 		content.createdById = Meteor.userId();
 		content.upVote = [];
 		content.downVote = [];
+		content.seals = [];
 
 		var father = Content.findOne({_id: content.metacontent});
 		
