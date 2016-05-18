@@ -59,7 +59,7 @@ Schema.User = new SimpleSchema({
 	},
 	roles: {
 		type: [String],
-		allowedValues: ["standard", "creator", "official", "admin"],
+		allowedValues: ["standard", "creator", "official", "admin", "organization"],
 		optional: false,
 		label: "Roles"
 	},
@@ -244,6 +244,10 @@ Schema.ContentText = new SimpleSchema({
 		optional: false
 	},
 	downVote: {
+		type: [String],
+		optional: false
+	},
+	seals: {
 		type: [String],
 		optional: false
 	}

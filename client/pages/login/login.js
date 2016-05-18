@@ -50,6 +50,9 @@ Template.login.events({
           preferred_language: TAPi18next.lng()
         }
       }
+      if (template.$("#organization").val()) {
+        user.profile.organization = template.$("#organization").val();
+      }
 
       // Calls the method "add_user" in the server. 
       Meteor.call("create_user", user, passVar, function(error, result) {
@@ -77,6 +80,7 @@ Template.login.events({
             tar.email.value = "";
             tar.password2.value = "";
             tar["confirm-password"].value = "";
+            tar.organization.value = "";
           }, 200);
         }
       });

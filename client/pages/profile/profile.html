@@ -13,22 +13,25 @@
                                 <div class=" col-md-9 col-lg-9 ">
                                     <table class="table table-user-information">
                                         <tbody>
+                                        {{#with getUserInfo}}
                                         <tr>
                                             <td>{{_ "profile.Username"}}:</td>
-                                            <td>{{ getUserInfo.username}}</td>
+                                            <td>{{ username}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.FirstName"}}:</td>
-                                            <td>{{ getUserProfile.first_name }}</td>
+                                            <td>{{ profile.first_name }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.LastName"}}:</td>
-                                            <td>{{ getUserProfile.last_name }}</td>
+                                            <td>{{ profile.last_name }}</td>
                                         </tr>
-                                        <!-- <tr>
+                                        {{#if profile.organization}}
+                                        <tr>
                                             <td>{{_ "profile.Organization"}}:</td>
-                                            <td>{{ getUserProfile.organization }}</td>
-                                        </tr> -->
+                                            <td>{{ profile.organization }}</td>
+                                        </tr>
+                                        {{/if}}
                                         <tr>
                                             <td>{{_ "profile.Language"}}:</td>
                                             <td>
@@ -39,18 +42,19 @@
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.Joined"}}:</td>
-                                            <td>{{ getUserInfo.createdAt }}
-                                                {{ getUserInfo.createdAt.getMonth }}
-                                                {{ getUserInfo.createdAt.getFullYear }}</td>
+                                            <td>{{ createdAt }}
+                                                {{ createdAt.getMonth }}
+                                                {{ createdAt.getFullYear }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.Email"}}:</td>
-                                            <td>{{ getUserInfo.email }}</td>
+                                            <td>{{ email }}</td>
                                         </tr>
                                         <tr>
                                             <td>{{_ "profile.UserPrivileges"}}:</td>
-                                            <td> {{ getUserInfo.roles }}</td>
+                                            <td> {{ roles }}</td>
                                         </tr>
+                                        {{/with}}
                                     </tbody>
                                 </table>
                             </div>
