@@ -271,10 +271,10 @@ Template.category.events({
 				}
 
 				else {
-					template.$("#logSuccess").show();
-					setTimeout(function () {
-						template.$("#logSuccess").hide();
-					}, 5000);
+					// template.$("#logSuccess").show();
+					// setTimeout(function () {
+					// 	template.$("#logSuccess").hide();
+					// }, 5000);
 					// console.log(event.target.name);
 					event.target.name.value = "";
 					event.target.description.value = "";

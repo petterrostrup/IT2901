@@ -91,6 +91,7 @@ function buildRegExp(searchText) {
 }
 
 // content search
+// content search
 SearchSource.defineSource('contentSearch', function(searchText, options) {
     options = options || {};
     var options = {sort: {isoScore: -1}, limit: 20};
@@ -120,7 +121,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     //   {description: regExp},
     //   {community_id: regExpCom}
     // ]};
-
     // test lookup
 //    console.log(ContentText.aggregate([
 //     {
@@ -134,7 +134,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
 //    }
 // ]))
     // end of test lookup
-
     // test join collections
     // var result = []
     // var cate = Category.find(selector, options).fetch();
@@ -144,7 +143,7 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
     // console.log(result)
     // end of test join collections
     //concat two returned collections
-
+        // category
         var catText = CategoryText.find(selectorCatText, { options,
             transform: function(doc) {
                 doc.categoryObj = Category.find({
@@ -163,57 +162,102 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         }
         // got content_ids then use it to get content
         var searchByCatResult = []
+        var resultContent = []
         for (var i in con_id) {
             var resultContent = ContentText.find({metacontent:con_id[i]}, { options,
                 transform: function(doc) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
+                    var category = CategoryText.find({
+                        metacategory: doc.contentObj[0].category_id
+                    }).fetch()
+                    doc.categoryName = category[0].name
                 return doc
                 }
-            }).fetch();
-            searchByCatResult.push(resultContent);
-            // console.log("in loop")
-            ContentText.find({metacontent:con_id[i]}, { options,
+                }).fetch()
+            searchByCatResult.push(resultContent[0])
+        }
+        // console.log("cat result")
+        // console.log(searchByCatResult)
+        // end of category
+        // group
+        var groupText = Groups.find(selectorCatText, options).fetch()
+        // console.log("gtext")
+        // console.log(groupText)
+        var con_id_group = []
+        for (var i in groupText) {
+            for (var j in groupText[i].content_ids){
+                
+                con_id_group.push(groupText[i].content_ids[j])
+                
+            }
+        }
+        // console.log("gid")
+        // console.log(con_id_group)
+        // got content_ids then use it to get content
+        var searchByGroupResult = []
+        var resultContentGroup = []
+        for (var i in con_id_group) {
+            var resultContentGroup = ContentText.find({metacontent:con_id_group[i]}, { options,
                 transform: function(doc) {
                     doc.contentObj = Content.find({
                         contents: { $in: [doc._id]}
                     }).fetch();
+                    var category = CategoryText.find({
+                        metacategory: doc.contentObj[0].category_id
+                    }).fetch()
                 return doc
                 }
-            }).fetch();
-            // console.log("searchByCatResult")
-            // console.log(searchByCatResult)
+                }).fetch()
+            searchByGroupResult.push(resultContentGroup[0])
         }
-        // console.log("cat Re")
-        // console.log(searchByCatResult)
-
+        // console.log("g result")
+        // console.log(searchByGroupResult)
+        // end of group
         var result = ContentText.find(selector, { options,
-            transform: function(doc) {
-                doc.contentObj = Content.find({
-                    contents: { $in: [doc._id]}
-                }).fetch();
-                return doc;
-            }
-        }).fetch();
-            // console.log("content")
-            // console.log(result.concat(searchByCatResult))
-        var finalResult = result.concat(searchByCatResult);
-        // console.log("concat")
-        // console.log(finalResult)
-
-        var finalFinal = [];
-        for (var i in finalResult) {
-            for (var j in finalResult[i]){
-                finalFinal.push(finalResult[i][j])
-            }
-        }   
-        // console.log("finalfinal")
-        // console.log(finalFinal);
-        return finalFinal
+        transform: function(doc) {
+            doc.contentObj = Content.find({
+                contents: { $in: [doc._id]}
+            }).fetch();
+            var category = CategoryText.find({
+                metacategory: doc.contentObj[0].category_id
+            }).fetch()
+            doc.categoryName = category[0].name
+        return doc;
+        }
+        }).fetch()
+        // console.log("con result")
+        // console.log(result)
+        // result - array of contents by name, searchByCatResult - array of contents by category
+        var finalResult = searchByCatResult.concat(searchByGroupResult.concat(result))
+        return finalResult;
+    // return finalResult
+//   } else {
+// =======
+//             transform: function(doc) {
+//                 doc.contentObj = Content.find({
+//                     contents: { $in: [doc._id]}
+//                 }).fetch();
+//                 return doc;
+//             }
+//         }).fetch();
+//             // console.log("content")
+//             // console.log(result.concat(searchByCatResult))
+//         var finalResult = result.concat(searchByCatResult);
+//         // console.log("concat")
+//         // console.log(finalResult)
+//         var finalFinal = [];
+//         for (var i in finalResult) {
+//             for (var j in finalResult[i]){
+//                 finalFinal.push(finalResult[i][j])
+//             }
+//         }   
+//         // console.log("finalfinal")
+//         // console.log(finalFinal);
+        // return finalFinal
     } else {
         return [];
-
     var result = ContentText.find({}, {
         transform: function(doc) {
             doc.contentObj = Content.find({
@@ -222,8 +266,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
             return doc
         }
     }).fetch()
-    // console.log("reslult")
-    // console.log(result)
     return result;
   }
 });

@@ -18,7 +18,7 @@
         "ago": "ago",
         "search": "Search for content here",
         "settings": "Settings",
-        "seals": "Seal of approvals"
+        "seals": "Seals of approval"
     },
     "profile": {
         "Username": "Username",
@@ -113,7 +113,7 @@
         "delete": "Delete",
         "give_seal": "Give seal of approval",
         "remove_seal": "Remove seal of approval",
-        "seal_of_approval": "Seal of approvals"
+        "seal_of_approval": "Seals of approval"
     },
     "home": {
         "description": "This is a page where everyone can share their knowledge and experience in a way that could help others. It could be about simple things like 'I know a place that has cheap and good food' or it could be about how to get a job. So please, share your knowledge and help others",

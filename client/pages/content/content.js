@@ -49,7 +49,8 @@ Template.content.helpers({
 
 	settingsCom: function() {
 	    return {
-	      position: Session.get("position"),
+	      // position: Session.get("position"),
+	      position: "top",
 	      limit: 30,  // more than 20, to emphasize matches outside strings *starting* with the filter
 	      rules: [
 	        {
