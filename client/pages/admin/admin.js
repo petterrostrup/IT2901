@@ -101,7 +101,7 @@ Template.admin.events({
 				show_message_error(error);				
 			} 
 			else {
-				show_message("{{_ 'lang_added'}}");
+				show_message("Lanugage added.");
 				event.target.lang_name.value = "";
 				event.target.eng_lang_name.value = "";
 				event.target.short_lang_name.value = "";
@@ -115,7 +115,7 @@ Template.admin.events({
 				show_message_error(error);
 			}
 			else
-				show_message("{{_ 'admin.delete_language_msg'}}");
+				show_message("Language deleted.");
 			if (result) {
 				console.log(result);
 			}

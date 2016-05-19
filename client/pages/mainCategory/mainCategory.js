@@ -57,6 +57,8 @@ Template.searchResultContent.rendered = function() {
 Template.searchBox.events({
   "keyup #search-box": _.throttle(function(e) {
     var text = $(e.target).val().trim();
+    if (text.length == 1)
+      return;
     PackageSearch.search(text);
     ContentSearch.search(text);
   }, 200)
