@@ -1,9 +1,11 @@
 
+// Will subscribe to allUsers after the page is rendered
+// Needs to be an admin account to subscribe to this database
 Template.admin.rendered = function() {
 	Meteor.subscribe("allUsers", Meteor.user());
 }
 
-
+// Function to show an error to the user
 var show_message_error = function(msg) {
 	$("#regErrorText").text(msg);
 	$("#regError").show();
@@ -12,6 +14,7 @@ var show_message_error = function(msg) {
 	}, 3000);
 }
 
+// Function to show a message to the user
 var show_message = function(msg) {
 	$("#regMsgText").text(msg);
 	$("#regMsg").show();
@@ -21,16 +24,19 @@ var show_message = function(msg) {
 }
 
 Template.admin_user_page.helpers({
+	// Finds the current user information
 	get_user_information: function() {
 		var user_id = Session.get("user_id");
 		return Meteor.users.findOne({_id: user_id});
 	},
+	// Checks if this user is an admin
 	is_admin: function() {
 		return Roles.userIsInRole(Session.get("user_id"), ["admin"]);
 	}
 });
 
 Template.admin_user_page.events({
+	// Function for adding/removing the admin role to a specified user.
 	"click .toggle_admin": function(event, template) {
 		if (event.target.id === "remove_admin") {
 			Meteor.call("remove_user_from_role", {
@@ -73,6 +79,7 @@ Template.admin.helpers({
 
 
 Template.admin.events({
+	// Function for changing the left menu buttons
 	"click .menu-btn": function(event, template) {
 		var children = template.$("#choose_action").children();
 		for (i = 0; i < children.length; i++) {
@@ -88,6 +95,7 @@ Template.admin.events({
 		var str = "#" + template_name + "_content";
 		template.$(str).show();
 	},
+	// Function for adding a new language to the system
 	"submit #sub_add_lang": function(event, template) {
 		event.preventDefault();
 
@@ -108,6 +116,7 @@ Template.admin.events({
 			}
 		});	
 	},
+	// Function for removing a language from the system
 	"click button.del_lang": function(event, template) {
 		var id = event.target.id;
 		Meteor.call("remove_language_system", id, function(error, result) {
@@ -122,7 +131,7 @@ Template.admin.events({
 		});
 	},
 
-
+	// Function for deleting a user
 	"click button.del_user": function(event, template) {
 		var id = event.target.id;
 		Meteor.call("remove_user_system", id, function(error, result) {
@@ -137,7 +146,7 @@ Template.admin.events({
 		});
 	},
 
-
+	// Function for showing users
 	"click button.show_user": function(event, template) {
 		var id = event.target.id;
 		Session.set("user_id", id);

@@ -1,3 +1,4 @@
+// Our database structure is here created 
 
 var Schema = {}
 
@@ -301,7 +302,7 @@ Schema.Groups = new SimpleSchema({
 });
 
 
-
+// All databases used in collections are here attached to the simple shcemas created
 Meteor.users.attachSchema(Schema.User);
 Content.attachSchema(Schema.Content);
 Tag.attachSchema(Schema.Tag);
