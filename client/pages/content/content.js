@@ -1,14 +1,16 @@
 
 Template.content.helpers({
+	//reruns the username of the creator of the content. 
 	get_created_info: function() {
 		var content = Content.findOne({
 			_id: Router.current().params._id
 		});
 		return content.createdByUsername;
 	},
-
+	//checks if you are the current owner of this content.
 	isOwner: function() {
 		var user = Meteor.user();
+		//checks if you are logged in. If not logged in there is no way of knowing if you are the creator. 
 		if (!user)
 			return false;
 		var content = Content.findOne({
@@ -18,6 +20,7 @@ Template.content.helpers({
 	},
 
 	get_seals: function() {
+		//finds the seals of approval for the current content. 
 		var seals = Session.get("content").seals;
 		if (seals.length) {
 			return {
@@ -27,7 +30,7 @@ Template.content.helpers({
 		}
 		return {found: false}
 	},
-
+	//checks if you are in an organization. 
 	is_organization: function() {
 		var user = Meteor.user();
 		if (!user) 
@@ -37,16 +40,17 @@ Template.content.helpers({
 		}
 		var content = Session.get("content");
 		var text = ContentText.findOne({_id: content._id});
+		//crossed checks wheter you have given an seal of approval.
 		return {
 			found: true,
 			crossed: text.seals.indexOf(user.profile.organization) > -1
 		}
 	},
-
 	timeSince: function(time) {
 		return time.toISOString().slice(0,10);
 	},
-
+	//Is used for search.
+	//sets settings for how the search shall behave. 
 	settingsCom: function() {
 	    return {
 	      // position: Session.get("position"),
@@ -174,7 +178,7 @@ Template.content.helpers({
 	}
 });
 
-
+//changes the color of the voting system based on your previus vote. 
 var changeVoteColor = function(contentText){
 	(function rendered() {
 		if(contentText.upVote != undefined || contentText.downVote != undefined) {
@@ -199,14 +203,14 @@ var changeVoteColor = function(contentText){
 	})();
 
 };
-
+//show the success. Gives the user visual feedback that something worked. 
 var logSuc = function() {
 	$("#logSuccess").show();
 	setTimeout(function() {
 		$("#logSuccess").hide();
 	}, 4000);
 }
-
+//show the errod. Gives the user visual feedback that something did not work. 
 var logErr = function(error) {
 	$("#logError").show();
 	$("#logErrorText").text(error);
@@ -217,7 +221,9 @@ var logErr = function(error) {
 
 
 Template.content.events({
+	//Give seal of approval
 	"click #give_seal": function(event, template) {
+		//calls give_seal_of_approval from methods.js
 		Meteor.call("give_seal_of_approval", Session.get("content")._id, function(error, result) {
 			if (error) {
 				console.log(error);
@@ -226,7 +232,9 @@ Template.content.events({
 			}
 		});
 	},
+	//Remove seal of approval
 	"click #remove_seal": function(event, template) {
+		//calls remove_seal_of_approval from methods.js
 		Meteor.call("remove_seal_of_approval", Session.get("content")._id, function(error, result) {
 			if (error) {
 				console.log(error);
@@ -235,7 +243,9 @@ Template.content.events({
 			}
 		});
 	},
+	//If you are the owner you can delete a content.
 	"click #del_content": function(event, template) {
+		//calls the delete_content from methods.js
 		Meteor.call("delete_content", Router.current().params._id, function(error) {
 			if (error) {
 				logErr(error);
@@ -245,6 +255,8 @@ Template.content.events({
 			}
 		});
 	},
+	//Adding content to group when enter is pressed down. 
+	//if group doesn't exsist, a new group will be created. 
 	"keyup #autocomplete-input-Com": function(event, template, doc) {
 		if (event.keyCode == 13) {
 			var text = template.$("#autocomplete-input-Com").val();
@@ -289,8 +301,8 @@ Template.content.events({
 			template.$("#open_groups").removeClass("active");
 		}
 	},
+	//Will show all groups the content is linked to. 
 	"click #open_groups": function(event, template) {
-		// console.log("LKJLKSFJLK");
 		if (!template.$("#open_groups").hasClass('active')) {
 			template.$("#new_groups").show();
 			template.$("#autocomplete-input-Com").focus();

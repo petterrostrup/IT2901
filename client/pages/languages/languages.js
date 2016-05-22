@@ -1,6 +1,7 @@
 
 
 Template.languages.helpers({
+	//retunrns the languages you know. 
 	getUserLanguages: function() {
 		var languages = Meteor.user().profile.languages;
         var langNames = [];
@@ -10,6 +11,7 @@ Template.languages.helpers({
         // console.log(langNames);
         return langNames;
 	},
+	//Settings for the search function
 	settingsLang: function() {
 		return {
 	      position: Session.get("position"),
@@ -30,8 +32,9 @@ Template.languages.helpers({
 
 
 Template.languages.events({
+	//adds languages to your profile
 	"autocompleteselect input": function(event, template, doc) {
-		// console.log(doc);
+		//Calls the add_language_profile method in method.js
 		Meteor.call("add_language_profile", doc._id, function(error, result) {
 			if (error) {
 				console.log(error);
@@ -47,7 +50,9 @@ Template.languages.events({
 			}
 		});
 	},
+	//Delete languages from your profile
 	"click .delete_button": function(event, template) {
+		//calls the remove_language_profile method in the method.js
 		Meteor.call("remove_language_profile", event.target.id, function(error, result) {
 			if (error) {
 				console.log(error);

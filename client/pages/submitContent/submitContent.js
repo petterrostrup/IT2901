@@ -1,3 +1,8 @@
+/*
+Not used. 
+
+CreateContent is used. 
+*/
 Template.submit_content.helpers({
     getContent: function() {
         return Content.find({});

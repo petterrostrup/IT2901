@@ -20,7 +20,7 @@ Template.editProfile.events({
 
 	    var email = $("#email").val();
 	    // console.log(profile.languages);
-
+        //Calls the edit_profile method in methods.js
     	Meteor.call("edit_profile", profile, email, function(error, result){
     		if (error) {
     			console.log(error);
@@ -34,23 +34,23 @@ Template.editProfile.events({
 });
 
 Template.editProfile.helpers({
+
+    //returns the current user. 
     getUserInfo: function() {
     	var user = Meteor.user();
     	if (user) {
     		user.createdAt = user.createdAt.toISOString().slice(0, 10);
     		return user;
     	} else {
-    		console.log("edit profile can't get user from database.");
     		return null;
     	}
     },
-
+    //returns the currents users profile. 
     getUserProfile: function() {
     	var profile = Meteor.user().profile;
     	if (profile) {
     		return profile;
     	} else {
-    		console.log("edit profile can't get profile from database.");
     		return null;
     	}
     }

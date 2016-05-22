@@ -1,5 +1,7 @@
 
 Template.yourGroups.helpers({
+    //returns all your own groups
+    //Groups that you are a member of. 
     get_your_groups: function(){
         if(Meteor.user() !== undefined) {
             var groups = [];
@@ -9,6 +11,7 @@ Template.yourGroups.helpers({
             return groups;
         }
     },
+    //returns all groups in the system. 
     get_all_groups: function(){
         var groupsQuery = Groups.find({}).fetch();
         var groups = [];
@@ -23,6 +26,7 @@ Template.yourGroups.helpers({
 });
 
 Template.yourGroups.events({
+    //redirects you to a grouppage.
     "click .clickAble": function(event){
         // event.preventDefault();
         Router.go("group_page", {_id: event.target.parentElement.className.split(" ")[1]});

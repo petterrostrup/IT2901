@@ -106,13 +106,13 @@ Template.group.helpers({
 		var data = Groups.findOne({_id: Router.current().params._id});
 		return data.members;
 	},
-
+	//Checks if you are a member of the group
 	loadIsMember: function() {
 		var data = Groups.findOne({_id: Router.current().params._id});
 		var user = Meteor.user();
 		Session.set("isMember", data.members.indexOf(user.username) > -1);
 	},
-
+	//retuns true if the user is a member of a group. 
 	userIsMember: function(){
 		return Session.get("isMember");
 	}
@@ -120,11 +120,15 @@ Template.group.helpers({
 
 
 Template.group.events({
+	//toggles betwen joining and leaving a group. 
+	//if you are not in the group you will join the group
+	//if you are in the group you will leave the group
 	"click #toggleGroup": function(event, template) {
 		var obj = {
 			join: Meteor.user().profile.groups.indexOf(Router.current().params._id) < 0,
 			group_id: Router.current().params._id
 		}
+		//calls toggle_group from methods.js
 		Meteor.call("toggle_group", obj, function(error, result) {
 			if (error) {
 				console.log(error);
@@ -136,6 +140,7 @@ Template.group.events({
 			}
 		});
 	},
+	//Shows content when content-link is clicked. 
 	"click .clickAble": function(event){
 		// event.preventDefault();
 		Router.go("show_content", {_id: event.target.parentElement.className.split(" ")[1]});
