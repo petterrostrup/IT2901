@@ -25,11 +25,6 @@ Router.route("/search", {
 // End of search
 
 
-Router.route("/newPage", {
- name: "newPage",
- template: "newPage"
-});
-
 /* Client-side router settings */
 Router.configure({
   layoutTemplate:"layout",
