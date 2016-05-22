@@ -1,4 +1,4 @@
-
+// Logging text to the console
 var log_text = function(text, user) {
 	if (user) {
 		console.log(new Date().toLocaleString() + "@" + user.username + "\t\t" + text);
@@ -63,6 +63,8 @@ Meteor.methods({
 		}
 	},
 
+	// This method will give a seal of approval to a content
+	// To be able to give a seal, you have to have an organization account
 	give_seal_of_approval: function(content_text_id) {
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
@@ -84,6 +86,7 @@ Meteor.methods({
 		}
 	},
 
+	// Will remove a given seal of approval if a organization already have given it
 	remove_seal_of_approval: function(content_text_id) {
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
@@ -105,11 +108,15 @@ Meteor.methods({
 
 	},
 
+	// Method for creating content
 	submit_content: function(main, content) {
 
+		// Needs to be logged in to create content
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in!");
 		}
+
+		// Checks if the arguments are in the right form
 		check(main, {
 			category_id: String,
 			groups: Array
@@ -122,40 +129,32 @@ Meteor.methods({
 			text: String
 		});
 
-		// console.log(main);
-
+		// Initializes the content and contentText with empty arrays
 		main.tags = [];
 		main.contents = [];
-		// Adds the id of the user in the main
 		main.createdById = Meteor.userId();
-		content.createdById = Meteor.userId();
 		main.createdByUsername = Meteor.user().username;
+
+		content.createdById = Meteor.userId();
 		content.upVote = [];
 		content.downVote = [];
 		content.seals = [];
 
+		// If the category does not exist, we cannot create content
 		var category = Category.findOne({_id: main.category_id});
 		if (!category) {
 			throw new Meteor.Error(400, "Missing valid category");
 		}
 
-		// Community id
-		// if (!post.community){
-		// 	post.community = [];
-		// 	throw new Meteor.Error(400, "Missing community.");
-		// }
-
-		// var community_id = []
-		// for (com in post.community) {
-		// 	community_id.push(CommunityTags.findOne({name: post.community[com]})._id)
-		// }
-
+		// Needs a language supported by the system
 		var language_id = LanguageTags.findOne({name: content.language});
 		if (!language_id) {
 			throw new Meteor.Error(400, "Missing valid language.");
 		}
 		var groups = [];
-		// main.groups = [];
+
+		// If the content is connected with groups, it will create this group if it does not exist
+		// and join those groups
 		if (main.groups.length){
 			for (var a in main.groups) {
 				if (!main.groups[a])
@@ -172,14 +171,11 @@ Meteor.methods({
 						_id: group
 					}
 				}
-				// main.groups.push(group.name);
 				groups.push(group);
 			}
 		}
-		// if (!community_id) {
-		// 	throw new Meteor.Error(400, "Missing valid community id.");
-		// }
 
+		// Rest of the code creates the content, and inserts ids in groups, content, category and contentText
 		var content_id = Content.insert(main);
 		if (!content_id) {
 			throw new Meteor.Error(400, "Content not added!");
@@ -220,13 +216,15 @@ Meteor.methods({
 		return content_id;
 	},
 
-
+	// Method for transelating and editing content
 	transelate_content: function(content) {
 
+		// Needs to be logged in for transelating content
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
-		// console.log(content);
+
+		// Checks if the parameters are in the right form
 		check(content, {
 			title: String,
 			description: String,
@@ -235,11 +233,13 @@ Meteor.methods({
 			metacontent: String
 		});
 
+		// Initializes the new ContentText
 		content.createdById = Meteor.userId();
 		content.upVote = [];
 		content.downVote = [];
 		content.seals = [];
 
+		// Finds the "father" content
 		var father = Content.findOne({_id: content.metacontent});
 		
 		if (!father) 
@@ -249,6 +249,8 @@ Meteor.methods({
 			metacontent: content.metacontent,
 			language: content.language
 		});
+
+		// If not found, it means that there are new content to be transelated to
 		if (!self) {
 			var language = LanguageTags.findOne({
 				name: content.language
@@ -260,7 +262,9 @@ Meteor.methods({
 			Content.update({_id: content.metacontent}, {
 				$push: {contents: content_id}
 			});
-		} else {
+		}
+		// Content is edited
+		else {
 			ContentText.update({
 				_id: self._id
 			},{
@@ -272,16 +276,19 @@ Meteor.methods({
 			log_text("Content translated with id='" + content_id + "'", Meteor.user());
 		}
 		
+		// Returns the id for father content
 		return content.metacontent;
 	},
 
-
+	// Function for transelating category
 	translate_category: function(cat_text) {
 
+		// Needs to be logged in for transelating category
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
 
+		// Checks that the input is in the right form
 		check(cat_text, {
 			name: String,
 			description: String,
@@ -293,6 +300,7 @@ Meteor.methods({
 			_id: cat_text.metacategory
 		});
 
+		// If no category found, cannot create new transelation
 		if (!category_father) {
 			throw new Meteor.Error(404, "Could not find category.");
 		}
@@ -301,6 +309,7 @@ Meteor.methods({
 			name: cat_text.language
 		});
 
+		// Needs a supported language
 		if (!language) {
 			throw new Meteor.Error(404, "Could not find language.");
 		}
@@ -310,6 +319,7 @@ Meteor.methods({
 			metacategory: category_father._id
 		});
 
+		// Will either update an existing transelation or create a new one
 		if (check_cat) {
 			CategoryText.update({
 				_id: check_cat._id
@@ -450,13 +460,18 @@ Meteor.methods({
 		}
 	},
 
+	// Method for removing a language from a user profile
 	remove_language_profile: function(lang_id) {
+
+		// Checks if the id is a String
 		check(lang_id, String);
 
+		// Needs to be logged in
 		if (!Meteor.userId()) {
 			throw new Meteor.Error(530, "You are not logged in.");
 		}
 
+		// Finds the language and removes it from the user profile
 		var languages = Meteor.user().profile.languages;
 		var index = languages.indexOf(lang_id);
 		if (index > -1) {
@@ -470,8 +485,9 @@ Meteor.methods({
 		}
 	},
 
-
+	// Function for adding a language to a user profile
 	add_language_profile: function(languageId) {
+		// Checks the id and if the user is logged in and that the language exists
 		check(languageId, String);
 
 		if (!Meteor.userId()) 
@@ -485,6 +501,7 @@ Meteor.methods({
 			if (languages[a] === languageId) 
 				throw new Meteor.Error(400, "Language already exist.");
 		}
+		// Adds the language to the user profile
 		languages.push(languageId);
 		Meteor.users.update({_id: Meteor.userId()}, {$set: {"profile.languages": languages}});
 		if (Meteor.settings.DEBUG){
@@ -492,130 +509,7 @@ Meteor.methods({
 		}
 	},
 
-
-	// Administrator methods
-	add_language_system: function(language) {
-
-		if (!Meteor.userId()) 
-			throw new Meteor.Error(530, "You are not logged in.");
-
-		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
-			throw new Meteor.Error(403, "You do not have access.");
-
-		check(language, {
-			"name": String,
-			"english_name": String,
-			"short_form": String
-		});
-
-		if (LanguageTags.findOne({name: language.name})) 
-			throw new Meteor.Error(400, "Language already exist.");
-
-		if (LanguageTags.findOne({english_name: language.english_name}))
-			throw new Meteor.Error(400, "Language already exist.");
-
-		if (LanguageTags.findOne({short_form: language.short_form}))
-			throw new Meteor.Error(400, "Language already exist.");
-
-		LanguageTags.insert(language);
-
-		if (Meteor.settings.DEBUG){
-			log_text("The language " + language.english_name + " was added to the system", Meteor.user());
-		}
-	},
-
-
-	remove_language_system: function(lang_id) {
-
-		if (!Meteor.userId()) 
-			throw new Meteor.Error(530, "You are not logged in.");
-
-		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
-			throw new Meteor.Error(403, "You do not have access.");
-
-		check(lang_id, String);
-		var is_deleted = LanguageTags.remove({_id: lang_id});
-		if (!is_deleted)
-			throw new Meteor.Error(404, "Language does not exist");
-
-		if (Meteor.settings.DEBUG){
-			log_text("Language deleted", Meteor.user());
-		}
-	},
-
-
-	remove_user_system: function(user_id) {
-		if (!Meteor.userId()) 
-			throw new Meteor.Error(530, "You are not logged in.");
-
-		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
-			throw new Meteor.Error(430, "You do not have access.");
-
-		check(user_id, String);
-
-		if (user_id === Meteor.userId()) 
-			throw new Meteor.Error(430, "Cannot delete your self.");
-
-		var is_deleted = Meteor.users.remove({_id: user_id});
-		if (!is_deleted)
-			throw new Meteor.Error(404, "User not found.");
-	},
-
-
-	add_user_to_role: function(obj) {
-		check(obj, {
-			user_id: String,
-			role: String
-		});
-
-		if (!Meteor.userId()) {
-			throw new Meteor.Error(530, "You are not logged in.");
-		}
-
-		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
-			throw new Meteor.Error(430, "You do not have access.");
-		}
-
-		if (!Meteor.users.findOne({_id: obj.user_id}))
-			throw new Meteor.Error(404, "User not found.");
-
-		Roles.addUsersToRoles(obj.user_id, obj.role);
-
-		if (Meteor.settings.DEBUG){
-			log_text("The user " + obj.user_id + " got " + obj.role + " priveliges.", Meteor.user());
-		}
-
-	},
-
-
-	remove_user_from_role: function(obj) {
-		check(obj, {
-			user_id: String,
-			role: String
-		});
-
-		if (!Meteor.userId()) {
-			throw new Meteor.Error(530, "You are not logged in.");
-		}
-
-		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
-			throw new Meteor.Error(430, "You do not have access.");
-		}
-
-		if (!Meteor.users.findOne({_id: obj.user_id}))
-			throw new Meteor.Error(404, "User not found.");
-
-		if (obj.user_id === Meteor.userId() && obj.role === "admin")
-			throw new Meteor.Error(430, "You cannot remove admin from your self.");
-
-		Roles.removeUsersFromRoles(obj.user_id, obj.role);
-
-		if (Meteor.settings.DEBUG){
-			log_text("The user " + obj.user_id + " was removed from " + obj.role, Meteor.user());
-		}
-	},
-
-
+	// Method for setting your preferred language
 	set_preferred_language: function(lang) {
 		check(lang, String);
 
@@ -630,7 +524,10 @@ Meteor.methods({
 		});
 	},
 
+	// Method for adding content to a group
 	add_group_content: function(obj) {
+
+		// Checks right input, that the user is logged in, and that the content and group exists
 		check(obj, {
 			content_id: String,
 			name: String 
@@ -663,6 +560,8 @@ Meteor.methods({
 		});
 	},
 
+	// Function for deleting content
+	// Needs to be logged in and you have to be the creator for this content
 	delete_content: function(content_id) {
 
 		check(content_id, String);
@@ -709,6 +608,7 @@ Meteor.methods({
 		Content.remove({_id: content._id});
 	},
 
+	// Creating a new group to the system
 	add_group: function(group) {
 		check(group, {
 			name: String
@@ -738,6 +638,7 @@ Meteor.methods({
 		return id;
 	},
 
+	// Function for giving a vote to a ContentText
 	vote: function(content_id, vote){
 
 		if (!Meteor.userId())
@@ -801,6 +702,8 @@ Meteor.methods({
 		return content.upVote.length - content.downVote.length;
 	},
 
+	// Function for joining or leaving a group
+	// Needs to be logged in
 	toggle_group: function(obj){
 
 		check(obj, {
@@ -847,6 +750,134 @@ Meteor.methods({
 			}, {
 				$pull: {"profile.groups": group_id}
 			});
+		}
+	},
+
+
+	// Administrator methods
+	// All functions here require that a user is logged in and that the user is an administrator
+
+	// Function for adding a new language to the system
+	add_language_system: function(language) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(language, {
+			"name": String,
+			"english_name": String,
+			"short_form": String
+		});
+
+		// Checks if the language exists
+		if (LanguageTags.findOne({name: language.name})) 
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({english_name: language.english_name}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		if (LanguageTags.findOne({short_form: language.short_form}))
+			throw new Meteor.Error(400, "Language already exist.");
+
+		LanguageTags.insert(language);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The language " + language.english_name + " was added to the system", Meteor.user());
+		}
+	},
+
+	// Function for removing a language from the system
+	remove_language_system: function(lang_id) {
+
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(403, "You do not have access.");
+
+		check(lang_id, String);
+		var is_deleted = LanguageTags.remove({_id: lang_id});
+		if (!is_deleted)
+			throw new Meteor.Error(404, "Language does not exist");
+
+		if (Meteor.settings.DEBUG){
+			log_text("Language deleted", Meteor.user());
+		}
+	},
+
+	// Function for removing a user from the system
+	remove_user_system: function(user_id) {
+		if (!Meteor.userId()) 
+			throw new Meteor.Error(530, "You are not logged in.");
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"]))
+			throw new Meteor.Error(430, "You do not have access.");
+
+		check(user_id, String);
+
+		// Cannot delete your own user
+		if (user_id === Meteor.userId()) 
+			throw new Meteor.Error(430, "Cannot delete your self.");
+
+		var is_deleted = Meteor.users.remove({_id: user_id});
+		if (!is_deleted)
+			throw new Meteor.Error(404, "User not found.");
+	},
+
+	// Add a user to a desired role
+	add_user_to_role: function(obj) {
+		check(obj, {
+			user_id: String,
+			role: String
+		});
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
+			throw new Meteor.Error(430, "You do not have access.");
+		}
+
+		if (!Meteor.users.findOne({_id: obj.user_id}))
+			throw new Meteor.Error(404, "User not found.");
+
+		Roles.addUsersToRoles(obj.user_id, obj.role);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " got " + obj.role + " priveliges.", Meteor.user());
+		}
+
+	},
+
+	// Removes a user from a desired role
+	remove_user_from_role: function(obj) {
+		check(obj, {
+			user_id: String,
+			role: String
+		});
+
+		if (!Meteor.userId()) {
+			throw new Meteor.Error(530, "You are not logged in.");
+		}
+
+		if (!Roles.userIsInRole(Meteor.user(), ["admin"])) {
+			throw new Meteor.Error(430, "You do not have access.");
+		}
+
+		if (!Meteor.users.findOne({_id: obj.user_id}))
+			throw new Meteor.Error(404, "User not found.");
+
+		if (obj.user_id === Meteor.userId() && obj.role === "admin")
+			throw new Meteor.Error(430, "You cannot remove admin from your self.");
+
+		Roles.removeUsersFromRoles(obj.user_id, obj.role);
+
+		if (Meteor.settings.DEBUG){
+			log_text("The user " + obj.user_id + " was removed from " + obj.role, Meteor.user());
 		}
 	}
 });

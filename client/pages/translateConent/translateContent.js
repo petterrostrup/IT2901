@@ -97,16 +97,25 @@ Template.translateContent.events({
 		if (Session.get("transelate_content")) {
 			content.language = langs[0];
 		}
-		else {
+		else if (Session.get("content_language")) {
 			content.language = Session.get("content_language");
+		} 
+		else {
+			conent.language = "undefined";
 		}
 
 		//calls the method "transelate_content" in methods.js
 		Meteor.call("transelate_content", content, function(error, result) {
 			if (result)
 				console.log(result);
-			if (error)
+			if (error){
 				console.log(error);
+				template.$("#logErrorText").text(error);
+				template.$("#logError").show();
+				setTimeout(function() {
+					template.$("#logError").hide();
+				}, 4000);
+			}
 			else
 				Router.go("show_content", {_id: result});
 		});

@@ -8,6 +8,7 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
         language = Meteor.user().profile.preferred_language;
     }
 
+    // If there is a search text, it will search through the categories
     if(searchText) {
         var regExp = buildRegExp(searchText);
         var selector = {$or: [
@@ -28,16 +29,9 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
     // end of try lookup
     
         return result
-    } else {
-// another transform
-//     , {
-//     transform: function(doc) {
-//         doc.categoryTextObj = CategoryText.find({
-//             _id: { $in: doc.categories}
-//         });
-//         return doc
-//     }
-// }
+    } 
+    // If there are no searchText, it will only return the top categories
+    else {
         var list = [];
         var categories = Category.find({}).fetch();
         for (var a in categories) {
@@ -63,24 +57,6 @@ SearchSource.defineSource('categorySearch', function(searchText, options) {
             }
         }
         return list;
-
-        // var result = CategoryText.find({}, {
-        //     transform: function(doc) {
-        //         var hei = Category.findOne({
-        //             parent_id: {$exists:false},
-        //             _id: doc.metacategory
-        //             // categories: { $in: [doc._id]}
-        //         });
-        //         if (!hei)
-        //             return {};
-        //         doc.categoryObj = Category.find({
-        //             categories: { $in: [doc._id]}
-        //         }).fetch();
-        //         return doc
-        //     }
-        // }).fetch();
-        // // console.log(result);
-        // return result;
     }
 });
 
@@ -91,7 +67,6 @@ function buildRegExp(searchText) {
 }
 
 // content search
-// content search
 SearchSource.defineSource('contentSearch', function(searchText, options) {
     options = options || {};
     var options = {sort: {isoScore: -1}, limit: 20};
@@ -101,48 +76,11 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         var selector = {$or: [
           {title: regExp},
           {description: regExp},
-          // {title: regExp}
-          // {community_id: regExp}
         ]};
         var selectorCatText = {$or: [
           {name: regExp},
         ]};
-    // search by commu and lang
-    // var selectorTag = {$or: [
-    //   {name: regExp},
-    // ]};
-    // var result_community_id = CommunityTags.find(selectorTag, options).fetch()
-    // var com_id = result_community_id[0].name
-    // var regExpCom = buildRegExp(com_id)
-    // console.log(com_id)
-    // console.log(regExpCom)
-    // var selector = {$or: [
-    //   {name: regExp},
-    //   {description: regExp},
-    //   {community_id: regExpCom}
-    // ]};
-    // test lookup
-//    console.log(ContentText.aggregate([
-//     {
-//       $lookup:
-//         {
-//           from: "Content",
-//           localField: "metacontent",
-//           foreignField: "_id",
-//           as: "content_info"
-//         }
-//    }
-// ]))
-    // end of test lookup
-    // test join collections
-    // var result = []
-    // var cate = Category.find(selector, options).fetch();
-    // for (var index in cate){
-    //     result.concat(Content.find({_id: cate[index]._id}).fetch())
-    // }
-    // console.log(result)
-    // end of test join collections
-    //concat two returned collections
+        //concat two returned collections
         // category
         var catText = CategoryText.find(selectorCatText, { options,
             transform: function(doc) {
@@ -178,13 +116,9 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }).fetch()
             searchByCatResult.push(resultContent[0])
         }
-        // console.log("cat result")
-        // console.log(searchByCatResult)
         // end of category
         // group
         var groupText = Groups.find(selectorCatText, options).fetch()
-        // console.log("gtext")
-        // console.log(groupText)
         var con_id_group = []
         for (var i in groupText) {
             for (var j in groupText[i].content_ids){
@@ -193,8 +127,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 
             }
         }
-        // console.log("gid")
-        // console.log(con_id_group)
         // got content_ids then use it to get content
         var searchByGroupResult = []
         var resultContentGroup = []
@@ -212,8 +144,6 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
                 }).fetch()
             searchByGroupResult.push(resultContentGroup[0])
         }
-        // console.log("g result")
-        // console.log(searchByGroupResult)
         // end of group
         var result = ContentText.find(selector, { options,
         transform: function(doc) {
@@ -227,36 +157,12 @@ SearchSource.defineSource('contentSearch', function(searchText, options) {
         return doc;
         }
         }).fetch()
-        // console.log("con result")
-        // console.log(result)
+
         // result - array of contents by name, searchByCatResult - array of contents by category
         var finalResult = searchByCatResult.concat(searchByGroupResult.concat(result))
         return finalResult;
-    // return finalResult
-//   } else {
-// =======
-//             transform: function(doc) {
-//                 doc.contentObj = Content.find({
-//                     contents: { $in: [doc._id]}
-//                 }).fetch();
-//                 return doc;
-//             }
-//         }).fetch();
-//             // console.log("content")
-//             // console.log(result.concat(searchByCatResult))
-//         var finalResult = result.concat(searchByCatResult);
-//         // console.log("concat")
-//         // console.log(finalResult)
-//         var finalFinal = [];
-//         for (var i in finalResult) {
-//             for (var j in finalResult[i]){
-//                 finalFinal.push(finalResult[i][j])
-//             }
-//         }   
-//         // console.log("finalfinal")
-//         // console.log(finalFinal);
-        // return finalFinal
     } else {
+        // If there are no search text, no content will be shown
         return [];
     var result = ContentText.find({}, {
         transform: function(doc) {
@@ -288,31 +194,14 @@ Meteor.publish("personalInfo", function() {
 });
 
 
-// Meteor.publish("usernames_category", function(cat_id) {
-//     check(cat_id, String);
-//     var user_ids = [];
-//     var content = Content.find({category_id: cat_id}).fetch();
-//     for (var a in content) {
-//         user_ids.push(content[a].createdById);
-//     }
-//     var users = Meteor.users.find({
-//         _id: {$in: user_ids}
-//     },{
-//         username: 1,
-//         _id: 0,
-//         profile: 0
-//     });
-//     console.log(users.fetch());
-//     return users;
-// });
-
-
 // Publishes all user info to administrators. If the user are not admin, the user cannot access all user information
 Meteor.publish("allUsers", function(user) {
     if (this.userId && Roles.userIsInRole(user, ["admin"]) && this.userId === user._id) {
         return Meteor.users.find({});
     }
 });
+
+// All these publish methods are methods for giving the database out to the users
 
 Meteor.publish("content", function(){
 	return Content.find({});
@@ -327,7 +216,6 @@ Meteor.publish("categoryText", function() {
 });
 
 Meteor.publish("tags", function(tag_string) {
-    console.log(tag_string);
     return Tag.find({
         name: {$regex: tag_string}
     });
@@ -343,6 +231,11 @@ Meteor.publish("LanguageTags", function() {
     return LanguageTags.find({});
 });
 
+Meteor.publish("groups", function() {
+    return Groups.find({});
+});
+
+// Local method for creating a new category
 var add_category = function(icon, catText) {
     var mainCat = {
         children_id: [],
@@ -356,13 +249,8 @@ var add_category = function(icon, catText) {
     Category.update({_id: mainId}, {
         $push: {categories: childId}
     });
-
-
 }
 
-Meteor.publish("groups", function() {
-    return Groups.find({});
-});
 
 Meteor.startup(function(){
     

@@ -1,3 +1,4 @@
+// Here all the databases that are used in the system is created
 Content = new Mongo.Collection("content");
 ContentText = new Mongo.Collection("contentText");
 Tag = new Mongo.Collection("tags");

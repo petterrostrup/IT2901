@@ -1,37 +1,42 @@
-# IT2901
-Bachelor
+# IT2901 - Bachelor Project
 
-# Simple structure
-Meteor will distinguish between server and client directories. Code that is only supposed to be reached by the server will be laid here.
-Code that is supposed to run on the client, will be laid in the client directory.
+## How to install the project locally on your machiene
 
-# Adding a settings.json file
+First install MeteorJS
 
-First create a settings.json file in the server directory.
-```json
+* For Linux/OSX:
+	* Type this into a terminal: ```curl https://install.meteor.com/ | sh```
+* For Windows:
+	* Download this: https://install.meteor.com/windows
+	* Follow the instructions
+
+After you have installed Meteor on your computer, go to a directory where you want to save the project.
+
+Clone this repository either by ssh ```git@github.com:petterrostrup/IT2901.git``` or https ```https://github.com/petterrostrup/IT2901.git```
+
+Then created the settings.json file with these parameters: 
+```
 {
-	"DEBUG": true,
+	// All these fields are required for the application to run properly
+	"DEBUG": Boolean,
 	"defaultUser": {
-		"username": "...",
-		"password": "...",
-		"email": "..."
+		"username": String,
+		"password": String,
+		"email": String
 	}
 }
 ```
-To run the meteor app, you type the following in the terminal:
-`meteor --settings server/settings.json`
 
-We will use this when we git:
- - http://nvie.com/posts/a-successful-git-branching-model/
+Then run the project with this command in a terminal:
+```meteor --settings path/to/file/settings.json```
+
+## How to deploy the project on a server
+
+We used something called MUP (Meteor Up). The instructions for deploying can be found here: https://github.com/arunoda/meteor-up
+
+_An important note is that we use node version 0.10.41._
 
 ## Packages that are used in the project
-
-### [Jxck:html2json](https://github.com/Jxck/html2json)
-converting html to json and back to html. 
-
-### [malkesh:trumbowyg](https://atmospherejs.com/malkesh/trumbowyg)
-
-A lightweight WYSIWYG editor.
 
 ### [accounts-password](https://atmospherejs.com/meteor/accounts-password)
 
@@ -52,8 +57,10 @@ Bootstrap.
 ### [alanning:roles](https://atmospherejs.com/alanning/roles)
 
 Simple roles implementation for Meteor. 
+
 ### [meteor-comments-ui](https://github.com/ARKHAM-Enterprises/meteor-comments-ui)
 Handles comments.
+
 ### [check](https://atmospherejs.com/meteor/check)
 
 Simple check for elements that are not supposed to be database injections.
@@ -62,43 +69,29 @@ Simple check for elements that are not supposed to be database injections.
 
 Testing framework
 
-### [ongoworks:security](https://atmospherejs.com/ongoworks/security)
-
 ### [mizzao:autocomplete](https://atmospherejs.com/mizzao/autocomplete)
+
 This is for multiple search selection for createContent
 
 Simple framework for adding constraints on adding, deleting and reading the mongdo database. Based on alanning:roles.
 
 ### [accounts-ui](https://atmospherejs.com/meteor/accounts-ui)
+
 Used for change password to a user account.
 Can also be used for logging in with facebook etc.
 
-## How-to-git (simple)
+### [meteorhacks:aggregate](https://atmospherejs.com/meteorhacks/aggregate)
 
-*Never* push directly to the master branch and the developer branch. You can check witch branch you are on by typing "git branch". 
-When you will start a new branch, be certan that you branch from *develop*.
+Package for using aggregate on Mongo Collections
 
+### [fortawesome:fontawesome](https://atmospherejs.com/fortawesome/fontawesome)
 
+Font Awesome is a package for using icons directly in the html.
 
-### How to start on a new issue
+### [meteorhacks:search-source](https://atmospherejs.com/meteorhacks/search-source)
 
-1. Check if the issue already exists.
-..* If yes: switch to that branch by typing "git checkout <*branch name*>" and start coding.
-2. Check that you are on the branch *develop* by typing "git branch" in your project folder.
-3. When you want to start working on a new issue, create a new branch: "git checkout -b <*your-branch-name*>".
-4. Now type "git push origin <*your-branch-name*>" so that the branch also pops up in github, not just on your local machine.
-5. Now everything is set to go, just start writing code!
+A package for using reactive search in Meteor.
 
-### How to push to <*your-branch*>
+### [simplemde](http://www.jsdelivr.com/projects/simplemde)
 
-1. Be on the correct issue/branch.
-2. Do all adding and commiting.
-3. Type: "git push origin <*your-branch*>" and it will be pushed to your branch.
-
-### How to push things to the develop branch
-
-*Do not merge directly with the develop branch.*
-
-1. Go to the projects github page and press the button "New pull request".
-2. Set the base to *develop* and compare to <*your-branch*>
-3. Write a little comment and create the pull request.
+A nice and simple markdown editor for javascript. Uses a CDN for getting the code.
