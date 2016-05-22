@@ -15,7 +15,7 @@ After you have installed Meteor on your computer, go to a directory where you wa
 Clone this repository either by ssh ```git@github.com:petterrostrup/IT2901.git``` or https ```https://github.com/petterrostrup/IT2901.git```
 
 Then created the settings.json file with these parameters: 
-```json
+```
 {
 	// All these fields are required for the application to run properly
 	"DEBUG": Boolean,
