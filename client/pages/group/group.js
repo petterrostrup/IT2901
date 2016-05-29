@@ -51,7 +51,8 @@ Template.group.helpers({
 							description: cont_lang[a].description,
 							createdBy: content.createdByUsername,
 							time: content.timestamp,
-							rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length
+							rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length,
+							seals: cont_lang[a].seals.length
 						});
 						found = true;
 						break;
@@ -70,7 +71,8 @@ Template.group.helpers({
 								description: cont_lang[a].description,
 								createdBy: content.createdByUsername,
 								time: content.timestamp,
-								rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length
+								rating: cont_lang[a].upVote.length - cont_lang[a].downVote.length,
+								seals: cont_lang[a].seals.length
 							});
 							found = true;
 							// console.log("Content found for user languages.");
@@ -89,7 +91,8 @@ Template.group.helpers({
 						description: cont_lang[0].description,
 						createdBy: content.createdByUsername,
 						time: content.timestamp,
-						rating: cont_lang[0].upVote.length - cont_lang[0].downVote.length
+						rating: cont_lang[0].upVote.length - cont_lang[0].downVote.length,
+						seals: cont_lang[0].seals.length
 					});
 					// console.log("Content not supported found.");
 				}
